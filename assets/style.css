@@ -147,10 +147,12 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
 }
 .tags.grandes span { font-size: 0.9rem; padding: 5px 12px; }
 
-.cartao-base { grid-column: 1 / -1; flex-direction: row; }
+/* Cartão sem captura de tela: um painel azul no lugar da imagem, na mesma proporção */
 .cartao-base .fluxo-mini {
-  flex: 0 0 42%;
-  padding: 28px 0;
+  aspect-ratio: 16 / 9;
+  min-height: 220px;
+  border-bottom: 1px solid var(--borda);
+  padding: 20px 0;
   background: linear-gradient(135deg, var(--marinho), #2B5A85);
   display: flex;
   flex-direction: column;
@@ -290,8 +292,6 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   .fluxo { grid-template-columns: 1fr 1fr; }
   .colunas { grid-template-columns: 1fr; gap: 8px; }
   .cartoes { grid-template-columns: 1fr; }
-  .cartao-base { flex-direction: column; }
-  .cartao-base .fluxo-mini { padding: 24px 0; }
 }
 
 @media (max-width: 560px) {

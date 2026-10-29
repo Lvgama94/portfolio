@@ -55,6 +55,8 @@ function delta(atual, antes, tipo, rotuloAntes, sentido = 1) {
   const emReais = tipo !== "pp" && tipo !== "abs" && antes <= 0;
   const d = tipo === "pp" || tipo === "abs" || emReais ? atual - antes : atual / antes - 1;
   if (!isFinite(d)) return { texto: "" };
+  // Variação que some no arredondamento (0,0 p.p. ou 0,0%) é estabilidade, não queda nem alta
+  if ((tipo === "pp" || (!emReais && tipo !== "abs")) && Math.abs(d) < 0.0005) return { texto: `= estável vs ${rotuloAntes}` };
   const seta = d > 0 ? "▲" : d < 0 ? "▼" : "=";
   const texto = tipo === "pp" ? pp(d) : tipo === "abs" ? `${d >= 0 ? "+" : "−"}${numero(Math.abs(d))}`
     : emReais ? `${d >= 0 ? "+" : ""}${compacto(d)}` : pct(d);
