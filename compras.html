@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compras e Estoque interativo · Lucas Gama</title>
+  <meta name="description" content="Versão web interativa do painel Compras e Estoque da Distribuidora Sul: pontualidade de fornecedores, estoque, giro, ruptura e curva ABC, com filtros e clique para filtrar.">
+  <meta property="og:title" content="Compras e Estoque interativo · Lucas Gama">
+  <meta property="og:description" content="Fornecedores, estoque, ruptura e curva ABC, com filtros.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/compras.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#compras-estoque">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">Projeto 3 · versão web interativa</p>
+    <h1>Compras e Estoque</h1>
+    <p class="ferramentas">Distribuidora Sul Ltda. (dados fictícios). Os números são os mesmos do painel em Power BI, conferidos contra o SQL Server.</p>
+  </div>
+</header>
+
+<main class="painel">
+  <div class="barra-filtros">
+    <div class="filtros">
+      <div class="grupo-filtro" role="group" aria-label="Ano" id="filtro-ano"></div>
+      <div class="grupo-filtro" id="filtro-categoria"></div>
+      <div class="grupo-filtro" id="filtro-fornecedor"></div>
+      <button class="chip" id="chip-selecao" type="button" hidden></button>
+    </div>
+    <div class="abas" role="tablist" aria-label="Páginas do painel">
+      <button role="tab" type="button" data-aba="compras" aria-selected="true">Compras e Fornecedores</button>
+      <button role="tab" type="button" data-aba="estoque" aria-selected="false">Estoque e Ruptura</button>
+      <button role="tab" type="button" data-aba="abc" aria-selected="false">Curva ABC</button>
+    </div>
+  </div>
+
+  <p class="aviso-carregando" id="carregando">Carregando os dados…</p>
+
+  <!-- ------------------------------------------------------------ Compras e Fornecedores -->
+  <section class="aba" id="aba-compras" role="tabpanel">
+    <div class="kpis" id="kpis-compras"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Valor comprado por mês</h2><p class="sub">Pela data do pedido · clique num mês para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="compras-mes">Tabela</button>
+        </header>
+        <div class="grafico" id="g-compras-mes"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Entregas no prazo por mês</h2><p class="sub">Pedidos entregues até a data prevista · clique para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="prazo-mes">Tabela</button>
+        </header>
+        <div class="grafico" id="g-prazo-mes"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Valor comprado por categoria</h2><p class="sub">Clique para filtrar a categoria</p></div>
+          <button class="ver-tabela" type="button" data-grafico="categorias">Tabela</button>
+        </header>
+        <div class="grafico" id="g-categorias"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Fornecedores</h2><p class="sub">Do maior para o menor em valor comprado · clique para filtrar</p></div>
+        </header>
+        <div class="legenda status">
+          <span><b class="st bom">●</b>No prazo ≥ 75%</span><span><b class="st atencao">●</b>60% a 75%</span><span><b class="st ruim">●</b>Abaixo de 60%</span>
+        </div>
+        <div class="tabela-rolagem"><table class="tabela-dados clicavel" id="tabela-fornecedores"></table></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ Estoque e Ruptura -->
+  <section class="aba" id="aba-estoque" role="tabpanel" hidden>
+    <div class="kpis" id="kpis-estoque"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Estoque no fim de cada mês</h2><p class="sub">Valor a custo · clique num mês para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="estoque-mes">Tabela</button>
+        </header>
+        <div class="grafico" id="g-estoque-mes"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Venda perdida por categoria</h2><p class="sub">Unidades pedidas e não atendidas × preço · clique para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="ruptura-categoria">Tabela</button>
+        </header>
+        <div class="grafico" id="g-ruptura-categoria"></div>
+      </article>
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Os 10 produtos que mais perderam venda</h2><p class="sub">Os itens que mais faltaram na prateleira</p></div>
+          <button class="ver-tabela" type="button" data-grafico="produtos-perda">Tabela</button>
+        </header>
+        <div class="grafico" id="g-produtos-perda"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ Curva ABC -->
+  <section class="aba" id="aba-abc" role="tabpanel" hidden>
+    <p class="nota-aba">As classes são calculadas uma vez, sobre a receita de 2024 e 2025, para o produto não mudar de classe a cada filtro. O filtro de ano não se aplica a esta página.</p>
+    <div class="kpis" id="kpis-abc"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Fatia dos produtos × fatia da receita</h2><p class="sub">Por classe · clique numa classe para filtrar a lista</p></div>
+          <button class="ver-tabela" type="button" data-grafico="classes">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>% dos produtos</span><span><i style="background:var(--serie-2)"></i>% da receita</span></div>
+        <div class="grafico" id="g-classes"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Receita acumulada pelo ranking de produtos</h2><p class="sub">Do produto que mais vende para o que menos vende</p></div>
+          <button class="ver-tabela" type="button" data-grafico="pareto">Tabela</button>
+        </header>
+        <div class="grafico" id="g-pareto"></div>
+      </article>
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Produtos</h2><p class="sub" id="sub-produtos">Ranking pela receita dos dois anos</p></div>
+        </header>
+        <div class="tabela-rolagem"><table class="tabela-dados" id="tabela-produtos"></table></div>
+      </article>
+    </div>
+  </section>
+
+  <p class="rodape-painel">
+    Dados exportados do SQL Server por <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/python/exportar_web.py" target="_blank" rel="noopener">python/exportar_web.py</a>, que confere os 22 indicadores com a view de conferência antes de gravar.
+    O painel original em Power BI está no <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_compras_estoque.md" target="_blank" rel="noopener">GitHub</a>.
+  </p>
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="assets/painel-base.js"></script>
+<script src="assets/compras.js"></script>
+</body>
+</html>

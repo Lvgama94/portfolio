@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel Financeiro interativo · Lucas Gama</title>
+  <meta name="description" content="Versão web interativa do painel Financeiro da Distribuidora Sul: DRE, orçado × realizado, contas a receber e fluxo de caixa, com filtros e clique para filtrar.">
+  <meta property="og:title" content="Painel Financeiro interativo · Lucas Gama">
+  <meta property="og:description" content="DRE, orçado × realizado, contas a receber e fluxo de caixa, com filtros.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/financeiro.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#financeiro">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">Projeto 1 · versão web interativa</p>
+    <h1>Painel Financeiro</h1>
+    <p class="ferramentas">Distribuidora Sul Ltda. (dados fictícios). Os números são os mesmos do painel em Power BI, conferidos contra o SQL Server.</p>
+  </div>
+</header>
+
+<main class="painel">
+  <div class="barra-filtros">
+    <div class="filtros">
+      <div class="grupo-filtro" role="group" aria-label="Ano" id="filtro-ano"></div>
+      <div class="grupo-filtro" role="group" aria-label="Filial" id="filtro-filial"></div>
+      <button class="chip" id="chip-selecao" type="button" hidden></button>
+    </div>
+    <div class="abas" role="tablist" aria-label="Páginas do painel">
+      <button role="tab" type="button" data-aba="resumo" aria-selected="true">Resumo</button>
+      <button role="tab" type="button" data-aba="dre" aria-selected="false">DRE e Orçamento</button>
+      <button role="tab" type="button" data-aba="receber" aria-selected="false">Contas a Receber</button>
+      <button role="tab" type="button" data-aba="caixa" aria-selected="false">Fluxo de Caixa</button>
+    </div>
+  </div>
+
+  <p class="aviso-carregando" id="carregando">Carregando os dados…</p>
+  <p class="nota-filial" id="nota-filial" hidden>Impostos sobre vendas, compras de mercadoria e despesas comerciais e financeiras são lançados na matriz, em Porto Alegre. Por isso, filtrando por filial, Caxias do Sul e Pelotas aparecem com margem e geração de caixa maiores do que realmente têm, e Porto Alegre com menores. Para avaliar rentabilidade, use a visão da empresa toda.</p>
+
+  <!-- ------------------------------------------------------------ Resumo -->
+  <section class="aba" id="aba-resumo" role="tabpanel">
+    <div class="kpis" id="kpis-resumo"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Receita líquida por mês</h2><p class="sub">Clique num mês para filtrar o painel</p></div>
+          <button class="ver-tabela" type="button" data-grafico="receita">Tabela</button>
+        </header>
+        <div class="grafico" id="g-receita"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Resultado líquido: realizado × orçado</h2><p class="sub" id="sub-resultado">Por mês</p></div>
+          <button class="ver-tabela" type="button" data-grafico="resultado">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Realizado</span><span><i style="background:var(--serie-2)"></i>Orçado</span></div>
+        <div class="grafico" id="g-resultado"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ DRE -->
+  <section class="aba" id="aba-dre" role="tabpanel" hidden>
+    <div class="grade-graficos">
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>DRE</h2><p class="sub" id="sub-dre">Clique num grupo para abrir as contas</p></div>
+        </header>
+        <div class="tabela-rolagem"><table class="tabela-dre" id="tabela-dre"></table></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Da receita bruta ao resultado</h2><p class="sub">Clique numa barra para abrir o grupo na DRE</p></div>
+          <button class="ver-tabela" type="button" data-grafico="cascata">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Receita e resultado</span><span><i style="background:var(--negativo)"></i>Deduções, custos e despesas</span></div>
+        <div class="grafico" id="g-cascata"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Desvio das despesas contra o orçado, por conta</h2><p class="sub">Negativo = gastou mais que o orçado</p></div>
+          <button class="ver-tabela" type="button" data-grafico="desvio">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Abaixo do orçado</span><span><i style="background:var(--negativo)"></i>Acima do orçado</span></div>
+        <div class="grafico" id="g-desvio"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ Contas a receber -->
+  <section class="aba" id="aba-receber" role="tabpanel" hidden>
+    <p class="nota-aba">Fotografia da carteira em 31/12/2025: o filtro de ano não se aplica a esta página.</p>
+    <div class="kpis" id="kpis-receber"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Carteira em aberto por faixa de atraso</h2><p class="sub" id="sub-aging">Todos os tipos de cliente</p></div>
+          <button class="ver-tabela" type="button" data-grafico="aging">Tabela</button>
+        </header>
+        <div class="grafico" id="g-aging"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Inadimplência por tipo de cliente</h2><p class="sub">Vencido ÷ carteira em aberto · clique para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="tipos">Tabela</button>
+        </header>
+        <div class="grafico" id="g-tipos"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ Fluxo de caixa -->
+  <section class="aba" id="aba-caixa" role="tabpanel" hidden>
+    <div class="kpis" id="kpis-caixa"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Recebido × pago por mês</h2><p class="sub">Pela data de pagamento · clique num mês para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="caixa">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Recebido</span><span><i style="background:var(--serie-2)"></i>Pago</span></div>
+        <div class="grafico" id="g-caixa"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Geração de caixa por mês</h2><p class="sub">Recebido − pago</p></div>
+          <button class="ver-tabela" type="button" data-grafico="geracao">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Sobrou caixa</span><span><i style="background:var(--negativo)"></i>Faltou caixa</span></div>
+        <div class="grafico" id="g-geracao"></div>
+      </article>
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Para onde foi o dinheiro</h2><p class="sub">Pagamentos por grupo</p></div>
+          <button class="ver-tabela" type="button" data-grafico="grupos">Tabela</button>
+        </header>
+        <div class="grafico baixo" id="g-grupos"></div>
+      </article>
+    </div>
+    <p class="nota-aba">A simulação começa em 01/01/2024 sem títulos anteriores, por isso jan/2024 recebe pouco e 2024 gera mais caixa que 2025.</p>
+  </section>
+
+  <p class="rodape-painel">
+    Dados exportados do SQL Server por <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/python/exportar_web.py" target="_blank" rel="noopener">python/exportar_web.py</a>, que confere os 40 indicadores com a view de conferência antes de gravar.
+    O painel original em Power BI está no <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_financeiro.md" target="_blank" rel="noopener">GitHub</a>.
+  </p>
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="assets/painel-base.js"></script>
+<script src="assets/financeiro.js"></script>
+</body>
+</html>
