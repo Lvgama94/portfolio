@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Excel + automação interativo · Lucas Gama</title>
+  <meta name="description" content="Resultado das automações em Excel e Power Query da Distribuidora Sul: conciliação bancária de dezembro/2025 e consolidação de 24 arquivos de ponto, para explorar no navegador.">
+  <meta property="og:title" content="Excel + automação interativo · Lucas Gama">
+  <meta property="og:description" content="Conciliação bancária e consolidação do ponto feitas com Power Query, para explorar.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/excel.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#excel">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">Projeto 4 · versão web interativa</p>
+    <h1>Excel + automação</h1>
+    <p class="ferramentas">O que as duas pastas de trabalho do Excel produziram com Power Query, lido direto das tabelas dos arquivos e conferido contra o SQL Server e o CSV do banco. Dados fictícios.</p>
+  </div>
+</header>
+
+<main class="painel">
+  <div class="barra-filtros">
+    <div class="filtros">
+      <div class="grupo-filtro" id="filtro-1"></div>
+      <div class="grupo-filtro" id="filtro-2"></div>
+      <button class="chip" id="chip-selecao" type="button" hidden></button>
+    </div>
+    <div class="abas" role="tablist" aria-label="Páginas do painel">
+      <button role="tab" type="button" data-aba="conciliacao" aria-selected="true">Conciliação bancária</button>
+      <button role="tab" type="button" data-aba="ponto" aria-selected="false">Consolidação do ponto</button>
+    </div>
+  </div>
+
+  <p class="aviso-carregando" id="carregando">Carregando os dados…</p>
+
+  <!-- ------------------------------------------------------------ Conciliação -->
+  <section class="aba" id="aba-conciliacao" role="tabpanel">
+    <p class="nota-aba">Dezembro de 2025: o extrato do banco contra os títulos baixados no sistema, casados em duas passadas (pelo documento e, no que sobra, por data e valor).</p>
+    <div class="kpis" id="kpis-conciliacao"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Lançamentos por status</h2><p class="sub">Clique num status para filtrar a lista</p></div>
+          <button class="ver-tabela" type="button" data-grafico="status">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Conciliado</span><span><i style="background:var(--negativo)"></i>Pendência</span></div>
+        <div class="grafico baixo" id="g-status"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>O que a conciliação encontrou</h2><p class="sub">As diferenças que alguém precisa investigar</p></div>
+        </header>
+        <ul class="pendencias" id="lista-pendencias"></ul>
+      </article>
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Movimento do extrato por dia</h2><p class="sub">Entradas e saídas no banco · clique num dia para filtrar a lista</p></div>
+          <button class="ver-tabela" type="button" data-grafico="dias">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Entradas</span><span><i style="background:var(--serie-2)"></i>Saídas</span></div>
+        <div class="grafico" id="g-dias"></div>
+      </article>
+      <article class="cartao-grafico largo" id="cartao-lancamentos">
+        <header>
+          <div><h2>Lançamentos</h2><p class="sub" id="sub-lancamentos"></p></div>
+        </header>
+        <!-- Filtros só desta tabela: ficam junto dela, não na barra do topo (que filtra a página inteira) -->
+        <div class="filtros filtros-tabela">
+          <div class="grupo-filtro" role="group" aria-label="Mostrar" id="filtro-ver"></div>
+          <div class="grupo-filtro" id="filtro-busca"></div>
+        </div>
+        <div class="tabela-rolagem"><table class="tabela-dados" id="tabela-lancamentos"></table></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ Ponto -->
+  <section class="aba" id="aba-ponto" role="tabpanel" hidden>
+    <p class="nota-aba">Os 24 arquivos mensais de ponto do RH, empilhados numa tabela só. Em março de 2025 o modelo da planilha mudou: colunas com outros nomes, em outra ordem, e horas extras em "hh:mm".</p>
+    <div class="kpis" id="kpis-ponto"></div>
+    <div class="grade-graficos">
+      <!-- 24 meses por gráfico: largura toda para caber um rótulo por coluna -->
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Registros lidos de cada arquivo</h2><p class="sub">Uma linha por pessoa no mês</p></div>
+          <button class="ver-tabela" type="button" data-grafico="arquivos">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Layout antigo</span><span><i style="background:var(--serie-2)"></i>Layout novo (desde mar/2025)</span></div>
+        <div class="grafico" id="g-arquivos"></div>
+      </article>
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Horas extras por mês</h2><p class="sub">Convertidas de "hh:mm" para horas no layout novo</p></div>
+          <button class="ver-tabela" type="button" data-grafico="he">Tabela</button>
+        </header>
+        <div class="grafico" id="g-he"></div>
+      </article>
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Absenteísmo por setor</h2><p class="sub">(Faltas + atestados) ÷ dias previstos · clique para filtrar o setor</p></div>
+          <button class="ver-tabela" type="button" data-grafico="setores">Tabela</button>
+        </header>
+        <div class="grafico" id="g-setores"></div>
+      </article>
+    </div>
+  </section>
+
+  <p class="rodape-painel">
+    Dados lidos das pastas de trabalho por <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/python/exportar_web.py" target="_blank" rel="noopener">python/exportar_web.py</a>, que confere o ponto com o SQL Server e a conciliação com o CSV do banco antes de gravar.
+    As pastas de trabalho e o código M de cada consulta estão no <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/excel_automacao.md" target="_blank" rel="noopener">GitHub</a>.
+  </p>
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="assets/painel-base.js"></script>
+<script src="assets/excel.js"></script>
+</body>
+</html>

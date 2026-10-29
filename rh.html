@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>People Analytics interativo · Lucas Gama</title>
+  <meta name="description" content="Versão web interativa do painel People Analytics da Distribuidora Sul: headcount, rotatividade, absenteísmo, horas extras e custo de pessoal, com filtros e clique para filtrar.">
+  <meta property="og:title" content="People Analytics interativo · Lucas Gama">
+  <meta property="og:description" content="Headcount, rotatividade, absenteísmo e horas extras, com filtros.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/rh.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#people-analytics">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">Projeto 2 · versão web interativa</p>
+    <h1>People Analytics</h1>
+    <p class="ferramentas">Distribuidora Sul Ltda. (dados fictícios). Os números são os mesmos do painel em Power BI, conferidos contra o SQL Server.</p>
+  </div>
+</header>
+
+<main class="painel">
+  <div class="barra-filtros">
+    <div class="filtros">
+      <div class="grupo-filtro" role="group" aria-label="Ano" id="filtro-ano"></div>
+      <div class="grupo-filtro" role="group" aria-label="Filial" id="filtro-filial"></div>
+      <div class="grupo-filtro" id="filtro-setor"></div>
+      <button class="chip" id="chip-selecao" type="button" hidden></button>
+    </div>
+    <div class="abas" role="tablist" aria-label="Páginas do painel">
+      <button role="tab" type="button" data-aba="visao" aria-selected="true">Visão Geral</button>
+      <button role="tab" type="button" data-aba="rotatividade" aria-selected="false">Rotatividade</button>
+      <button role="tab" type="button" data-aba="absenteismo" aria-selected="false">Absenteísmo e Horas Extras</button>
+    </div>
+  </div>
+
+  <p class="aviso-carregando" id="carregando">Carregando os dados…</p>
+
+  <!-- ------------------------------------------------------------ Visão Geral -->
+  <section class="aba" id="aba-visao" role="tabpanel">
+    <div class="kpis" id="kpis-visao"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Admissões × desligamentos por mês</h2><p class="sub">Clique num mês para filtrar o painel</p></div>
+          <button class="ver-tabela" type="button" data-grafico="movimento">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Admissões</span><span><i style="background:var(--serie-2)"></i>Desligamentos</span></div>
+        <div class="grafico" id="g-movimento"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Headcount no fim de cada mês</h2><p class="sub">Pessoas ativas no último dia do mês</p></div>
+          <button class="ver-tabela" type="button" data-grafico="headcount">Tabela</button>
+        </header>
+        <div class="grafico" id="g-headcount"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Headcount por setor</h2><p class="sub">No fim do período · clique para filtrar o setor</p></div>
+          <button class="ver-tabela" type="button" data-grafico="setor-hc">Tabela</button>
+        </header>
+        <div class="grafico" id="g-setor-hc"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Custo de pessoal por setor</h2><p class="sub">Salários, encargos e benefícios · clique para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="setor-custo">Tabela</button>
+        </header>
+        <div class="grafico" id="g-setor-custo"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ Rotatividade -->
+  <section class="aba" id="aba-rotatividade" role="tabpanel" hidden>
+    <div class="kpis" id="kpis-rotatividade"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Turnover por setor</h2><p class="sub">Desligamentos ÷ headcount médio · clique para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="turnover-setor">Tabela</button>
+        </header>
+        <div class="grafico" id="g-turnover-setor"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Desligamentos por tempo de casa</h2><p class="sub">Quanto tempo a pessoa ficou antes de sair</p></div>
+          <button class="ver-tabela" type="button" data-grafico="tempo-casa">Tabela</button>
+        </header>
+        <div class="grafico" id="g-tempo-casa"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Desligamentos por motivo</h2><p class="sub">Quem pediu para sair × quem foi desligado</p></div>
+          <button class="ver-tabela" type="button" data-grafico="motivos">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-2)"></i>Voluntário</span><span><i style="background:var(--serie-1)"></i>Involuntário</span></div>
+        <div class="grafico baixo" id="g-motivos"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Rotatividade por cargo</h2><p class="sub" id="sub-cargos">Cargos com desligamento no período</p></div>
+        </header>
+        <div class="tabela-rolagem limitada"><table class="tabela-dados" id="tabela-cargos"></table></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ Absenteísmo e Horas Extras -->
+  <section class="aba" id="aba-absenteismo" role="tabpanel" hidden>
+    <div class="kpis" id="kpis-absenteismo"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Absenteísmo por setor</h2><p class="sub">(Faltas + atestados) ÷ dias previstos · clique para filtrar</p></div>
+          <button class="ver-tabela" type="button" data-grafico="abs-setor">Tabela</button>
+        </header>
+        <div class="grafico" id="g-abs-setor"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Horas extras por pessoa por mês, por setor</h2><p class="sub">Clique para filtrar o setor</p></div>
+          <button class="ver-tabela" type="button" data-grafico="he-setor">Tabela</button>
+        </header>
+        <div class="grafico" id="g-he-setor"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Horas extras por mês</h2><p class="sub">Clique num mês para filtrar o painel</p></div>
+          <button class="ver-tabela" type="button" data-grafico="he-mes">Tabela</button>
+        </header>
+        <div class="grafico" id="g-he-mes"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Faltas por mês trabalhado: quem saiu × quem ficou</h2><p class="sub" id="sub-saiu">Sinal de alerta antes do pedido de demissão</p></div>
+          <button class="ver-tabela" type="button" data-grafico="saiu-ficou">Tabela</button>
+        </header>
+        <div class="grafico baixo" id="g-saiu-ficou"></div>
+      </article>
+    </div>
+    <p class="nota-aba">"Quem saiu" são as pessoas desligadas até 31/12/2025, comparadas nos meses em que ainda trabalhavam.</p>
+  </section>
+
+  <p class="rodape-painel">
+    Dados exportados do SQL Server por <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/python/exportar_web.py" target="_blank" rel="noopener">python/exportar_web.py</a>, que confere os 20 indicadores com a view de conferência antes de gravar.
+    O painel original em Power BI está no <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_people_analytics.md" target="_blank" rel="noopener">GitHub</a>.
+  </p>
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="assets/painel-base.js"></script>
+<script src="assets/rh.js"></script>
+</body>
+</html>
