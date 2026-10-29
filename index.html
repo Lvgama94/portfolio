@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lucas Gama · Analista de Dados & BI</title>
+  <meta name="description" content="Portfólio de Lucas Gama, Analista de Dados & BI em Porto Alegre: painéis Power BI, SQL Server, Python e automações em Excel para financeiro, RH e operações.">
+  <meta property="og:title" content="Lucas Gama · Analista de Dados & BI">
+  <meta property="og:description" content="Painéis Power BI, SQL, Python e Excel para financeiro, RH e operações.">
+  <meta property="og:image" content="assets/img/financeiro_resumo.webp">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="#inicio">Lucas Gama</a>
+    <div class="links">
+      <a href="#projetos">Projetos</a>
+      <a href="#como-trabalho">Como trabalho</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="inicio">
+    <p class="cargo">Analista de Dados & BI · Porto Alegre</p>
+    <h1>Transformo dados de financeiro, RH e operações em indicadores que ajudam a decidir.</h1>
+    <p class="ferramentas">Power BI · SQL Server · Python · Excel e Power Query</p>
+    <div class="botoes">
+      <a class="botao primario" href="#projetos">Ver projetos</a>
+      <a class="botao" href="https://www.linkedin.com/in/lucasvianagama" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="botao" href="https://github.com/Lvgama94" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <ul class="numeros">
+      <li><strong>4</strong><span>projetos completos sobre a mesma empresa</span></li>
+      <li><strong>123</strong><span>medidas DAX em 3 modelos semânticos</span></li>
+      <li><strong>84</strong><span>indicadores dos painéis conferidos contra o SQL</span></li>
+      <li><strong>11</strong><span>testes automáticos de qualidade dos dados</span></li>
+    </ul>
+  </section>
+</header>
+
+<main>
+
+  <section class="secao" id="projetos">
+    <h2>Projetos</h2>
+    <p class="intro">Todos os projetos usam a mesma empresa: a <strong>Distribuidora Sul Ltda.</strong>, uma distribuidora fictícia de alimentos e bebidas do RS com dois anos de operação, R$ 121 milhões em vendas, 171 funcionários no histórico e 90 produtos. Os dados foram gerados por código, com os problemas de qualidade do mundo real.</p>
+
+    <div class="cartoes">
+      <article class="cartao">
+        <img src="assets/img/financeiro_resumo.webp" alt="Painel Financeiro: resumo" loading="lazy">
+        <div class="corpo">
+          <h3>Painel Financeiro</h3>
+          <p>DRE, orçado × realizado, contas a receber e fluxo de caixa.</p>
+          <ul>
+            <li>Resultado R$ 1,9 mi abaixo do orçado, puxado pela frota</li>
+            <li>10,2% da carteira vencida, concentrada nos pequenos clientes</li>
+          </ul>
+          <p class="tags"><span>Power BI</span><span>DAX</span><span>SQL</span></p>
+          <a class="mais" href="#financeiro">Ver detalhes →</a>
+        </div>
+      </article>
+
+      <article class="cartao">
+        <img src="assets/img/rh_rotatividade.webp" alt="Painel People Analytics: rotatividade" loading="lazy">
+        <div class="corpo">
+          <h3>People Analytics</h3>
+          <p>Headcount, rotatividade, absenteísmo e horas extras.</p>
+          <ul>
+            <li>Rotatividade de 45,3% (+2,6 p.p.); 63% das saídas no 1º ano</li>
+            <li>Quem saiu faltava 30% mais: sinal de alerta para o RH</li>
+          </ul>
+          <p class="tags"><span>Power BI</span><span>DAX</span><span>RH</span></p>
+          <a class="mais" href="#people-analytics">Ver detalhes →</a>
+        </div>
+      </article>
+
+      <article class="cartao">
+        <img src="assets/img/compras_estoque_ruptura.webp" alt="Painel Compras e Estoque: estoque e ruptura" loading="lazy">
+        <div class="corpo">
+          <h3>Compras e Estoque</h3>
+          <p>Pontualidade de fornecedores, giro, ruptura e curva ABC.</p>
+          <ul>
+            <li>R$ 918 mil em vendas perdidas por falta de produto</li>
+            <li>Estoque 16% maior e giro em queda: capital parado</li>
+          </ul>
+          <p class="tags"><span>Power BI</span><span>DAX</span><span>Supply</span></p>
+          <a class="mais" href="#compras-estoque">Ver detalhes →</a>
+        </div>
+      </article>
+
+      <article class="cartao">
+        <img src="assets/img/excel_conciliacao_bancaria.webp" alt="Conciliação bancária no Excel" loading="lazy">
+        <div class="corpo">
+          <h3>Excel + automação</h3>
+          <p>Consolidação do ponto e conciliação bancária com Power Query.</p>
+          <ul>
+            <li>24 arquivos de ponto com layouts diferentes → 1 clique</li>
+            <li>1.601 lançamentos conciliados e 11 pendências encontradas</li>
+          </ul>
+          <p class="tags"><span>Excel</span><span>Power Query</span><span>Financeiro</span></p>
+          <a class="mais" href="#excel">Ver detalhes →</a>
+        </div>
+      </article>
+
+      <article class="cartao cartao-base">
+        <div class="fluxo-mini" aria-hidden="true">
+          <span>Dados brutos</span><span>Python</span><span>SQL Server</span><span>Power BI</span>
+        </div>
+        <div class="corpo">
+          <h3>Base de dados integrada</h3>
+          <p>A fundação de todos os painéis: ETL em Python e modelo estrela no SQL Server.</p>
+          <ul>
+            <li>11 tipos de problema de qualidade tratados, com relatório</li>
+            <li>8 dimensões, 9 fatos e 11 testes automáticos na carga</li>
+          </ul>
+          <p class="tags"><span>Python</span><span>pandas</span><span>SQL Server</span></p>
+          <a class="mais" href="#base-de-dados">Ver detalhes →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="secao alt" id="como-trabalho">
+    <h2>Como eu trabalho</h2>
+    <ol class="fluxo">
+      <li><span class="passo">1</span><h3>Dado bruto</h3><p>Exportações do ERP e planilhas das áreas, com duplicidades, datas em dois formatos e layouts que mudam no meio do ano.</p></li>
+      <li><span class="passo">2</span><h3>Python</h3><p>ETL com pandas: limpeza, padronização e um relatório do que foi corrigido a cada execução.</p></li>
+      <li><span class="passo">3</span><h3>SQL Server</h3><p>Modelo estrela, carga dentro de uma transação e testes automáticos antes de liberar os números.</p></li>
+      <li><span class="passo">4</span><h3>Power BI e Excel</h3><p>Painéis e automações conferidos número a número contra uma consulta SQL independente.</p></li>
+    </ol>
+  </section>
+
+  <!-- ------------------------------------------------------------ Detalhes -->
+  <section class="secao detalhe" id="financeiro">
+    <p class="rotulo">Projeto 1</p>
+    <h2>Painel Financeiro</h2>
+    <div class="colunas">
+      <div>
+        <h3>O problema</h3>
+        <p>A diretoria precisava ver, num lugar só, se a empresa cresce com lucro, onde o realizado fugiu do orçamento, quem está devendo e se o caixa acompanha o resultado.</p>
+        <h3>O que fiz</h3>
+        <ul>
+          <li>Modelo semântico com 11 tabelas e 60 medidas DAX, versionado em texto (PBIP/TMDL)</li>
+          <li>DRE com sinal na dimensão de contas: a matriz soma direto o resultado</li>
+          <li>Várias datas na mesma fato (emissão, vencimento, pagamento) com <code>USERELATIONSHIP</code></li>
+          <li>Competência na DRE e caixa no fluxo: a compra de mercadoria aparece no caixa, mas só vira custo quando é vendida</li>
+        </ul>
+      </div>
+      <div>
+        <h3>O que os dados mostraram</h3>
+        <ul class="destaques">
+          <li><strong>+6,5%</strong> de receita líquida em 2025, mas 98,5% do orçado</li>
+          <li><strong>3,5% → 4,2%</strong> de margem líquida</li>
+          <li><strong>−R$ 1,9 mi</strong> contra o orçado: manutenção de frota +31%, combustível +19%</li>
+          <li><strong>46,5%</strong> de inadimplência nas lanchonetes, contra 7,9% nos supermercados</li>
+        </ul>
+        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_financeiro.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
+      </div>
+    </div>
+    <div class="galeria">
+      <img src="assets/img/financeiro_resumo.webp" alt="Resumo" loading="lazy">
+      <img src="assets/img/financeiro_dre.webp" alt="DRE e Orçamento" loading="lazy">
+      <img src="assets/img/financeiro_receber.webp" alt="Contas a Receber" loading="lazy">
+      <img src="assets/img/financeiro_caixa.webp" alt="Fluxo de Caixa" loading="lazy">
+    </div>
+  </section>
+
+  <section class="secao detalhe alt" id="people-analytics">
+    <p class="rotulo">Projeto 2</p>
+    <h2>People Analytics</h2>
+    <div class="colunas">
+      <div>
+        <h3>O problema</h3>
+        <p>O RH sentia que perdia gente demais, mas não sabia onde, por quê nem em que momento. As faltas e as horas extras eram fechadas à mão, mês a mês.</p>
+        <h3>O que fiz</h3>
+        <ul>
+          <li>Quadro mensal por funcionário: headcount como saldo do fim do período, não como soma</li>
+          <li>Rotatividade sobre o headcount médio, voluntária e involuntária, por tempo de casa e motivo</li>
+          <li>Comparação de faltas entre quem saiu e quem ficou, respeitando setor, filial e ano</li>
+          <li>34 medidas DAX e 20 indicadores conferidos contra o SQL</li>
+        </ul>
+      </div>
+      <div>
+        <h3>O que os dados mostraram</h3>
+        <ul class="destaques">
+          <li><strong>45,3%</strong> de rotatividade em 2025 (+2,6 p.p.); a voluntária subiu para 22,1%</li>
+          <li><strong>63%</strong> das saídas de 2025 aconteceram no primeiro ano de casa</li>
+          <li><strong>+30%</strong> de faltas entre quem saiu em 2025, nos meses em que trabalhou</li>
+          <li><strong>16,9 h</strong> extras por pessoa por mês na Logística, contra cerca de 4 h nos outros setores</li>
+        </ul>
+        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_people_analytics.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
+      </div>
+    </div>
+    <div class="galeria">
+      <img src="assets/img/rh_visao_geral.webp" alt="Visão Geral" loading="lazy">
+      <img src="assets/img/rh_rotatividade.webp" alt="Rotatividade" loading="lazy">
+      <img src="assets/img/rh_absenteismo.webp" alt="Absenteísmo e Horas Extras" loading="lazy">
+    </div>
+  </section>
+
+  <section class="secao detalhe" id="compras-estoque">
+    <p class="rotulo">Projeto 3</p>
+    <h2>Compras e Estoque</h2>
+    <div class="colunas">
+      <div>
+        <h3>O problema</h3>
+        <p>Faltava produto para vender e, ao mesmo tempo, o estoque crescia. Compras queria saber quais fornecedores atrasam e quais itens não podem faltar.</p>
+        <h3>O que fiz</h3>
+        <ul>
+          <li>Pontualidade medida por pedido, não por item, para pedidos grandes não pesarem mais</li>
+          <li>Estoque como saldo acumulado dos movimentos, com giro e cobertura na mesma base</li>
+          <li>Venda perdida: unidades pedidas e não atendidas × preço</li>
+          <li>Curva ABC fixa sobre dois anos, para o produto não mudar de classe a cada filtro</li>
+        </ul>
+      </div>
+      <div>
+        <h3>O que os dados mostraram</h3>
+        <ul class="destaques">
+          <li><strong>R$ 918 mil</strong> em vendas perdidas em 2025, mesmo com 98,1% de nível de serviço</li>
+          <li><strong>50%</strong> no prazo no 3º maior fornecedor, contra 73,8% na média</li>
+          <li><strong>17,7 → 15,8</strong> de giro de estoque, com 28 dias de cobertura</li>
+          <li><strong>28%</strong> dos produtos fazem 80% da receita</li>
+        </ul>
+        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_compras_estoque.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
+      </div>
+    </div>
+    <div class="galeria">
+      <img src="assets/img/compras_fornecedores.webp" alt="Compras e Fornecedores" loading="lazy">
+      <img src="assets/img/compras_estoque_ruptura.webp" alt="Estoque e Ruptura" loading="lazy">
+      <img src="assets/img/compras_curva_abc.webp" alt="Curva ABC" loading="lazy">
+    </div>
+  </section>
+
+  <section class="secao detalhe alt" id="excel">
+    <p class="rotulo">Projeto 4</p>
+    <h2>Excel + automação</h2>
+    <div class="colunas">
+      <div>
+        <h3>O problema</h3>
+        <p>Duas rotinas de fechamento tomavam horas: juntar 24 planilhas de ponto com o layout mudando no meio do ano, e conferir o extrato do banco contra o sistema linha a linha.</p>
+        <h3>O que fiz</h3>
+        <ul>
+          <li>Power Query que lê a pasta inteira, reconhece os dois layouts e converte "hh:mm" em horas</li>
+          <li>Conciliação em duas passadas: pelo documento e, no que sobra, por data e valor</li>
+          <li>Pastas de trabalho que acham os dados sozinhas a partir de onde estão salvas</li>
+          <li>Sem macro e sem instalar nada: só Excel</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Resultado</h3>
+        <ul class="destaques">
+          <li><strong>24 arquivos → 1 clique</strong> em Atualizar Tudo, com totais iguais aos do SQL</li>
+          <li><strong>1.590</strong> lançamentos conciliados automaticamente</li>
+          <li><strong>11 pendências</strong> encontradas: tarifas não lançadas, compensação em janeiro e juros</li>
+        </ul>
+        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/excel_automacao.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
+      </div>
+    </div>
+    <div class="galeria">
+      <img src="assets/img/excel_conciliacao_bancaria.webp" alt="Conciliação bancária" loading="lazy">
+      <img src="assets/img/excel_consolidacao_ponto.webp" alt="Consolidação do ponto" loading="lazy">
+    </div>
+  </section>
+
+  <section class="secao detalhe" id="base-de-dados">
+    <p class="rotulo">Projeto 0</p>
+    <h2>Base de dados integrada</h2>
+    <div class="colunas">
+      <div>
+        <h3>O problema</h3>
+        <p>Painel bom começa com dado confiável. Os arquivos chegam dos sistemas com duplicidades, cadastros repetidos, datas em dois formatos e números como texto.</p>
+        <h3>O que fiz</h3>
+        <ul>
+          <li>Geração de dois anos de operação com comportamento de negócio realista (Python)</li>
+          <li>ETL com pandas que trata 11 tipos de problema e gera um relatório de qualidade</li>
+          <li>Modelo estrela no SQL Server: staging, procedure de carga com transação e views com CTE e funções de janela</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Garantias</h3>
+        <ul class="destaques">
+          <li><strong>11 testes</strong> automáticos depois de cada carga: nenhuma linha perdida, nota igual a título, receita da DRE igual às vendas, estoque nunca negativo</li>
+          <li><strong>~20 s</strong> para recriar o banco inteiro do zero</li>
+        </ul>
+        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul" target="_blank" rel="noopener">Repositório no GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao alt" id="sobre">
+    <h2>Sobre</h2>
+    <div class="colunas">
+      <div>
+        <p>Sou analista de Power BI em Porto Alegre. Antes dos dados, trabalhei com logística e atendimento: coordenei operação de logística e relacionamento com clientes, e isso me ensinou a olhar o indicador pelo lado de quem precisa decidir.</p>
+        <p>Hoje uso SQL, Python e Power BI para planejar, coletar e modelar dados e construir indicadores e relatórios de gestão. Tenho inglês avançado e curso Ciência da Computação na BYU-Idaho.</p>
+        <ul class="linha-tempo">
+          <li><span>2024–2026</span> Analista de Power BI · Fullpromo Marketing Promocional</li>
+          <li><span>2023–2024</span> Coordenador de logística · Fullpromo Marketing Promocional</li>
+          <li><span>2026–</span> Ciência da Computação · BYU-Idaho</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Competências</h3>
+        <p class="tags grandes">
+          <span>Power BI e DAX</span><span>Modelagem dimensional</span><span>SQL Server / T-SQL</span>
+          <span>Python (pandas)</span><span>Excel e Power Query</span><span>Tabelas dinâmicas</span>
+          <span>DRE e orçamento</span><span>Fluxo de caixa</span><span>Indicadores de RH</span>
+          <span>Compras e estoque</span><span>Git</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao contato" id="contato">
+    <h2>Vamos conversar?</h2>
+    <p>Busco vagas de Analista de Dados / BI em Porto Alegre (presencial ou híbrido) ou remotas.</p>
+    <div class="botoes">
+      <a class="botao primario" href="https://www.linkedin.com/in/lucasvianagama" target="_blank" rel="noopener">Falar no LinkedIn</a>
+      <a class="botao" href="https://github.com/Lvgama94" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p>Os dados dos projetos são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="fechar" type="button" aria-label="Fechar">×</button>
+  <img alt="">
+  <p class="legenda"></p>
+</div>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
