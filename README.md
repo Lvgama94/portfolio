@@ -19,14 +19,15 @@ index.html                  página inicial
 financeiro.html             painel Financeiro interativo
 rh.html                     painel People Analytics interativo
 compras.html                painel Compras e Estoque interativo
+comercial.html              painel Comercial interativo
 excel.html                  resultado das automações em Excel (conciliação e ponto)
 assets/style.css            estilos (mesma paleta dos painéis)
 assets/site.js              ampliação das imagens das galerias
 assets/painel.css           filtros, abas, indicadores e gráficos das páginas interativas
 assets/painel-base.js       formatação, gráficos, rótulos, tabelas e abas comuns a todas
-assets/financeiro.js, rh.js, compras.js, excel.js   cálculo e gráficos de cada página
+assets/financeiro.js, rh.js, compras.js, comercial.js, excel.js   cálculo e gráficos de cada página
 assets/data/*.json          dados de cada página
 assets/img/                 capturas dos painéis em WebP
 ```
 
-Os JSONs são gerados por `python/exportar_web.py`, no repositório [distribuidora-sul](https://github.com/Lvgama94/distribuidora-sul). Para os painéis de Power BI, ele recalcula os indicadores a partir do próprio arquivo e só grava se baterem com a view de conferência do SQL (82 indicadores no total). Para o Excel, lê as tabelas que o Power Query gravou nas pastas de trabalho e confere com o SQL e com o CSV do banco.
+Os JSONs são gerados por `python/exportar_web.py`, no repositório [distribuidora-sul](https://github.com/Lvgama94/distribuidora-sul). Para os painéis, ele recalcula os indicadores a partir do próprio arquivo e só grava se baterem com a view de conferência do SQL (107 indicadores no total). Para o Excel, lê as tabelas que o Power Query gravou nas pastas de trabalho e confere com o SQL e com o CSV do banco.

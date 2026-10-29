@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel Comercial interativo · Lucas Gama</title>
+  <meta name="description" content="Versão web interativa do painel Comercial da Distribuidora Sul: faturamento, margem, ticket médio, vendedores, concentração e clientes que pararam de comprar, com filtros e clique para filtrar.">
+  <meta property="og:title" content="Painel Comercial interativo · Lucas Gama">
+  <meta property="og:description" content="Faturamento, vendedores e clientes, com filtros.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/comercial.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#comercial">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">Projeto 5 · versão web interativa</p>
+    <h1>Painel Comercial</h1>
+    <p class="ferramentas">Distribuidora Sul Ltda. (dados fictícios). Os números são os mesmos do painel em Power BI, conferidos contra o SQL Server, e o faturamento é a receita bruta da DRE do painel Financeiro.</p>
+  </div>
+</header>
+
+<main class="painel">
+  <div class="barra-filtros">
+    <div class="filtros">
+      <div class="grupo-filtro" role="group" aria-label="Ano" id="filtro-ano"></div>
+      <div class="grupo-filtro" role="group" aria-label="Filial" id="filtro-filial"></div>
+      <div class="grupo-filtro" id="filtro-tipo"></div>
+      <button class="chip" id="chip-selecao" type="button" hidden></button>
+    </div>
+    <div class="abas" role="tablist" aria-label="Páginas do painel">
+      <button role="tab" type="button" data-aba="visao" aria-selected="true">Visão Geral</button>
+      <button role="tab" type="button" data-aba="vendedores" aria-selected="false">Vendedores</button>
+      <button role="tab" type="button" data-aba="clientes" aria-selected="false">Clientes</button>
+    </div>
+  </div>
+
+  <p class="aviso-carregando" id="carregando">Carregando os dados…</p>
+
+  <!-- ------------------------------------------------------------ Visão Geral -->
+  <section class="aba" id="aba-visao" role="tabpanel">
+    <div class="kpis" id="kpis-visao"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Faturamento por mês</h2><p class="sub">Vendas já com desconto · clique num mês para filtrar o painel</p></div>
+          <button class="ver-tabela" type="button" data-grafico="mes">Tabela</button>
+        </header>
+        <div class="grafico" id="g-mes"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Faturamento por tipo de cliente</h2><p class="sub">Clique para filtrar o tipo</p></div>
+          <button class="ver-tabela" type="button" data-grafico="tipos">Tabela</button>
+        </header>
+        <div class="grafico" id="g-tipos"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Desconto e margem por tipo de cliente</h2><p class="sub">Quem leva mais desconto deixa menos margem</p></div>
+          <button class="ver-tabela" type="button" data-grafico="desconto-margem">Tabela</button>
+        </header>
+        <div class="legenda"><span><i style="background:var(--serie-1)"></i>Margem comercial</span><span><i style="background:var(--serie-2)"></i>Desconto médio</span></div>
+        <div class="grafico" id="g-desconto-margem"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Faturamento por filial</h2><p class="sub">Clique para filtrar a filial</p></div>
+          <button class="ver-tabela" type="button" data-grafico="filiais">Tabela</button>
+        </header>
+        <div class="grafico baixo" id="g-filiais"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Faturamento por categoria</h2><p class="sub">O mix do que foi vendido</p></div>
+          <button class="ver-tabela" type="button" data-grafico="categorias">Tabela</button>
+        </header>
+        <div class="grafico baixo" id="g-categorias"></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ Vendedores -->
+  <section class="aba" id="aba-vendedores" role="tabpanel" hidden>
+    <div class="kpis" id="kpis-vendedores"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Os 15 vendedores que mais faturaram</h2><p class="sub">No período e nos filtros escolhidos</p></div>
+          <button class="ver-tabela" type="button" data-grafico="ranking">Tabela</button>
+        </header>
+        <div class="grafico alto" id="g-ranking"></div>
+      </article>
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Todos os vendedores</h2><p class="sub" id="sub-vendedores"></p></div>
+        </header>
+        <div class="tabela-rolagem"><table class="tabela-dados" id="tabela-vendedores"></table></div>
+      </article>
+    </div>
+    <p class="nota-aba">O desconto depende muito da carteira: quem atende supermercados concede mais desconto que quem atende padarias e lanchonetes.</p>
+  </section>
+
+  <!-- ------------------------------------------------------------ Clientes -->
+  <section class="aba" id="aba-clientes" role="tabpanel" hidden>
+    <div class="kpis" id="kpis-clientes"></div>
+    <div class="grade-graficos">
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Concentração do faturamento</h2><p class="sub">Dos maiores para os menores clientes do período</p></div>
+          <button class="ver-tabela" type="button" data-grafico="concentracao">Tabela</button>
+        </header>
+        <div class="grafico" id="g-concentracao"></div>
+      </article>
+      <article class="cartao-grafico">
+        <header>
+          <div><h2>Há quanto tempo cada cliente não compra</h2><p class="sub">Em 31/12/2025, entre os clientes que já compraram</p></div>
+          <button class="ver-tabela" type="button" data-grafico="recencia">Tabela</button>
+        </header>
+        <div class="grafico" id="g-recencia"></div>
+      </article>
+      <article class="cartao-grafico largo">
+        <header>
+          <div><h2>Clientes que pararam de comprar</h2><p class="sub" id="sub-risco">Sem compra há mais de 90 dias, dos que mais compravam para os que menos compravam</p></div>
+        </header>
+        <div class="tabela-rolagem"><table class="tabela-dados" id="tabela-risco"></table></div>
+      </article>
+    </div>
+    <p class="nota-aba">Novos e perdidos comparam o período com o mesmo período do ano anterior: novo é quem comprou agora e não comprou antes; perdido é o contrário.</p>
+  </section>
+
+  <p class="rodape-painel">
+    Dados exportados do SQL Server por <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/python/exportar_web.py" target="_blank" rel="noopener">python/exportar_web.py</a>, que confere os 25 indicadores com a view de conferência antes de gravar.
+    O painel original em Power BI está no <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_comercial.md" target="_blank" rel="noopener">GitHub</a>.
+  </p>
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="assets/painel-base.js"></script>
+<script src="assets/comercial.js"></script>
+</body>
+</html>

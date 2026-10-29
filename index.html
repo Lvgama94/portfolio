@@ -39,9 +39,9 @@
       <a class="botao" href="https://github.com/Lvgama94" target="_blank" rel="noopener">GitHub</a>
     </div>
     <ul class="numeros">
-      <li><strong>4</strong><span>projetos completos sobre a mesma empresa</span></li>
-      <li><strong>123</strong><span>medidas DAX em 3 modelos semânticos</span></li>
-      <li><strong>84</strong><span>indicadores dos painéis conferidos contra o SQL</span></li>
+      <li><strong>5</strong><span>projetos completos sobre a mesma empresa</span></li>
+      <li><strong>148</strong><span>medidas DAX em 4 modelos semânticos</span></li>
+      <li><strong>109</strong><span>indicadores dos painéis conferidos contra o SQL</span></li>
       <li><strong>11</strong><span>testes automáticos de qualidade dos dados</span></li>
     </ul>
   </section>
@@ -118,6 +118,23 @@
           <div class="acoes-cartao">
             <a class="botao primario pequeno" href="excel.html">Explorar o resultado</a>
             <a class="mais" href="#excel">Ver detalhes →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="cartao">
+        <img src="assets/img/comercial_visao_geral.webp" alt="Painel Comercial: visão geral" loading="lazy">
+        <div class="corpo">
+          <h3>Painel Comercial</h3>
+          <p>Faturamento, vendedores, concentração e clientes que pararam de comprar.</p>
+          <ul>
+            <li>49 clientes perdidos em 2025, que tinham comprado R$ 4 mi em 2024</li>
+            <li>Supermercados: 67% das vendas, com o maior desconto e a menor margem</li>
+          </ul>
+          <p class="tags"><span>Power BI</span><span>DAX</span><span>Vendas</span><span class="destaque">Interativo</span></p>
+          <div class="acoes-cartao">
+            <a class="botao primario pequeno" href="comercial.html">Explorar o painel</a>
+            <a class="mais" href="#comercial">Ver detalhes →</a>
           </div>
         </div>
       </article>
@@ -286,7 +303,41 @@
     </div>
   </section>
 
-  <section class="secao detalhe" id="base-de-dados">
+  <section class="secao detalhe" id="comercial">
+    <p class="rotulo">Projeto 5</p>
+    <h2>Painel Comercial</h2>
+    <div class="colunas">
+      <div>
+        <h3>O problema</h3>
+        <p>A diretoria via o faturamento crescer, mas não sabia se a carteira de clientes acompanhava, quanto o desconto custava em margem nem quem tinha parado de comprar.</p>
+        <h3>O que fiz</h3>
+        <ul>
+          <li>Modelo semântico com 25 medidas DAX, todas conferidas contra uma view em SQL, com o mesmo faturamento da DRE do painel Financeiro</li>
+          <li>Clientes novos e perdidos contra o mesmo período do ano anterior (<code>SAMEPERIODLASTYEAR</code> + <code>EXCEPT</code>) e concentração nos 20% maiores (<code>TOPN</code>)</li>
+          <li>Exportação no grão mês × cliente × vendedor, para filtrar por qualquer recorte e ainda contar clientes distintos</li>
+          <li>Lista dos clientes parados que mais compravam, para a equipe comercial ligar primeiro</li>
+        </ul>
+      </div>
+      <div>
+        <h3>O que os dados mostraram</h3>
+        <ul class="destaques">
+          <li><strong>+6,6%</strong> de faturamento em 2025, com mais notas e ticket 3,5% menor</li>
+          <li><strong>20%</strong> dos clientes fazem 73% do faturamento</li>
+          <li><strong>49 perdidos</strong> em 2025, que tinham comprado R$ 4,0 mi em 2024, contra 34 novos</li>
+          <li><strong>32 clientes</strong> compraram em 2025 e pararam no meio do ano: R$ 2,85 mi para recuperar</li>
+        </ul>
+        <a class="botao primario pequeno" href="comercial.html">Abrir o painel interativo</a>
+        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_comercial.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
+      </div>
+    </div>
+    <div class="galeria">
+      <img src="assets/img/comercial_visao_geral.webp" alt="Visão Geral" loading="lazy">
+      <img src="assets/img/comercial_vendedores.webp" alt="Vendedores" loading="lazy">
+      <img src="assets/img/comercial_clientes.webp" alt="Clientes" loading="lazy">
+    </div>
+  </section>
+
+  <section class="secao detalhe alt" id="base-de-dados">
     <p class="rotulo">Projeto 0</p>
     <h2>Base de dados integrada</h2>
     <div class="colunas">
@@ -311,7 +362,7 @@
     </div>
   </section>
 
-  <section class="secao alt" id="sobre">
+  <section class="secao" id="sobre">
     <h2>Sobre</h2>
     <div class="colunas">
       <div>
@@ -335,7 +386,7 @@
     </div>
   </section>
 
-  <section class="secao contato" id="contato">
+  <section class="secao alt contato" id="contato">
     <h2>Vamos conversar?</h2>
     <p>Busco vagas de Analista de Dados / BI em Porto Alegre (presencial ou híbrido) ou remotas.</p>
     <div class="botoes">
