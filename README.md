@@ -24,8 +24,11 @@ excel.html                  resultado das automações em Excel (conciliação e
 sql.html                    SQL na prática: 10 perguntas com a consulta e o resultado
 relatorio.html              relatório para a diretoria: três decisões para 2026, com o ganho de cada uma
 indicadores.html            catálogo de indicadores: definição, fórmula DAX, fonte e valor conferido, com busca
+analise.html                análise em Python: segmentação RFM dos clientes e previsão da receita de 2026
 assets/style.css            estilos (mesma paleta dos painéis)
 assets/site.js              vitrine de projetos com abas numeradas e ampliação das imagens
+assets/idioma.js            português ou inglês na página inicial, trocado na hora (?lang=en abre em inglês)
+assets/i18n/en.json         tradução de cada texto da página inicial, pela frase em português
 assets/painel.css           filtros, abas, indicadores e gráficos das páginas interativas
 assets/painel-base.js       formatação, gráficos, rótulos, tabelas e abas comuns a todas
 assets/sql.js, sql.css      realce de sintaxe e tabelas de resultado do SQL na prática

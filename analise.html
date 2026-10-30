@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Análise em Python · Lucas Gama</title>
+  <meta name="description" content="Segmentação RFM dos clientes da Distribuidora Sul e previsão da receita de 2026 em Python (pandas e matplotlib), com o método testado contra o real e contra o orçamento.">
+  <meta property="og:title" content="Análise em Python · Lucas Gama">
+  <meta property="og:description" content="Segmentação RFM dos clientes e previsão da receita de 2026, em Python.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/analise.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+  <link rel="stylesheet" href="assets/relatorio.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#analise">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">Análise em Python · pandas e matplotlib</p>
+    <h1>Clientes e previsão de receita</h1>
+    <p class="ferramentas">Distribuidora Sul Ltda. (dados fictícios). Duas perguntas da diretoria respondidas em Python, sobre o mesmo banco dos painéis: quais clientes a empresa não pode perder e quanto deve faturar em 2026.</p>
+  </div>
+</header>
+
+<main class="relatorio">
+
+  <section aria-labelledby="titulo-resumo">
+    <h2 id="titulo-resumo" class="rotulo-secao">Resumo</h2>
+    <div class="numeros-analise">
+      <div><strong>82%</strong><span>do faturamento de 2025 vem de 148 clientes campeões (35% da carteira)</span></div>
+      <div><strong>R$ 2,6 mi</strong><span>compraram em 2025 os 12 clientes em risco, que pararam de comprar</span></div>
+      <div><strong>R$ 65,7 mi</strong><span>é a previsão para 2026 (+4,6%), entre R$ 64,3 e 67,0 mi</span></div>
+      <div><strong>0,1%</strong><span>de erro no total do 2º semestre de 2025, contra 2,2% do orçamento</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="titulo-rfm">
+    <p class="rotulo-secao">Pergunta 1</p>
+    <h2 id="titulo-rfm" class="titulo-analise">Quais clientes mais importam e quais estão em risco?</h2>
+    <p>A segmentação <strong>RFM</strong> dá a cada cliente três notas de 1 a 5: <strong>recência</strong> (dias desde a última compra), <strong>frequência</strong> (notas em 2025) e <strong>valor</strong> (faturamento em 2025). Como o cliente típico compra a cada 8 dias, a recência usa faixas de negócio (até 15, 30, 60 e 90 dias), e não quintis; mais de 90 dias é o mesmo corte de "parado" do painel Comercial.</p>
+    <figure class="figura">
+      <img src="assets/img/analise_segmentos.svg" alt="Barras com a fatia de clientes e de faturamento de cada segmento: os 148 campeões são 35,2% dos clientes e 82,2% do faturamento" loading="lazy">
+    </figure>
+    <figure class="figura">
+      <img src="assets/img/analise_em_risco.svg" alt="Dispersão do faturamento de 2025 contra os dias sem comprar: os 12 clientes em risco ficam à direita da linha de 90 dias, com faturamento alto" loading="lazy">
+    </figure>
+    <h3>Os 12 clientes em risco, do que mais comprou para o que menos comprou</h3>
+    <div class="tabela-rolagem">
+      <table class="tabela-analise">
+        <thead><tr><th>Cliente</th><th>Tipo</th><th>Última compra</th><th class="num">Dias sem comprar</th><th class="num">Notas em 2025</th><th class="num">Faturamento 2025</th></tr></thead>
+        <tbody>
+          <tr><td>Super Rodrigues EIRELI</td><td>Supermercado</td><td>05/09/2025</td><td class="num">117</td><td class="num">44</td><td class="num">R$ 837.545</td></tr>
+          <tr><td>Supermercados Dalla Costa ME</td><td>Supermercado</td><td>16/07/2025</td><td class="num">168</td><td class="num">38</td><td class="num">R$ 593.002</td></tr>
+          <tr><td>Supermercados Müller ME</td><td>Supermercado</td><td>26/08/2025</td><td class="num">127</td><td class="num">20</td><td class="num">R$ 243.820</td></tr>
+          <tr><td>Super Moraes ME</td><td>Supermercado</td><td>06/05/2025</td><td class="num">239</td><td class="num">18</td><td class="num">R$ 214.203</td></tr>
+          <tr><td>Supermercado Brum EIRELI</td><td>Supermercado</td><td>02/07/2025</td><td class="num">182</td><td class="num">15</td><td class="num">R$ 183.866</td></tr>
+          <tr><td>Supermercados Gaúcho Ltda</td><td>Supermercado</td><td>11/08/2025</td><td class="num">142</td><td class="num">19</td><td class="num">R$ 159.052</td></tr>
+          <tr><td>Padaria Kunz Ltda</td><td>Padaria</td><td>28/08/2025</td><td class="num">125</td><td class="num">31</td><td class="num">R$ 86.184</td></tr>
+          <tr><td>Churrascaria São Jorge ME</td><td>Restaurante</td><td>23/09/2025</td><td class="num">99</td><td class="num">35</td><td class="num">R$ 84.914</td></tr>
+          <tr><td>Confeitaria Bertoldi ME</td><td>Padaria</td><td>29/10/2025</td><td class="num">63</td><td class="num">33</td><td class="num">R$ 56.580</td></tr>
+          <tr><td>Minimercado Machado EIRELI</td><td>Mercado de bairro</td><td>27/06/2025</td><td class="num">187</td><td class="num">21</td><td class="num">R$ 49.058</td></tr>
+          <tr><td>Mercearia Müller Ltda</td><td>Mercado de bairro</td><td>30/06/2025</td><td class="num">184</td><td class="num">18</td><td class="num">R$ 48.505</td></tr>
+          <tr><td>Armazém Silva Ltda</td><td>Mercado de bairro</td><td>22/09/2025</td><td class="num">100</td><td class="num">25</td><td class="num">R$ 32.294</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="destaques">
+      <li><strong>148 campeões</strong> (35% dos clientes) fazem <strong>82% do faturamento</strong> de 2025, sobretudo mercados de bairro e supermercados.</li>
+      <li><strong>12 clientes em risco</strong> compravam muito e estão, em mediana, há 134 dias sem comprar. O maior é o Super Rodrigues EIRELI, parado desde setembro.</li>
+      <li>Dos <strong>32 parados</strong> do <a href="relatorio.html">relatório para a diretoria</a>, <strong>11 estão em risco e concentram R$ 2,53 mi</strong> do que os 32 compraram em 2025. Os outros 21 são pequenos (R$ 0,32 mi). A lista de ligações deve começar pelos 11.</li>
+      <li><strong>91 promissores</strong> compraram há pouco, mas compram pouco: hotéis, lanchonetes e padarias são onde há espaço para vender mais.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="titulo-previsao">
+    <p class="rotulo-secao">Pergunta 2</p>
+    <h2 id="titulo-previsao" class="titulo-analise">Quanto a empresa deve faturar em 2026?</h2>
+    <p>O método é simples de explicar à diretoria: <strong>o faturamento de cada mês segue o formato dos anos anteriores (sazonalidade) e cresce na taxa recente (tendência)</strong>. Maio de 2024 fica fora do cálculo, porque as enchentes em Porto Alegre derrubaram as vendas da matriz; com ele, o crescimento sairia 6,6% em vez de 4,6%.</p>
+    <figure class="figura">
+      <img src="assets/img/analise_previsao.svg" alt="Linha do faturamento mensal de 2024 e 2025 e previsão mensal de 2026, com a faixa de erro típico de um mês" loading="lazy">
+    </figure>
+    <h3>O teste: prever o 2º semestre de 2025 só com os dados até junho</h3>
+    <div class="tabela-rolagem">
+      <table class="tabela-analise">
+        <thead><tr><th>Mês</th><th class="num">Real</th><th class="num">Modelo</th><th class="num">Erro</th><th class="num">Orçamento</th><th class="num">Erro</th></tr></thead>
+        <tbody>
+          <tr><td>jul/25</td><td class="num">R$ 5.809.911</td><td class="num">R$ 5.878.224</td><td class="num">+1,2%</td><td class="num">R$ 5.858.700</td><td class="num">+0,8%</td></tr>
+          <tr><td>ago/25</td><td class="num">R$ 5.342.998</td><td class="num">R$ 5.781.837</td><td class="num">+8,2%</td><td class="num">R$ 5.396.100</td><td class="num">+1,0%</td></tr>
+          <tr><td>set/25</td><td class="num">R$ 5.222.966</td><td class="num">R$ 4.769.267</td><td class="num">−8,7%</td><td class="num">R$ 5.534.200</td><td class="num">+6,0%</td></tr>
+          <tr><td>out/25</td><td class="num">R$ 6.046.492</td><td class="num">R$ 5.523.869</td><td class="num">−8,6%</td><td class="num">R$ 6.239.900</td><td class="num">+3,2%</td></tr>
+          <tr><td>nov/25</td><td class="num">R$ 4.754.026</td><td class="num">R$ 4.902.549</td><td class="num">+3,1%</td><td class="num">R$ 4.759.900</td><td class="num">+0,1%</td></tr>
+          <tr><td>dez/25</td><td class="num">R$ 6.264.143</td><td class="num">R$ 6.556.181</td><td class="num">+4,7%</td><td class="num">R$ 6.375.600</td><td class="num">+1,8%</td></tr>
+          <tr class="total"><td>Semestre</td><td class="num">R$ 33.440.536</td><td class="num">R$ 33.411.927</td><td class="num">−0,1%</td><td class="num">R$ 34.164.400</td><td class="num">+2,2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="destaques">
+      <li>No teste, o método errou <strong>0,1% no semestre</strong> (o orçamento, 2,2%), mas <strong>5,8% num mês típico</strong> (o orçamento, 2,1%). O orçamento acerta melhor o formato de cada mês, porém fica sempre acima do real; o método acerta o nível. A sugestão é usar o método para a meta do ano e o formato da controladoria para distribuí-la pelos meses.</li>
+      <li>A previsão para <strong>2026 é R$ 65,7 mi (+4,6%)</strong>, numa faixa provável de R$ 64,3 mi a R$ 67,0 mi. Dezembro deve ser o maior mês (R$ 6,7 mi) e fevereiro, o menor (R$ 4,6 mi).</li>
+      <li>Com o maio das enchentes no cálculo, a previsão subiria para quase R$ 67 mi: o mesmo otimismo que deixou o orçamento de 2025 1,5% acima do realizado.</li>
+    </ul>
+  </section>
+
+  <section class="metodo" aria-labelledby="titulo-metodo">
+    <h2 id="titulo-metodo" class="rotulo-secao">Como foi feito</h2>
+    <ul>
+      <li>Notebook em Python com pandas e matplotlib, executado e salvo com as saídas: <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/analises/clientes_e_previsao.ipynb" target="_blank" rel="noopener">clientes_e_previsao.ipynb no GitHub</a>.</li>
+      <li>Antes da análise, o faturamento e os clientes de cada ano são conferidos contra a view <code>dw.vw_conferencia_comercial</code>, a mesma que confere o painel Comercial; se não baterem, o notebook para.</li>
+      <li>Os dados saem do mesmo banco SQL Server dos painéis, com data de corte em 31/12/2025, e os gráficos usam a mesma paleta.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+</body>
+</html>

@@ -133,7 +133,7 @@ for (const painel of paineis) {
       setTimeout(() => {
         img.src = miniatura.dataset.src;
         img.alt = miniatura.getAttribute("aria-label");
-        principal.setAttribute("aria-label", `Ampliar: ${img.alt}`);
+        principal.setAttribute("aria-label", `${idioma.t("Ampliar")}: ${img.alt}`);
         // Se o load não vier (imagem já em cache em alguns navegadores), reaparece mesmo assim
         setTimeout(() => img.classList.remove("trocando"), 400);
       }, 180);
@@ -149,6 +149,19 @@ function doEndereco(aoCarregar = false) {
   if (aoCarregar) document.getElementById("projetos").scrollIntoView({ behavior: "instant", block: "start" });
 }
 window.addEventListener("hashchange", () => doEndereco());
+
+// Trocou o idioma (idioma.js): os nomes das abas mudam de largura, e os textos montados aqui são refeitos
+document.addEventListener("idioma", () => {
+  moverMarcador(false);
+  vitrine.querySelector(".posicao .de").textContent = idioma.t("de");
+  for (const painel of paineis) {
+    const principal = painel.querySelector(".imagem-principal");
+    const ativa = painel.querySelector(".miniatura.ativa");
+    if (!principal || !ativa) continue;
+    principal.querySelector("img").alt = ativa.getAttribute("aria-label");
+    principal.setAttribute("aria-label", `${idioma.t("Ampliar")}: ${ativa.getAttribute("aria-label")}`);
+  }
+});
 
 new ResizeObserver(() => moverMarcador(false)).observe(barra);
 doEndereco(true);

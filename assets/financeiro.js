@@ -88,8 +88,8 @@ function resumo() {
   const rotulos = doAno.map((m) => MESES[Number(D.meses[m].slice(5)) - 1]);
   const clicarMes = (p) => alternarMes(doAno[p.dataIndex]);
 
-  const receitas = porMes.map((x) => x.liquida), girarReceita = modoRotulos("receita", receitas.length).girar;
-  const espacoReceita = espacoRotulos(girarReceita, receitas);
+  const receitas = porMes.map((x) => x.liquida), modoReceita = modoRotulos("receita", receitas.length, 1, receitas.map(rotuloValor));
+  const espacoReceita = espacoRotulos(modoReceita.girar, receitas);
   desenhar("receita", {
     opcao: opcaoBase({
       grid: espacoReceita.grid,
@@ -97,7 +97,7 @@ function resumo() {
       tooltip: { ...opcaoBase().tooltip, formatter: ([p]) => dica(nomeMes(doAno[p.dataIndex]), [
         { valor: compacto(porMes[p.dataIndex].liquida), nome: "receita líquida" },
         { valor: pct(porMes[p.dataIndex].margemLiquida), nome: "margem líquida" }]) },
-      series: [{ type: "bar", barMaxWidth: 24, cursor: "pointer", data: barras(receitas, COR.serie1, { destaque, girar: girarReceita }) }],
+      series: [{ type: "bar", barMaxWidth: 24, cursor: "pointer", data: barras(receitas, COR.serie1, { destaque, ...modoReceita.serie(0) }) }],
     }),
     aoClicar: clicarMes,
     tabela: { colunas: ["Mês", "Receita líquida", "Margem líquida"],
@@ -107,11 +107,11 @@ function resumo() {
   const comOrcamento = estado.filial === 0;
   document.getElementById("sub-resultado").textContent = comOrcamento ? "Por mês · clique num mês para filtrar" : "O orçamento não é aberto por filial: só o realizado aparece";
   const realizados = porMes.map((x) => x.resultado), orcados = comOrcamento ? porMes.map((x) => x.resultadoOrcado) : [];
-  const modoResultado = modoRotulos("resultado", realizados.length, comOrcamento ? 2 : 1), girarResultado = modoResultado.girar;
-  const espacoResultado = espacoRotulos(girarResultado, [...realizados, ...orcados]);
-  const series = [{ name: "Realizado", type: "bar", barMaxWidth: 24, barGap: "10%", cursor: "pointer", data: barras(realizados, COR.serie1, { destaque, girar: girarResultado }) }];
+  const modoResultado = modoRotulos("resultado", realizados.length, comOrcamento ? 2 : 1, [...realizados, ...orcados].map(rotuloValor));
+  const espacoResultado = espacoRotulos(modoResultado.girar, [...realizados, ...orcados]);
+  const series = [{ name: "Realizado", type: "bar", barMaxWidth: 24, barGap: "10%", cursor: "pointer", data: barras(realizados, COR.serie1, { destaque, ...modoResultado.serie(0) }) }];
   if (comOrcamento) series.push({ name: "Orçado", type: "bar", barMaxWidth: 24, cursor: "pointer",
-                                  data: barras(orcados, COR.serie2, { destaque, girar: modoResultado.todas ? girarResultado : null }) });
+                                  data: barras(orcados, COR.serie2, { destaque, ...modoResultado.serie(1) }) });
   desenhar("resultado", {
     opcao: opcaoBase({
       grid: espacoResultado.grid,
@@ -242,7 +242,7 @@ function dre() {
           const base = api.coord([api.value(0), Math.min(api.value(1), api.value(2))]);
           const largura = Math.min(api.size([1, 0])[0] * 0.6, 24);
           // Rótulo de valor acima de cada barra (na vertical quando as colunas são estreitas)
-          const rotulo = { type: "text", x: topo[0], y: topo[1] - 4, rotation: girarCascata ? Math.PI / 2 : 0,
+          const rotulo = { type: "text", x: topo[0], y: topo[1] - DISTANCIA_ROTULO, rotation: girarCascata ? Math.PI / 2 : 0,
                            style: { text: rotuloValor(x.valor), fill: COR.texto, font: `10px ${FONTE}`,
                                     align: girarCascata ? "left" : "center", verticalAlign: girarCascata ? "middle" : "bottom" } };
           return { type: "group", children: [
@@ -284,7 +284,7 @@ function dre() {
         data: despesas.map((c) => ({
           value: c.desvio,
           itemStyle: { color: corSinal(c.desvio), borderRadius: raio(c.desvio, true) },
-          label: { show: true, position: c.desvio >= 0 ? "right" : "left", color: COR.texto, fontSize: 11,
+          label: { show: true, position: c.desvio >= 0 ? "right" : "left", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11,
                    formatter: () => (folgaDesvio > 0.35 ? rotuloValor(c.desvio) : compacto(c.desvio)) },   // celular: sem "R$" para caber
         })),
       }],
@@ -317,7 +317,7 @@ function receber() {
       series: [{
         type: "bar", barMaxWidth: 32,
         data: Array.from(c.porFaixa, (v, i) => ({ value: v, itemStyle: { color: COR.rampa[i], borderRadius: [4, 4, 0, 0] } })),
-        label: { show: true, position: "top", color: COR.texto, fontSize: 11, formatter: (p) => compacto(p.value) },
+        label: { show: true, position: "top", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => compacto(p.value) },
       }],
     }),
     tabela: { colunas: ["Faixa", "Em aberto", "% da carteira"], linhas: faixas.map((f, i) => [f, reais(c.porFaixa[i]), pct(c.porFaixa[i] / c.total)]) },
@@ -337,7 +337,7 @@ function receber() {
       series: [{
         type: "bar", barMaxWidth: 18, cursor: "pointer",
         data: barras(tipos.map((x) => x.inadimplencia), COR.serie1, { deitado: true, destaque: estado.tipo == null ? null : tipos.findIndex((x) => x.t === estado.tipo) }),
-        label: { show: true, position: "right", color: COR.texto, fontSize: 11, formatter: (p) => pct(p.value) },
+        label: { show: true, position: "right", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => pct(p.value) },
       }],
     }),
     aoClicar: (p) => { const t = tipos[p.dataIndex].t; estado.tipo = estado.tipo === t ? null : t; atualizar(); },
@@ -364,10 +364,10 @@ function caixa() {
   const rotulos = doAno.map((m) => MESES[Number(D.meses[m].slice(5)) - 1]);
   const clicarMes = (p) => alternarMes(doAno[p.dataIndex]);
   const recebidos = porMes.map((x) => x.recebido), pagos = porMes.map((x) => x.pago);
-  const modoCaixa = modoRotulos("caixa", recebidos.length, 2), girarCaixa = modoCaixa.girar;
+  const modoCaixa = modoRotulos("caixa", recebidos.length, 2, [...recebidos, ...pagos].map(rotuloValor));
   desenhar("caixa", {
     opcao: opcaoBase({
-      grid: espacoRotulos(girarCaixa, []).grid,
+      grid: espacoRotulos(modoCaixa.girar, []).grid,
       xAxis: eixoCategoria(rotulos), yAxis: eixoValor(),
       tooltip: { ...opcaoBase().tooltip, formatter: (ps) => {
         const x = porMes[ps[0].dataIndex];
@@ -375,21 +375,21 @@ function caixa() {
           { cor: COR.serie2, valor: compacto(x.pago), nome: "pago" }, { valor: compacto(x.geracao), nome: "geração de caixa" }]);
       } },
       series: [
-        { name: "Recebido", type: "bar", barMaxWidth: 24, barGap: "10%", cursor: "pointer", data: barras(recebidos, COR.serie1, { destaque, girar: girarCaixa }) },
-        { name: "Pago", type: "bar", barMaxWidth: 24, cursor: "pointer", data: barras(pagos, COR.serie2, { destaque, girar: modoCaixa.todas ? girarCaixa : null }) },
+        { name: "Recebido", type: "bar", barMaxWidth: 24, barGap: "10%", cursor: "pointer", data: barras(recebidos, COR.serie1, { destaque, ...modoCaixa.serie(0) }) },
+        { name: "Pago", type: "bar", barMaxWidth: 24, cursor: "pointer", data: barras(pagos, COR.serie2, { destaque, ...modoCaixa.serie(1) }) },
       ],
     }),
     aoClicar: clicarMes,
     tabela: { colunas: ["Mês", "Recebido", "Pago", "Geração"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), reais(x.recebido), reais(x.pago), reais(x.geracao)]) },
   });
-  const geracoes = porMes.map((x) => x.geracao), girarGeracao = modoRotulos("geracao", geracoes.length).girar;
-  const espacoGeracao = espacoRotulos(girarGeracao, geracoes);
+  const geracoes = porMes.map((x) => x.geracao), modoGeracao = modoRotulos("geracao", geracoes.length, 1, geracoes.map(rotuloValor));
+  const espacoGeracao = espacoRotulos(modoGeracao.girar, geracoes);
   desenhar("geracao", {
     opcao: opcaoBase({
       grid: espacoGeracao.grid,
       xAxis: eixoCategoria(rotulos), yAxis: eixoValor(eixoReais, { boundaryGap: espacoGeracao.margem }),
       tooltip: { ...opcaoBase().tooltip, formatter: ([p]) => dica(nomeMes(doAno[p.dataIndex]), [{ valor: compacto(porMes[p.dataIndex].geracao), nome: "geração de caixa" }]) },
-      series: [{ type: "bar", barMaxWidth: 24, cursor: "pointer", data: barras(geracoes, corSinal, { destaque, girar: girarGeracao }) }],
+      series: [{ type: "bar", barMaxWidth: 24, cursor: "pointer", data: barras(geracoes, corSinal, { destaque, ...modoGeracao.serie(0) }) }],
     }),
     aoClicar: clicarMes,
     tabela: { colunas: ["Mês", "Geração de caixa"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), reais(x.geracao)]) },
@@ -406,7 +406,7 @@ function caixa() {
         { valor: reais(porGrupo[p.dataIndex].valor), nome: "pago" }, { valor: pct(porGrupo[p.dataIndex].valor / atual.pago), nome: "do total pago" }]) },
       series: [{
         type: "bar", barMaxWidth: 18, data: barras(porGrupo.map((x) => x.valor), COR.serie1, { deitado: true }),
-        label: { show: true, position: "right", color: COR.texto, fontSize: 11, formatter: (p) => compacto(p.value) },
+        label: { show: true, position: "right", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => compacto(p.value) },
       }],
     }),
     tabela: { colunas: ["Grupo", "Pago", "% do total"], linhas: porGrupo.map((x) => [x.nome, reais(x.valor), pct(x.valor / atual.pago)]) },
