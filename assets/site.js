@@ -22,7 +22,29 @@ const marcador = vitrine.querySelector(".marcador-aba");
 const abas = [...barra.querySelectorAll('[role="tab"]')];
 const paineis = abas.map((aba) => document.getElementById(aba.getAttribute("aria-controls")));
 const posicao = vitrine.querySelector(".posicao strong");
+const area = vitrine.querySelector(".paineis-vitrine");
 let atual = 0;
+let soltarAltura = null;
+
+/** Faz a troca de painel e anima a altura da vitrine da do projeto anterior até a do novo. */
+function trocarComAltura(trocar, animar) {
+  const antes = area.offsetHeight;
+  clearTimeout(soltarAltura);
+  area.classList.remove("redimensionando");
+  area.style.height = "";
+  trocar();
+  const depois = area.offsetHeight;
+  if (!animar || antes === depois || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  area.style.height = `${antes}px`;
+  void area.offsetHeight;
+  area.classList.add("redimensionando");
+  area.style.height = `${depois}px`;
+  // Terminada a transição, volta à altura automática (o timer não depende do transitionend)
+  soltarAltura = setTimeout(() => {
+    area.classList.remove("redimensionando");
+    area.style.height = "";
+  }, 550);
+}
 
 /** Leva o marcador branco até a aba ativa (sem animar na primeira vez). */
 function moverMarcador(animar = true) {
@@ -36,7 +58,7 @@ function moverMarcador(animar = true) {
   barra.scrollTo({ left: aba.offsetLeft - (barra.clientWidth - aba.offsetWidth) / 2, behavior: animar ? "smooth" : "auto" });
 }
 
-function ativar(indice, { focar = false, endereco = true } = {}) {
+function ativar(indice, { focar = false, endereco = true, animar = true } = {}) {
   indice = (indice + abas.length) % abas.length;
   if (indice === atual) return;
   const anterior = paineis[atual];
@@ -45,12 +67,14 @@ function ativar(indice, { focar = false, endereco = true } = {}) {
   abas[atual].tabIndex = -1;
   abas[indice].setAttribute("aria-selected", "true");
   abas[indice].tabIndex = 0;
-  anterior.classList.remove("ativo", "entrando");
-  // O novo painel entra pelo lado para onde se andou; reiniciar a classe reinicia a animação
-  novo.style.setProperty("--direcao", indice > atual ? 1 : -1);
-  novo.classList.remove("entrando");
-  void novo.offsetWidth;
-  novo.classList.add("ativo", "entrando");
+  trocarComAltura(() => {
+    anterior.classList.remove("ativo", "entrando");
+    // O novo painel entra pelo lado para onde se andou; reiniciar a classe reinicia a animação
+    novo.style.setProperty("--direcao", indice > atual ? 1 : -1);
+    novo.classList.remove("entrando");
+    void novo.offsetWidth;
+    novo.classList.add("ativo", "entrando");
+  }, animar);
   atual = indice;
   posicao.textContent = indice + 1;
   moverMarcador();
@@ -77,12 +101,11 @@ vitrine.querySelector(".navegar-vitrine .proximo").addEventListener("click", () 
 
 // No celular, arrastar para o lado troca de projeto
 let toque = null;
-const areaPaineis = vitrine.querySelector(".paineis-vitrine");
-areaPaineis.addEventListener("touchstart", (evento) => {
+area.addEventListener("touchstart", (evento) => {
   const t = evento.changedTouches[0];
   toque = { x: t.clientX, y: t.clientY };
 }, { passive: true });
-areaPaineis.addEventListener("touchend", (evento) => {
+area.addEventListener("touchend", (evento) => {
   if (!toque) return;
   const t = evento.changedTouches[0];
   const dx = t.clientX - toque.x;
@@ -122,7 +145,7 @@ for (const painel of paineis) {
 function doEndereco(aoCarregar = false) {
   const indice = paineis.findIndex((p) => `#${p.id}` === location.hash);
   if (indice < 0) return;
-  ativar(indice, { endereco: false });
+  ativar(indice, { endereco: false, animar: !aoCarregar });
   if (aoCarregar) document.getElementById("projetos").scrollIntoView({ behavior: "instant", block: "start" });
 }
 window.addEventListener("hashchange", () => doEndereco());

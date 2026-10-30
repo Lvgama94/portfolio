@@ -198,20 +198,20 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
 }
 .marcador-aba.sem-transicao { transition: none; }
 
-/* Painéis empilhados na mesma célula: a vitrine tem a altura do maior e nada abaixo dela pula */
-.paineis-vitrine { display: grid; }
+/* Só o painel ativo ocupa espaço: a vitrine tem a altura do projeto aberto, e a troca anima a altura (site.js) */
+.paineis-vitrine { overflow: hidden; }
+.paineis-vitrine.redimensionando { transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 .projeto {
-  grid-area: 1 / 1;
   display: grid;
   grid-template-columns: 1.12fr 1fr;
   gap: 36px;
   align-items: start;
   padding: 30px 32px;
-  visibility: hidden;
-  opacity: 0;
   outline: none;
 }
-.projeto.ativo { visibility: visible; opacity: 1; }
+.projeto:not(.ativo) { display: none; }
+/* Nos extras a coluna da esquerda é só a prévia: fica no meio da altura do texto, sem vão embaixo */
+.projeto:has(.visual-desenhado) { align-items: center; }
 .projeto.entrando { animation: entrar 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .projeto.ativo .surge { animation: surgir 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--i) * 50ms + 60ms); }
 @keyframes entrar { from { opacity: 0; transform: translateX(calc(var(--direcao, 1) * 44px)); } }
@@ -543,10 +543,8 @@ dialog.lightbox::backdrop { background: rgba(15, 25, 38, 0.88); }
   .numeros { grid-template-columns: repeat(2, 1fr); }
   .fluxo { grid-template-columns: 1fr 1fr; }
   .colunas { grid-template-columns: 1fr; gap: 8px; }
-  /* Uma coluna: só o painel ativo ocupa espaço, e as abas rolam de lado */
-  .paineis-vitrine { display: block; }
+  /* Uma coluna, e as abas rolam de lado */
   .projeto { grid-template-columns: 1fr; gap: 4px; padding: 22px 20px; }
-  .projeto:not(.ativo) { display: none; }
   .grupo-abas, .grupo-abas ~ .grupo-abas { flex: none; }
   .abas-vitrine [role="tab"] { flex: none; min-width: 112px; }
   .projeto-texto { order: -1; margin-bottom: 16px; }
@@ -573,5 +571,6 @@ dialog.lightbox::backdrop { background: rgba(15, 25, 38, 0.88); }
 /* Quem pede menos movimento no sistema vê a troca sem animação */
 @media (prefers-reduced-motion: reduce) {
   .projeto.entrando, .projeto.ativo .surge { animation: none; }
+  .paineis-vitrine.redimensionando { transition: none; }
   .marcador-aba, .imagem-principal img, .abas-vitrine .num { transition: none; }
 }
