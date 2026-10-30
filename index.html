@@ -155,6 +155,26 @@
         </div>
       </article>
     </div>
+
+    <div class="faixa-sql" id="sql">
+      <div class="corpo-faixa">
+        <p class="rotulo">Extra · SQL Server</p>
+        <h3>SQL na prática</h3>
+        <p>Dez perguntas de negócio da mesma empresa respondidas em SQL: quem parou de comprar, quais fornecedores atrasam, onde a receita fugiu do orçamento. Cada uma traz a resposta, a consulta e o resultado.</p>
+        <p class="tags"><span>CTE</span><span>Funções de janela</span><span>LAG</span><span>NTILE</span><span>ROLLUP</span><span>FULL JOIN</span></p>
+        <div class="acoes-cartao">
+          <a class="botao primario pequeno" href="sql.html">Ver as 10 consultas</a>
+          <a class="mais" href="https://github.com/Lvgama94/distribuidora-sul/tree/main/sql/perguntas" target="_blank" rel="noopener">Arquivos no GitHub →</a>
+        </div>
+      </div>
+      <pre class="codigo-mini" aria-hidden="true"><code><span class="k">SELECT</span> faixa_de_clientes,
+       <span class="f">SUM</span>(faturamento) <span class="k">AS</span> faturamento,
+       <span class="f">SUM</span>(faturamento)
+         / <span class="f">SUM</span>(<span class="f">SUM</span>(faturamento)) <span class="k">OVER</span> ()
+         <span class="k">AS</span> pct_do_faturamento
+<span class="k">FROM</span> quintos
+<span class="k">GROUP BY</span> quinto;  <span class="c">-- 20% maiores: 73,4%</span></code></pre>
+    </div>
   </section>
 
   <section class="secao alt" id="como-trabalho">
@@ -357,6 +377,7 @@
           <li><strong>11 testes</strong> automáticos depois de cada carga: nenhuma linha perdida, nota igual a título, receita da DRE igual às vendas, estoque nunca negativo</li>
           <li><strong>~20 s</strong> para recriar o banco inteiro do zero</li>
         </ul>
+        <a class="botao primario pequeno" href="sql.html">SQL na prática</a>
         <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul" target="_blank" rel="noopener">Repositório no GitHub</a>
       </div>
     </div>

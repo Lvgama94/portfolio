@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQL na prática · Lucas Gama</title>
+  <meta name="description" content="Dez perguntas de negócio da Distribuidora Sul respondidas em SQL Server: CTEs, funções de janela, anti-join e conciliação entre fontes, cada uma com a consulta e o resultado.">
+  <meta property="og:title" content="SQL na prática · Lucas Gama">
+  <meta property="og:description" content="Dez perguntas de negócio respondidas em SQL, com a consulta e o resultado.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/sql.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+  <link rel="stylesheet" href="assets/sql.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#sql">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">SQL Server · T-SQL</p>
+    <h1>SQL na prática</h1>
+    <p class="ferramentas">Dez perguntas de negócio da Distribuidora Sul (dados fictícios) respondidas em SQL, das mais simples às mais elaboradas. Cada pergunta traz a resposta, a consulta e o resultado que ela devolve no banco do projeto.</p>
+  </div>
+</header>
+
+<main class="painel">
+  <ol class="sumario" id="sumario" aria-label="Perguntas"></ol>
+  <div id="perguntas"><p class="aviso-carregando">Carregando as consultas…</p></div>
+
+  <p class="rodape-painel">
+    Resultados gravados por <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/python/exportar_web.py" target="_blank" rel="noopener">python/exportar_web.py</a>, que roda as consultas de <a href="https://github.com/Lvgama94/distribuidora-sul/tree/main/sql/perguntas" target="_blank" rel="noopener">sql/perguntas</a> e, antes de gravar, confere 10 números que elas têm em comum com os painéis (faturamento, desligamentos, clientes perdidos, receita orçada e notas fiscais) contra as views de conferência.
+  </p>
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+
+<script src="assets/sql.js"></script>
+</body>
+</html>

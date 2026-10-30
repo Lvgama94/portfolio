@@ -1,0 +1,114 @@
+/* SQL na prática: complementa style.css e painel.css com o sumário, as perguntas e o código. */
+.sumario {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 14px;
+}
+.sumario a {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 2px 8px;
+  height: 100%;
+  padding: 10px 14px;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  color: var(--texto);
+  text-decoration: none;
+  font-size: 0.93rem;
+  line-height: 1.4;
+}
+.sumario a:hover { border-color: var(--azul-claro); }
+.sumario .num { grid-row: span 2; font-weight: 700; color: var(--azul-claro); font-variant-numeric: tabular-nums; }
+.sumario .tec { font-size: 0.8rem; color: var(--texto-suave); }
+
+.pergunta {
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 22px 24px 20px;
+  margin-bottom: 22px;
+  scroll-margin-top: 16px;
+}
+.pergunta > header { display: grid; grid-template-columns: auto 1fr; gap: 0 14px; align-items: baseline; }
+.pergunta .num { font-size: 1.45rem; font-weight: 700; color: var(--azul-claro); font-variant-numeric: tabular-nums; }
+.pergunta h2 { margin: 0; font-size: 1.2rem; line-height: 1.35; color: var(--marinho); }
+.tecnicas { grid-column: 2; list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.tecnicas li { background: #E8EEF4; color: var(--marinho); border-radius: 999px; padding: 2px 10px; font-size: 0.8rem; font-weight: 600; }
+
+.resposta {
+  margin: 16px 0 4px;
+  padding: 10px 14px;
+  background: #FFF8EC;
+  border-left: 4px solid var(--laranja);
+  border-radius: 6px;
+}
+
+.rotulo-bloco {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+.rotulo-bloco .acoes { display: flex; gap: 6px; letter-spacing: 0; text-transform: none; }
+.rotulo-bloco .acoes button, .rotulo-bloco .acoes a, .mais-linhas {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--azul);
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.rotulo-bloco .acoes button:hover, .rotulo-bloco .acoes a:hover, .mais-linhas:hover { background: #E8EEF4; }
+
+/* Código: fundo escuro com realce de palavras-chave, funções, textos, números e comentários */
+.codigo {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: #13263A;
+  color: #E3ECF5;
+  border-radius: 8px;
+  font: 0.82rem/1.55 Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace;
+  tab-size: 4;
+}
+.codigo code { background: none; padding: 0; border-radius: 0; font-size: inherit; }
+.codigo .k { color: #8CC4FF; }
+.codigo .f { color: #FFC56B; }
+.codigo .s { color: #9FDFA0; }
+.codigo .n { color: #F4A6C8; }
+.codigo .c { color: #93A7BA; font-style: italic; }
+
+.resultado { margin-top: 0; }
+.resultado th { font-family: Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace; font-size: 0.8rem; background: #F3F6FA; }
+.tabela-dados.resultado th.texto, .tabela-dados.resultado td.texto { text-align: left; }
+.resultado tr.total td { font-weight: 700; background: #F3F6FA; }
+.resultado tr.extra { display: none; }
+.pergunta.aberto .resultado tr.extra { display: table-row; }
+.nulo { color: var(--texto-suave); font-style: italic; }
+.mais-linhas { margin-top: 10px; }
+
+@media (max-width: 860px) {
+  .sumario { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .pergunta { padding: 16px 14px; }
+  .pergunta .num { font-size: 1.2rem; }
+  .pergunta h2 { font-size: 1.08rem; }
+  .tecnicas { grid-column: 1 / -1; }
+  .codigo { font-size: 0.76rem; padding: 12px; }
+}
