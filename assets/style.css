@@ -211,6 +211,37 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   font-weight: 700;
 }
 
+/* Faixa do SQL na prática, abaixo dos cartões: texto à esquerda, trecho de código à direita */
+.faixa-sql {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  scroll-margin-top: 16px;
+}
+.faixa-sql .corpo-faixa { padding: 22px 24px; display: flex; flex-direction: column; }
+.faixa-sql h3 { margin: 4px 0 6px; }
+.faixa-sql p { margin: 0 0 10px; color: var(--texto-suave); }
+.faixa-sql .acoes-cartao { margin-top: 8px; }
+.codigo-mini {
+  margin: 0;
+  padding: 24px;
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
+  background: #13263A;
+  color: #E3ECF5;
+  font: 0.84rem/1.6 Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace;
+}
+.codigo-mini code { background: none; padding: 0; font-size: inherit; }
+.codigo-mini .k { color: #8CC4FF; }
+.codigo-mini .f { color: #FFC56B; }
+.codigo-mini .c { color: #93A7BA; font-style: italic; }
+
 /* ------------------------------------------------------------ detalhes */
 .colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
 .colunas ul { padding-left: 20px; }
@@ -292,6 +323,8 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   .fluxo { grid-template-columns: 1fr 1fr; }
   .colunas { grid-template-columns: 1fr; gap: 8px; }
   .cartoes { grid-template-columns: 1fr; }
+  .faixa-sql { grid-template-columns: 1fr; }
+  .codigo-mini { display: none; }
 }
 
 @media (max-width: 560px) {
