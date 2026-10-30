@@ -53,161 +53,292 @@
     <h2>Projetos</h2>
     <p class="intro">Todos os projetos usam a mesma empresa: a <strong>Distribuidora Sul Ltda.</strong>, uma distribuidora fictícia de alimentos e bebidas do RS com dois anos de operação, R$ 121 milhões em vendas, 171 funcionários no histórico e 90 produtos. Os dados foram gerados por código, com os problemas de qualidade do mundo real.</p>
 
-    <div class="cartoes">
-      <article class="cartao">
-        <img src="assets/img/financeiro_resumo.webp" alt="Painel Financeiro: resumo" loading="lazy">
-        <div class="corpo">
-          <h3>Painel Financeiro</h3>
-          <p>DRE, orçado × realizado, contas a receber e fluxo de caixa.</p>
-          <ul>
-            <li>Resultado R$ 1,9 mi abaixo do orçado, puxado pela frota</li>
-            <li>10,2% da carteira vencida, concentrada nos pequenos clientes</li>
-          </ul>
-          <p class="tags"><span>Power BI</span><span>DAX</span><span>SQL</span><span class="destaque">Interativo</span></p>
-          <div class="acoes-cartao">
-            <a class="botao primario pequeno" href="financeiro.html">Explorar o painel</a>
-            <a class="mais" href="#financeiro">Ver detalhes →</a>
+    <div class="vitrine">
+      <div class="abas-vitrine" role="tablist" aria-label="Projetos">
+        <span class="marcador-aba" aria-hidden="true"></span>
+        <div class="grupo-abas" role="presentation">
+          <span class="rotulo-grupo" aria-hidden="true">Projetos</span>
+          <div class="botoes-grupo" role="presentation">
+            <button type="button" role="tab" id="aba-financeiro" aria-controls="financeiro" aria-selected="true"><span class="num">01</span><span class="nome">Financeiro</span></button>
+            <button type="button" role="tab" id="aba-people-analytics" aria-controls="people-analytics" aria-selected="false" tabindex="-1"><span class="num">02</span><span class="nome">People Analytics</span></button>
+            <button type="button" role="tab" id="aba-compras-estoque" aria-controls="compras-estoque" aria-selected="false" tabindex="-1"><span class="num">03</span><span class="nome">Compras e Estoque</span></button>
+            <button type="button" role="tab" id="aba-excel" aria-controls="excel" aria-selected="false" tabindex="-1"><span class="num">04</span><span class="nome">Excel + automação</span></button>
+            <button type="button" role="tab" id="aba-comercial" aria-controls="comercial" aria-selected="false" tabindex="-1"><span class="num">05</span><span class="nome">Comercial</span></button>
+            <button type="button" role="tab" id="aba-base-de-dados" aria-controls="base-de-dados" aria-selected="false" tabindex="-1"><span class="num">06</span><span class="nome">Base de dados</span></button>
           </div>
         </div>
-      </article>
-
-      <article class="cartao">
-        <img src="assets/img/rh_rotatividade.webp" alt="Painel People Analytics: rotatividade" loading="lazy">
-        <div class="corpo">
-          <h3>People Analytics</h3>
-          <p>Headcount, rotatividade, absenteísmo e horas extras.</p>
-          <ul>
-            <li>Rotatividade de 45,3% (+2,6 p.p.); 63% das saídas no 1º ano</li>
-            <li>Quem saiu faltava 30% mais: sinal de alerta para o RH</li>
-          </ul>
-          <p class="tags"><span>Power BI</span><span>DAX</span><span>RH</span><span class="destaque">Interativo</span></p>
-          <div class="acoes-cartao">
-            <a class="botao primario pequeno" href="rh.html">Explorar o painel</a>
-            <a class="mais" href="#people-analytics">Ver detalhes →</a>
+        <span class="divisoria" aria-hidden="true"></span>
+        <div class="grupo-abas" role="presentation">
+          <span class="rotulo-grupo" aria-hidden="true">Além dos painéis</span>
+          <div class="botoes-grupo" role="presentation">
+            <button type="button" role="tab" id="aba-sql" aria-controls="sql" aria-selected="false" tabindex="-1"><span class="num">07</span><span class="nome">SQL na prática</span></button>
+            <button type="button" role="tab" id="aba-relatorio" aria-controls="relatorio" aria-selected="false" tabindex="-1"><span class="num">08</span><span class="nome">Relatório</span></button>
+            <button type="button" role="tab" id="aba-catalogo" aria-controls="catalogo" aria-selected="false" tabindex="-1"><span class="num">09</span><span class="nome">Catálogo</span></button>
           </div>
         </div>
-      </article>
+      </div>
 
-      <article class="cartao">
-        <img src="assets/img/compras_estoque_ruptura.webp" alt="Painel Compras e Estoque: estoque e ruptura" loading="lazy">
-        <div class="corpo">
-          <h3>Compras e Estoque</h3>
-          <p>Pontualidade de fornecedores, giro, ruptura e curva ABC.</p>
-          <ul>
-            <li>R$ 918 mil em vendas perdidas por falta de produto</li>
-            <li>Estoque 16% maior e giro em queda: capital parado</li>
-          </ul>
-          <p class="tags"><span>Power BI</span><span>DAX</span><span>Supply</span><span class="destaque">Interativo</span></p>
-          <div class="acoes-cartao">
-            <a class="botao primario pequeno" href="compras.html">Explorar o painel</a>
-            <a class="mais" href="#compras-estoque">Ver detalhes →</a>
+      <div class="paineis-vitrine">
+        <article class="projeto ativo" role="tabpanel" id="financeiro" aria-labelledby="aba-financeiro" tabindex="0">
+          <div class="projeto-visual">
+            <button type="button" class="imagem-principal" aria-label="Ampliar: Resumo">
+              <img src="assets/img/financeiro_resumo.webp" alt="Resumo" loading="lazy">
+            </button>
+            <div class="miniaturas" role="group" aria-label="Páginas">
+              <button type="button" class="miniatura ativa" aria-pressed="true" data-src="assets/img/financeiro_resumo.webp" aria-label="Resumo"><img src="assets/img/financeiro_resumo.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/financeiro_dre.webp" aria-label="DRE e Orçamento"><img src="assets/img/financeiro_dre.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/financeiro_receber.webp" aria-label="Contas a Receber"><img src="assets/img/financeiro_receber.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/financeiro_caixa.webp" aria-label="Fluxo de Caixa"><img src="assets/img/financeiro_caixa.webp" alt="" loading="lazy"></button>
+            </div>
+            <h4>O que fiz</h4>
+            <ul class="o-que-fiz">
+              <li>Modelo semântico com 11 tabelas e 60 medidas DAX, versionado em texto (PBIP/TMDL)</li>
+              <li>DRE com sinal na dimensão de contas: a matriz soma direto o resultado</li>
+              <li>Várias datas na mesma fato (emissão, vencimento, pagamento) com <code>USERELATIONSHIP</code></li>
+              <li>Competência na DRE e caixa no fluxo: a compra de mercadoria aparece no caixa, mas só vira custo quando é vendida</li>
+            </ul>
           </div>
-        </div>
-      </article>
-
-      <article class="cartao">
-        <img src="assets/img/excel_conciliacao_bancaria.webp" alt="Conciliação bancária no Excel" loading="lazy">
-        <div class="corpo">
-          <h3>Excel + automação</h3>
-          <p>Consolidação do ponto e conciliação bancária com Power Query.</p>
-          <ul>
-            <li>24 arquivos de ponto com layouts diferentes → 1 clique</li>
-            <li>1.601 lançamentos conciliados e 11 pendências encontradas</li>
-          </ul>
-          <p class="tags"><span>Excel</span><span>Power Query</span><span>Financeiro</span><span class="destaque">Interativo</span></p>
-          <div class="acoes-cartao">
-            <a class="botao primario pequeno" href="excel.html">Explorar o resultado</a>
-            <a class="mais" href="#excel">Ver detalhes →</a>
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Painel em Power BI</p>
+            <h3 class="surge" style="--i: 1">Painel Financeiro</h3>
+            <p class="lead surge" style="--i: 2">DRE, orçado × realizado, contas a receber e fluxo de caixa.</p>
+            <h4 class="surge" style="--i: 3">O problema</h4>
+            <p class="surge" style="--i: 4">A diretoria precisava ver, num lugar só, se a empresa cresce com lucro, onde o realizado fugiu do orçamento, quem está devendo e se o caixa acompanha o resultado.</p>
+            <h4 class="surge" style="--i: 5">O que os dados mostraram</h4>
+            <ul class="destaques surge" style="--i: 6">
+              <li><strong>+6,5%</strong> de receita líquida em 2025, mas 98,5% do orçado</li>
+              <li><strong>3,5% → 4,2%</strong> de margem líquida</li>
+              <li><strong>−R$ 1,9 mi</strong> contra o orçado: manutenção de frota +31%, combustível +19%</li>
+              <li><strong>46,5%</strong> de inadimplência nas lanchonetes, contra 7,9% nos supermercados</li>
+            </ul>
+            <p class="tags surge" style="--i: 7"><span>Power BI</span><span>DAX</span><span>SQL</span><span class="destaque">Interativo</span></p>
+            <div class="acoes-projeto surge" style="--i: 8"><a class="botao primario" href="financeiro.html">Abrir o painel interativo</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_financeiro.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a></div>
           </div>
-        </div>
-      </article>
-
-      <article class="cartao">
-        <img src="assets/img/comercial_visao_geral.webp" alt="Painel Comercial: visão geral" loading="lazy">
-        <div class="corpo">
-          <h3>Painel Comercial</h3>
-          <p>Faturamento, vendedores, concentração e clientes que pararam de comprar.</p>
-          <ul>
-            <li>49 clientes perdidos em 2025, que tinham comprado R$ 4 mi em 2024</li>
-            <li>Supermercados: 67% das vendas, com o maior desconto e a menor margem</li>
-          </ul>
-          <p class="tags"><span>Power BI</span><span>DAX</span><span>Vendas</span><span class="destaque">Interativo</span></p>
-          <div class="acoes-cartao">
-            <a class="botao primario pequeno" href="comercial.html">Explorar o painel</a>
-            <a class="mais" href="#comercial">Ver detalhes →</a>
+        </article>
+        <article class="projeto" role="tabpanel" id="people-analytics" aria-labelledby="aba-people-analytics" tabindex="0">
+          <div class="projeto-visual">
+            <button type="button" class="imagem-principal" aria-label="Ampliar: Visão Geral">
+              <img src="assets/img/rh_visao_geral.webp" alt="Visão Geral" loading="lazy">
+            </button>
+            <div class="miniaturas" role="group" aria-label="Páginas">
+              <button type="button" class="miniatura ativa" aria-pressed="true" data-src="assets/img/rh_visao_geral.webp" aria-label="Visão Geral"><img src="assets/img/rh_visao_geral.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/rh_rotatividade.webp" aria-label="Rotatividade"><img src="assets/img/rh_rotatividade.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/rh_absenteismo.webp" aria-label="Absenteísmo e Horas Extras"><img src="assets/img/rh_absenteismo.webp" alt="" loading="lazy"></button>
+            </div>
+            <h4>O que fiz</h4>
+            <ul class="o-que-fiz">
+              <li>Quadro mensal por funcionário: headcount como saldo do fim do período, não como soma</li>
+              <li>Rotatividade sobre o headcount médio, voluntária e involuntária, por tempo de casa e motivo</li>
+              <li>Comparação de faltas entre quem saiu e quem ficou, respeitando setor, filial e ano</li>
+              <li>34 medidas DAX e 20 indicadores conferidos contra o SQL</li>
+            </ul>
           </div>
-        </div>
-      </article>
-
-      <article class="cartao cartao-base">
-        <div class="fluxo-mini" aria-hidden="true">
-          <span>Dados brutos</span><span>Python</span><span>SQL Server</span><span>Power BI</span>
-        </div>
-        <div class="corpo">
-          <h3>Base de dados integrada</h3>
-          <p>A fundação de todos os painéis: ETL em Python e modelo estrela no SQL Server.</p>
-          <ul>
-            <li>11 tipos de problema de qualidade tratados, com relatório</li>
-            <li>8 dimensões, 9 fatos e 11 testes automáticos na carga</li>
-          </ul>
-          <p class="tags"><span>Python</span><span>pandas</span><span>SQL Server</span></p>
-          <a class="mais" href="#base-de-dados">Ver detalhes →</a>
-        </div>
-      </article>
-    </div>
-
-    <h3 class="titulo-extras">Além dos painéis</h3>
-    <div class="cartoes">
-      <article class="cartao" id="sql">
-        <pre class="previa-codigo" aria-hidden="true"><code><span class="k">SELECT</span> faixa_de_clientes,
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Painel em Power BI</p>
+            <h3 class="surge" style="--i: 1">People Analytics</h3>
+            <p class="lead surge" style="--i: 2">Headcount, rotatividade, absenteísmo e horas extras.</p>
+            <h4 class="surge" style="--i: 3">O problema</h4>
+            <p class="surge" style="--i: 4">O RH sentia que perdia gente demais, mas não sabia onde, por quê nem em que momento. As faltas e as horas extras eram fechadas à mão, mês a mês.</p>
+            <h4 class="surge" style="--i: 5">O que os dados mostraram</h4>
+            <ul class="destaques surge" style="--i: 6">
+              <li><strong>45,3%</strong> de rotatividade em 2025 (+2,6 p.p.); a voluntária subiu para 22,1%</li>
+              <li><strong>63%</strong> das saídas de 2025 aconteceram no primeiro ano de casa</li>
+              <li><strong>+30%</strong> de faltas entre quem saiu em 2025, nos meses em que trabalhou</li>
+              <li><strong>16,9 h</strong> extras por pessoa por mês na Logística, contra cerca de 4 h nos outros setores</li>
+            </ul>
+            <p class="tags surge" style="--i: 7"><span>Power BI</span><span>DAX</span><span>RH</span><span class="destaque">Interativo</span></p>
+            <div class="acoes-projeto surge" style="--i: 8"><a class="botao primario" href="rh.html">Abrir o painel interativo</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_people_analytics.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a></div>
+          </div>
+        </article>
+        <article class="projeto" role="tabpanel" id="compras-estoque" aria-labelledby="aba-compras-estoque" tabindex="0">
+          <div class="projeto-visual">
+            <button type="button" class="imagem-principal" aria-label="Ampliar: Compras e Fornecedores">
+              <img src="assets/img/compras_fornecedores.webp" alt="Compras e Fornecedores" loading="lazy">
+            </button>
+            <div class="miniaturas" role="group" aria-label="Páginas">
+              <button type="button" class="miniatura ativa" aria-pressed="true" data-src="assets/img/compras_fornecedores.webp" aria-label="Compras e Fornecedores"><img src="assets/img/compras_fornecedores.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/compras_estoque_ruptura.webp" aria-label="Estoque e Ruptura"><img src="assets/img/compras_estoque_ruptura.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/compras_curva_abc.webp" aria-label="Curva ABC"><img src="assets/img/compras_curva_abc.webp" alt="" loading="lazy"></button>
+            </div>
+            <h4>O que fiz</h4>
+            <ul class="o-que-fiz">
+              <li>Pontualidade medida por pedido, não por item, para pedidos grandes não pesarem mais</li>
+              <li>Estoque como saldo acumulado dos movimentos, com giro e cobertura na mesma base</li>
+              <li>Venda perdida: unidades pedidas e não atendidas × preço</li>
+              <li>Curva ABC fixa sobre dois anos, para o produto não mudar de classe a cada filtro</li>
+            </ul>
+          </div>
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Painel em Power BI</p>
+            <h3 class="surge" style="--i: 1">Compras e Estoque</h3>
+            <p class="lead surge" style="--i: 2">Pontualidade de fornecedores, giro, ruptura e curva ABC.</p>
+            <h4 class="surge" style="--i: 3">O problema</h4>
+            <p class="surge" style="--i: 4">Faltava produto para vender e, ao mesmo tempo, o estoque crescia. Compras queria saber quais fornecedores atrasam e quais itens não podem faltar.</p>
+            <h4 class="surge" style="--i: 5">O que os dados mostraram</h4>
+            <ul class="destaques surge" style="--i: 6">
+              <li><strong>R$ 918 mil</strong> em vendas perdidas em 2025, mesmo com 98,1% de nível de serviço</li>
+              <li><strong>50%</strong> no prazo no 3º maior fornecedor, contra 73,8% na média</li>
+              <li><strong>17,7 → 15,8</strong> de giro de estoque, com 28 dias de cobertura</li>
+              <li><strong>28%</strong> dos produtos fazem 80% da receita</li>
+            </ul>
+            <p class="tags surge" style="--i: 7"><span>Power BI</span><span>DAX</span><span>Supply</span><span class="destaque">Interativo</span></p>
+            <div class="acoes-projeto surge" style="--i: 8"><a class="botao primario" href="compras.html">Abrir o painel interativo</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_compras_estoque.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a></div>
+          </div>
+        </article>
+        <article class="projeto" role="tabpanel" id="excel" aria-labelledby="aba-excel" tabindex="0">
+          <div class="projeto-visual">
+            <button type="button" class="imagem-principal" aria-label="Ampliar: Conciliação bancária">
+              <img src="assets/img/excel_conciliacao_bancaria.webp" alt="Conciliação bancária" loading="lazy">
+            </button>
+            <div class="miniaturas" role="group" aria-label="Páginas">
+              <button type="button" class="miniatura ativa" aria-pressed="true" data-src="assets/img/excel_conciliacao_bancaria.webp" aria-label="Conciliação bancária"><img src="assets/img/excel_conciliacao_bancaria.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/excel_consolidacao_ponto.webp" aria-label="Consolidação do ponto"><img src="assets/img/excel_consolidacao_ponto.webp" alt="" loading="lazy"></button>
+            </div>
+            <h4>O que fiz</h4>
+            <ul class="o-que-fiz">
+              <li>Power Query que lê a pasta inteira, reconhece os dois layouts e converte "hh:mm" em horas</li>
+              <li>Conciliação em duas passadas: pelo documento e, no que sobra, por data e valor</li>
+              <li>Pastas de trabalho que acham os dados sozinhas a partir de onde estão salvas</li>
+              <li>Sem macro e sem instalar nada: só Excel</li>
+            </ul>
+          </div>
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Excel e Power Query</p>
+            <h3 class="surge" style="--i: 1">Excel + automação</h3>
+            <p class="lead surge" style="--i: 2">Consolidação do ponto e conciliação bancária com Power Query.</p>
+            <h4 class="surge" style="--i: 3">O problema</h4>
+            <p class="surge" style="--i: 4">Duas rotinas de fechamento tomavam horas: juntar 24 planilhas de ponto com o layout mudando no meio do ano, e conferir o extrato do banco contra o sistema linha a linha.</p>
+            <h4 class="surge" style="--i: 5">Resultado</h4>
+            <ul class="destaques surge" style="--i: 6">
+              <li><strong>24 arquivos → 1 clique</strong> em Atualizar Tudo, com totais iguais aos do SQL</li>
+              <li><strong>1.590</strong> lançamentos conciliados automaticamente</li>
+              <li><strong>11 pendências</strong> encontradas: tarifas não lançadas, compensação em janeiro e juros</li>
+            </ul>
+            <p class="tags surge" style="--i: 7"><span>Excel</span><span>Power Query</span><span>Financeiro</span><span class="destaque">Interativo</span></p>
+            <div class="acoes-projeto surge" style="--i: 8"><a class="botao primario" href="excel.html">Explorar o resultado</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/excel_automacao.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a></div>
+          </div>
+        </article>
+        <article class="projeto" role="tabpanel" id="comercial" aria-labelledby="aba-comercial" tabindex="0">
+          <div class="projeto-visual">
+            <button type="button" class="imagem-principal" aria-label="Ampliar: Visão Geral">
+              <img src="assets/img/comercial_visao_geral.webp" alt="Visão Geral" loading="lazy">
+            </button>
+            <div class="miniaturas" role="group" aria-label="Páginas">
+              <button type="button" class="miniatura ativa" aria-pressed="true" data-src="assets/img/comercial_visao_geral.webp" aria-label="Visão Geral"><img src="assets/img/comercial_visao_geral.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/comercial_vendedores.webp" aria-label="Vendedores"><img src="assets/img/comercial_vendedores.webp" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/comercial_clientes.webp" aria-label="Clientes"><img src="assets/img/comercial_clientes.webp" alt="" loading="lazy"></button>
+            </div>
+            <h4>O que fiz</h4>
+            <ul class="o-que-fiz">
+              <li>Modelo semântico com 25 medidas DAX, todas conferidas contra uma view em SQL, com o mesmo faturamento da DRE do painel Financeiro</li>
+              <li>Clientes novos e perdidos contra o mesmo período do ano anterior (<code>SAMEPERIODLASTYEAR</code> + <code>EXCEPT</code>) e concentração nos 20% maiores (<code>TOPN</code>)</li>
+              <li>Exportação no grão mês × cliente × vendedor, para filtrar por qualquer recorte e ainda contar clientes distintos</li>
+              <li>Lista dos clientes parados que mais compravam, para a equipe comercial ligar primeiro</li>
+            </ul>
+          </div>
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Painel em Power BI</p>
+            <h3 class="surge" style="--i: 1">Painel Comercial</h3>
+            <p class="lead surge" style="--i: 2">Faturamento, vendedores, concentração e clientes que pararam de comprar.</p>
+            <h4 class="surge" style="--i: 3">O problema</h4>
+            <p class="surge" style="--i: 4">A diretoria via o faturamento crescer, mas não sabia se a carteira de clientes acompanhava, quanto o desconto custava em margem nem quem tinha parado de comprar.</p>
+            <h4 class="surge" style="--i: 5">O que os dados mostraram</h4>
+            <ul class="destaques surge" style="--i: 6">
+              <li><strong>+6,6%</strong> de faturamento em 2025, com mais notas e ticket 3,5% menor</li>
+              <li><strong>20%</strong> dos clientes fazem 73% do faturamento</li>
+              <li><strong>49 perdidos</strong> em 2025, que tinham comprado R$ 4,0 mi em 2024, contra 34 novos</li>
+              <li><strong>32 clientes</strong> compraram em 2025 e pararam no meio do ano: R$ 2,85 mi para recuperar</li>
+            </ul>
+            <p class="tags surge" style="--i: 7"><span>Power BI</span><span>DAX</span><span>Vendas</span><span class="destaque">Interativo</span></p>
+            <div class="acoes-projeto surge" style="--i: 8"><a class="botao primario" href="comercial.html">Abrir o painel interativo</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_comercial.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a></div>
+          </div>
+        </article>
+        <article class="projeto" role="tabpanel" id="base-de-dados" aria-labelledby="aba-base-de-dados" tabindex="0">
+          <div class="projeto-visual">
+            <div class="fluxo-grande" aria-hidden="true">
+              <span>Dados brutos<small>CSV do ERP e planilhas</small></span>
+              <span>Python<small>ETL e relatório de qualidade</small></span>
+              <span>SQL Server<small>modelo estrela e 11 testes</small></span>
+              <span>Power BI<small>4 painéis conferidos</small></span>
+            </div>
+            <h4>O que fiz</h4>
+            <ul class="o-que-fiz">
+              <li>Geração de dois anos de operação com comportamento de negócio realista (Python)</li>
+              <li>ETL com pandas que trata 11 tipos de problema e gera um relatório de qualidade</li>
+              <li>Modelo estrela no SQL Server: staging, procedure de carga com transação e views com CTE e funções de janela</li>
+            </ul>
+          </div>
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Python e SQL Server</p>
+            <h3 class="surge" style="--i: 1">Base de dados integrada</h3>
+            <p class="lead surge" style="--i: 2">A fundação de todos os painéis: ETL em Python e modelo estrela no SQL Server.</p>
+            <h4 class="surge" style="--i: 3">O problema</h4>
+            <p class="surge" style="--i: 4">Painel bom começa com dado confiável. Os arquivos chegam dos sistemas com duplicidades, cadastros repetidos, datas em dois formatos e números como texto.</p>
+            <h4 class="surge" style="--i: 5">Garantias</h4>
+            <ul class="destaques surge" style="--i: 6">
+              <li><strong>11 testes</strong> automáticos depois de cada carga: nenhuma linha perdida, nota igual a título, receita da DRE igual às vendas, estoque nunca negativo</li>
+              <li><strong>~20 s</strong> para recriar o banco inteiro do zero</li>
+            </ul>
+            <p class="tags surge" style="--i: 7"><span>Python</span><span>pandas</span><span>SQL Server</span></p>
+            <div class="acoes-projeto surge" style="--i: 8"><a class="botao primario" href="sql.html">SQL na prática</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul" target="_blank" rel="noopener">Repositório no GitHub</a></div>
+          </div>
+        </article>
+        <article class="projeto" role="tabpanel" id="sql" aria-labelledby="aba-sql" tabindex="0">
+          <div class="projeto-visual">
+            <div class="visual-desenhado">
+              <pre class="previa-codigo" aria-hidden="true"><code><span class="k">SELECT</span> faixa_de_clientes,
        <span class="f">SUM</span>(faturamento) <span class="k">AS</span> faturamento,
        <span class="f">SUM</span>(faturamento)
          / <span class="f">SUM</span>(<span class="f">SUM</span>(faturamento)) <span class="k">OVER</span> ()
          <span class="k">AS</span> pct_do_faturamento
 <span class="k">FROM</span> quintos
 <span class="k">GROUP BY</span> quinto;  <span class="c">-- 20% maiores: 73,4%</span></code></pre>
-        <div class="corpo">
-          <h3>SQL na prática</h3>
-          <p>Dez perguntas de negócio respondidas em SQL: quem parou de comprar, quais fornecedores atrasam, onde a receita fugiu do orçamento.</p>
-          <ul>
-            <li>Cada pergunta com a resposta, a consulta e o resultado</li>
-            <li>Números conferidos com as views dos painéis antes de publicar</li>
-          </ul>
-          <p class="tags"><span>CTE</span><span>Funções de janela</span><span>NTILE</span><span>FULL JOIN</span></p>
-          <div class="acoes-cartao">
-            <a class="botao primario pequeno" href="sql.html">Ver as 10 consultas</a>
-            <a class="mais" href="https://github.com/Lvgama94/distribuidora-sul/tree/main/sql/perguntas" target="_blank" rel="noopener">Arquivos no GitHub →</a>
+            </div>
           </div>
-        </div>
-      </article>
-
-      <article class="cartao" id="relatorio">
-        <div class="previa-relatorio" aria-hidden="true">
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">SQL Server</p>
+            <h3 class="surge" style="--i: 1">SQL na prática</h3>
+            <p class="lead surge" style="--i: 2">Dez perguntas de negócio respondidas em SQL: quem parou de comprar, quais fornecedores atrasam, onde a receita fugiu do orçamento.</p>
+            <h4 class="surge" style="--i: 3">Destaques</h4>
+            <ul class="destaques surge" style="--i: 4">
+              <li>Cada pergunta com a resposta, a consulta e o resultado</li>
+              <li>Números conferidos com as views dos painéis antes de publicar</li>
+            </ul>
+            <p class="tags surge" style="--i: 5"><span>CTE</span><span>Funções de janela</span><span>NTILE</span><span>FULL JOIN</span></p>
+            <div class="acoes-projeto surge" style="--i: 6"><a class="botao primario" href="sql.html">Ver as 10 consultas</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/tree/main/sql/perguntas" target="_blank" rel="noopener">Arquivos no GitHub</a></div>
+          </div>
+        </article>
+        <article class="projeto" role="tabpanel" id="relatorio" aria-labelledby="aba-relatorio" tabindex="0">
+          <div class="projeto-visual">
+            <div class="visual-desenhado">
+              <div class="previa-relatorio" aria-hidden="true">
           <p class="pr-titulo">Três decisões para 2026</p>
           <p class="pr-total"><strong>R$ 441 mil</strong> por ano</p>
           <ol>
-            <li><span>Recuperar 32 clientes parados</span><b>R$ 333 mil</b></li>
-            <li><span>Cobrar pontualidade de 9 fornecedores</span><b>R$ 55 mil</b></li>
-            <li><span>Reduzir as saídas no 1º ano</span><b>R$ 53 mil</b></li>
+            <li><span>Recuperar 32 clientes</span><b>R$ 333 mil</b></li>
+            <li><span>Pontualidade de 9 fornecedores</span><b>R$ 55 mil</b></li>
+            <li><span>Saídas no 1º ano</span><b>R$ 53 mil</b></li>
           </ol>
         </div>
-        <div class="corpo">
-          <h3>Relatório para a diretoria</h3>
-          <p>Os quatro painéis lidos como decisão: o que fazer em 2026, quem faz e quanto vale.</p>
-          <ul>
-            <li>R$ 441 mil por ano no cenário conservador, cerca de 20% do resultado de 2025</li>
-            <li>Ganho de cada decisão calculado em SQL, com as premissas à vista</li>
-          </ul>
-          <p class="tags"><span>Análise de negócio</span><span>SQL</span><span>Comunicação</span></p>
-          <div class="acoes-cartao">
-            <a class="botao primario pequeno" href="relatorio.html">Ler o relatório</a>
-            <a class="mais" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/relatorio_diretoria.md" target="_blank" rel="noopener">Roteiro no GitHub →</a>
+            </div>
           </div>
-        </div>
-      </article>
-
-      <article class="cartao largo" id="catalogo">
-        <div class="previa-catalogo" aria-hidden="true">
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Análise de negócio</p>
+            <h3 class="surge" style="--i: 1">Relatório para a diretoria</h3>
+            <p class="lead surge" style="--i: 2">Os quatro painéis lidos como decisão: o que fazer em 2026, quem faz e quanto vale.</p>
+            <h4 class="surge" style="--i: 3">Destaques</h4>
+            <ul class="destaques surge" style="--i: 4">
+              <li>R$ 441 mil por ano no cenário conservador, cerca de 20% do resultado de 2025</li>
+              <li>Ganho de cada decisão calculado em SQL, com as premissas à vista</li>
+            </ul>
+            <p class="tags surge" style="--i: 5"><span>Análise de negócio</span><span>SQL</span><span>Comunicação</span></p>
+            <div class="acoes-projeto surge" style="--i: 6"><a class="botao primario" href="relatorio.html">Ler o relatório</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/relatorio_diretoria.md" target="_blank" rel="noopener">Roteiro no GitHub</a></div>
+          </div>
+        </article>
+        <article class="projeto" role="tabpanel" id="catalogo" aria-labelledby="aba-catalogo" tabindex="0">
+          <div class="projeto-visual">
+            <div class="visual-desenhado">
+              <div class="previa-catalogo" aria-hidden="true">
           <div class="pc-verbete">
             <p class="pc-nome">Ticket Médio <span>R$</span></p>
             <p class="pc-definicao">Faturamento médio por nota fiscal de venda.</p>
@@ -215,20 +346,28 @@
             <p class="pc-valor">2025: <strong>R$ 5.279</strong> <span class="pc-selo">conferido com o SQL</span></p>
           </div>
         </div>
-        <div class="corpo">
-          <h3>Catálogo de indicadores</h3>
-          <p>Os 140 indicadores dos quatro painéis num só lugar: definição, fórmula DAX, tabela de origem no SQL e valor de 2025.</p>
-          <ul>
-            <li>Gerado dos próprios modelos do Power BI: a definição do catálogo é a mesma que aparece no painel</li>
-            <li>59 valores conferidos contra o SQL e 2 nomes repetidos entre modelos apontados</li>
-          </ul>
-          <p class="tags"><span>Governança de BI</span><span>DAX</span><span>Python</span></p>
-          <div class="acoes-cartao">
-            <a class="botao primario pequeno" href="indicadores.html">Abrir o catálogo</a>
-            <a class="mais" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/catalogo_indicadores.md" target="_blank" rel="noopener">Versão no GitHub →</a>
+            </div>
           </div>
-        </div>
-      </article>
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Governança de BI</p>
+            <h3 class="surge" style="--i: 1">Catálogo de indicadores</h3>
+            <p class="lead surge" style="--i: 2">Os 140 indicadores dos quatro painéis num só lugar: definição, fórmula DAX, tabela de origem no SQL e valor de 2025.</p>
+            <h4 class="surge" style="--i: 3">Destaques</h4>
+            <ul class="destaques surge" style="--i: 4">
+              <li>Gerado dos próprios modelos do Power BI: a definição do catálogo é a mesma que aparece no painel</li>
+              <li>59 valores conferidos contra o SQL e 2 nomes repetidos entre modelos apontados</li>
+            </ul>
+            <p class="tags surge" style="--i: 5"><span>Governança de BI</span><span>DAX</span><span>Python</span></p>
+            <div class="acoes-projeto surge" style="--i: 6"><a class="botao primario" href="indicadores.html">Abrir o catálogo</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/catalogo_indicadores.md" target="_blank" rel="noopener">Versão no GitHub</a></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="navegar-vitrine">
+        <button type="button" class="anterior" aria-label="Projeto anterior">←</button>
+        <span class="posicao" aria-live="polite"><strong>1</strong> de 9</span>
+        <button type="button" class="proximo" aria-label="Próximo projeto">→</button>
+      </div>
     </div>
   </section>
 
@@ -242,201 +381,11 @@
     </ol>
   </section>
 
-  <!-- ------------------------------------------------------------ Detalhes -->
-  <section class="secao detalhe" id="financeiro">
-    <p class="rotulo">Projeto 1</p>
-    <h2>Painel Financeiro</h2>
-    <div class="colunas">
-      <div>
-        <h3>O problema</h3>
-        <p>A diretoria precisava ver, num lugar só, se a empresa cresce com lucro, onde o realizado fugiu do orçamento, quem está devendo e se o caixa acompanha o resultado.</p>
-        <h3>O que fiz</h3>
-        <ul>
-          <li>Modelo semântico com 11 tabelas e 60 medidas DAX, versionado em texto (PBIP/TMDL)</li>
-          <li>DRE com sinal na dimensão de contas: a matriz soma direto o resultado</li>
-          <li>Várias datas na mesma fato (emissão, vencimento, pagamento) com <code>USERELATIONSHIP</code></li>
-          <li>Competência na DRE e caixa no fluxo: a compra de mercadoria aparece no caixa, mas só vira custo quando é vendida</li>
-        </ul>
-      </div>
-      <div>
-        <h3>O que os dados mostraram</h3>
-        <ul class="destaques">
-          <li><strong>+6,5%</strong> de receita líquida em 2025, mas 98,5% do orçado</li>
-          <li><strong>3,5% → 4,2%</strong> de margem líquida</li>
-          <li><strong>−R$ 1,9 mi</strong> contra o orçado: manutenção de frota +31%, combustível +19%</li>
-          <li><strong>46,5%</strong> de inadimplência nas lanchonetes, contra 7,9% nos supermercados</li>
-        </ul>
-        <a class="botao primario pequeno" href="financeiro.html">Abrir o painel interativo</a>
-        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_financeiro.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
-      </div>
-    </div>
-    <div class="galeria">
-      <img src="assets/img/financeiro_resumo.webp" alt="Resumo" loading="lazy">
-      <img src="assets/img/financeiro_dre.webp" alt="DRE e Orçamento" loading="lazy">
-      <img src="assets/img/financeiro_receber.webp" alt="Contas a Receber" loading="lazy">
-      <img src="assets/img/financeiro_caixa.webp" alt="Fluxo de Caixa" loading="lazy">
-    </div>
-  </section>
 
-  <section class="secao detalhe alt" id="people-analytics">
-    <p class="rotulo">Projeto 2</p>
-    <h2>People Analytics</h2>
-    <div class="colunas">
-      <div>
-        <h3>O problema</h3>
-        <p>O RH sentia que perdia gente demais, mas não sabia onde, por quê nem em que momento. As faltas e as horas extras eram fechadas à mão, mês a mês.</p>
-        <h3>O que fiz</h3>
-        <ul>
-          <li>Quadro mensal por funcionário: headcount como saldo do fim do período, não como soma</li>
-          <li>Rotatividade sobre o headcount médio, voluntária e involuntária, por tempo de casa e motivo</li>
-          <li>Comparação de faltas entre quem saiu e quem ficou, respeitando setor, filial e ano</li>
-          <li>34 medidas DAX e 20 indicadores conferidos contra o SQL</li>
-        </ul>
-      </div>
-      <div>
-        <h3>O que os dados mostraram</h3>
-        <ul class="destaques">
-          <li><strong>45,3%</strong> de rotatividade em 2025 (+2,6 p.p.); a voluntária subiu para 22,1%</li>
-          <li><strong>63%</strong> das saídas de 2025 aconteceram no primeiro ano de casa</li>
-          <li><strong>+30%</strong> de faltas entre quem saiu em 2025, nos meses em que trabalhou</li>
-          <li><strong>16,9 h</strong> extras por pessoa por mês na Logística, contra cerca de 4 h nos outros setores</li>
-        </ul>
-        <a class="botao primario pequeno" href="rh.html">Abrir o painel interativo</a>
-        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_people_analytics.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
-      </div>
-    </div>
-    <div class="galeria">
-      <img src="assets/img/rh_visao_geral.webp" alt="Visão Geral" loading="lazy">
-      <img src="assets/img/rh_rotatividade.webp" alt="Rotatividade" loading="lazy">
-      <img src="assets/img/rh_absenteismo.webp" alt="Absenteísmo e Horas Extras" loading="lazy">
-    </div>
-  </section>
 
-  <section class="secao detalhe" id="compras-estoque">
-    <p class="rotulo">Projeto 3</p>
-    <h2>Compras e Estoque</h2>
-    <div class="colunas">
-      <div>
-        <h3>O problema</h3>
-        <p>Faltava produto para vender e, ao mesmo tempo, o estoque crescia. Compras queria saber quais fornecedores atrasam e quais itens não podem faltar.</p>
-        <h3>O que fiz</h3>
-        <ul>
-          <li>Pontualidade medida por pedido, não por item, para pedidos grandes não pesarem mais</li>
-          <li>Estoque como saldo acumulado dos movimentos, com giro e cobertura na mesma base</li>
-          <li>Venda perdida: unidades pedidas e não atendidas × preço</li>
-          <li>Curva ABC fixa sobre dois anos, para o produto não mudar de classe a cada filtro</li>
-        </ul>
-      </div>
-      <div>
-        <h3>O que os dados mostraram</h3>
-        <ul class="destaques">
-          <li><strong>R$ 918 mil</strong> em vendas perdidas em 2025, mesmo com 98,1% de nível de serviço</li>
-          <li><strong>50%</strong> no prazo no 3º maior fornecedor, contra 73,8% na média</li>
-          <li><strong>17,7 → 15,8</strong> de giro de estoque, com 28 dias de cobertura</li>
-          <li><strong>28%</strong> dos produtos fazem 80% da receita</li>
-        </ul>
-        <a class="botao primario pequeno" href="compras.html">Abrir o painel interativo</a>
-        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_compras_estoque.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
-      </div>
-    </div>
-    <div class="galeria">
-      <img src="assets/img/compras_fornecedores.webp" alt="Compras e Fornecedores" loading="lazy">
-      <img src="assets/img/compras_estoque_ruptura.webp" alt="Estoque e Ruptura" loading="lazy">
-      <img src="assets/img/compras_curva_abc.webp" alt="Curva ABC" loading="lazy">
-    </div>
-  </section>
 
-  <section class="secao detalhe alt" id="excel">
-    <p class="rotulo">Projeto 4</p>
-    <h2>Excel + automação</h2>
-    <div class="colunas">
-      <div>
-        <h3>O problema</h3>
-        <p>Duas rotinas de fechamento tomavam horas: juntar 24 planilhas de ponto com o layout mudando no meio do ano, e conferir o extrato do banco contra o sistema linha a linha.</p>
-        <h3>O que fiz</h3>
-        <ul>
-          <li>Power Query que lê a pasta inteira, reconhece os dois layouts e converte "hh:mm" em horas</li>
-          <li>Conciliação em duas passadas: pelo documento e, no que sobra, por data e valor</li>
-          <li>Pastas de trabalho que acham os dados sozinhas a partir de onde estão salvas</li>
-          <li>Sem macro e sem instalar nada: só Excel</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Resultado</h3>
-        <ul class="destaques">
-          <li><strong>24 arquivos → 1 clique</strong> em Atualizar Tudo, com totais iguais aos do SQL</li>
-          <li><strong>1.590</strong> lançamentos conciliados automaticamente</li>
-          <li><strong>11 pendências</strong> encontradas: tarifas não lançadas, compensação em janeiro e juros</li>
-        </ul>
-        <a class="botao primario pequeno" href="excel.html">Explorar o resultado</a>
-        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/excel_automacao.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
-      </div>
-    </div>
-    <div class="galeria">
-      <img src="assets/img/excel_conciliacao_bancaria.webp" alt="Conciliação bancária" loading="lazy">
-      <img src="assets/img/excel_consolidacao_ponto.webp" alt="Consolidação do ponto" loading="lazy">
-    </div>
-  </section>
 
-  <section class="secao detalhe" id="comercial">
-    <p class="rotulo">Projeto 5</p>
-    <h2>Painel Comercial</h2>
-    <div class="colunas">
-      <div>
-        <h3>O problema</h3>
-        <p>A diretoria via o faturamento crescer, mas não sabia se a carteira de clientes acompanhava, quanto o desconto custava em margem nem quem tinha parado de comprar.</p>
-        <h3>O que fiz</h3>
-        <ul>
-          <li>Modelo semântico com 25 medidas DAX, todas conferidas contra uma view em SQL, com o mesmo faturamento da DRE do painel Financeiro</li>
-          <li>Clientes novos e perdidos contra o mesmo período do ano anterior (<code>SAMEPERIODLASTYEAR</code> + <code>EXCEPT</code>) e concentração nos 20% maiores (<code>TOPN</code>)</li>
-          <li>Exportação no grão mês × cliente × vendedor, para filtrar por qualquer recorte e ainda contar clientes distintos</li>
-          <li>Lista dos clientes parados que mais compravam, para a equipe comercial ligar primeiro</li>
-        </ul>
-      </div>
-      <div>
-        <h3>O que os dados mostraram</h3>
-        <ul class="destaques">
-          <li><strong>+6,6%</strong> de faturamento em 2025, com mais notas e ticket 3,5% menor</li>
-          <li><strong>20%</strong> dos clientes fazem 73% do faturamento</li>
-          <li><strong>49 perdidos</strong> em 2025, que tinham comprado R$ 4,0 mi em 2024, contra 34 novos</li>
-          <li><strong>32 clientes</strong> compraram em 2025 e pararam no meio do ano: R$ 2,85 mi para recuperar</li>
-        </ul>
-        <a class="botao primario pequeno" href="comercial.html">Abrir o painel interativo</a>
-        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/painel_comercial.md" target="_blank" rel="noopener">Roteiro e código no GitHub</a>
-      </div>
-    </div>
-    <div class="galeria">
-      <img src="assets/img/comercial_visao_geral.webp" alt="Visão Geral" loading="lazy">
-      <img src="assets/img/comercial_vendedores.webp" alt="Vendedores" loading="lazy">
-      <img src="assets/img/comercial_clientes.webp" alt="Clientes" loading="lazy">
-    </div>
-  </section>
 
-  <section class="secao detalhe alt" id="base-de-dados">
-    <p class="rotulo">Projeto 0</p>
-    <h2>Base de dados integrada</h2>
-    <div class="colunas">
-      <div>
-        <h3>O problema</h3>
-        <p>Painel bom começa com dado confiável. Os arquivos chegam dos sistemas com duplicidades, cadastros repetidos, datas em dois formatos e números como texto.</p>
-        <h3>O que fiz</h3>
-        <ul>
-          <li>Geração de dois anos de operação com comportamento de negócio realista (Python)</li>
-          <li>ETL com pandas que trata 11 tipos de problema e gera um relatório de qualidade</li>
-          <li>Modelo estrela no SQL Server: staging, procedure de carga com transação e views com CTE e funções de janela</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Garantias</h3>
-        <ul class="destaques">
-          <li><strong>11 testes</strong> automáticos depois de cada carga: nenhuma linha perdida, nota igual a título, receita da DRE igual às vendas, estoque nunca negativo</li>
-          <li><strong>~20 s</strong> para recriar o banco inteiro do zero</li>
-        </ul>
-        <a class="botao primario pequeno" href="sql.html">SQL na prática</a>
-        <a class="botao pequeno" href="https://github.com/Lvgama94/distribuidora-sul" target="_blank" rel="noopener">Repositório no GitHub</a>
-      </div>
-    </div>
-  </section>
 
   <section class="secao" id="sobre">
     <h2>Sobre</h2>
@@ -477,11 +426,11 @@
   <p>© 2026 Lucas Gama</p>
 </footer>
 
-<div class="lightbox" id="lightbox" hidden>
+<dialog class="lightbox" id="lightbox" aria-label="Imagem ampliada">
   <button class="fechar" type="button" aria-label="Fechar">×</button>
   <img alt="">
   <p class="legenda"></p>
-</div>
+</dialog>
 
 <script src="assets/site.js"></script>
 </body>

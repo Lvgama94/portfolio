@@ -25,7 +25,7 @@ sql.html                    SQL na prática: 10 perguntas com a consulta e o res
 relatorio.html              relatório para a diretoria: três decisões para 2026, com o ganho de cada uma
 indicadores.html            catálogo de indicadores: definição, fórmula DAX, fonte e valor conferido, com busca
 assets/style.css            estilos (mesma paleta dos painéis)
-assets/site.js              ampliação das imagens das galerias
+assets/site.js              vitrine de projetos com abas numeradas e ampliação das imagens
 assets/painel.css           filtros, abas, indicadores e gráficos das páginas interativas
 assets/painel-base.js       formatação, gráficos, rótulos, tabelas e abas comuns a todas
 assets/sql.js, sql.css      realce de sintaxe e tabelas de resultado do SQL na prática
