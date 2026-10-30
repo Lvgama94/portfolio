@@ -90,7 +90,7 @@ function conciliacao() {
   const entradas = dias.map((d) => L.reduce((a, l) => a + (l[1] === d && l[6] > 0 ? l[6] : 0), 0));
   const saidas = dias.map((d) => L.reduce((a, l) => a + (l[1] === d && l[6] < 0 ? -l[6] : 0), 0));
   const destaque = estado.dia == null ? null : dias.indexOf(estado.dia);
-  const modo = modoRotulos("dias", dias.length, 2), espaco = espacoRotulos(modo.girar, entradas);
+  const modo = modoRotulos("dias", dias.length, 2, [...entradas, ...saidas].map(rotuloValor)), espaco = espacoRotulos(modo.girar, entradas);
   desenhar("dias", {
     opcao: opcaoBase({
       grid: espaco.grid,
@@ -100,9 +100,9 @@ function conciliacao() {
         { cor: COR.serie1, valor: compacto(entradas[ps[0].dataIndex]), nome: "entradas" }, { cor: COR.serie2, valor: compacto(saidas[ps[0].dataIndex]), nome: "saídas" }]) },
       series: [
         { name: "Entradas", type: "bar", barMaxWidth: 24, barGap: "10%", cursor: "pointer",
-          data: barras(entradas, COR.serie1, { destaque, girar: modo.girar, apenas: modo.poucos ? aCada(entradas.length, modo.passo) : null }) },
+          data: barras(entradas, COR.serie1, { destaque, ...modo.serie(0) }) },
         { name: "Saídas", type: "bar", barMaxWidth: 24, cursor: "pointer",
-          data: barras(saidas, COR.serie2, { destaque, girar: modo.todas && !modo.poucos ? modo.girar : null }) },
+          data: barras(saidas, COR.serie2, { destaque, ...modo.serie(1) }) },
       ],
     }),
     aoClicar: (p) => {

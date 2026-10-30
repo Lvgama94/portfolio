@@ -147,7 +147,7 @@ function rotatividade() {
         { valor: inteiro(a.porFaixa[p.dataIndex]), nome: "desligamentos" }, { valor: pct(a.porFaixa[p.dataIndex] / total), nome: "das saídas" }]) },
       series: [{ type: "bar", barMaxWidth: 32,
         data: Array.from(a.porFaixa, (v, i) => ({ value: v, itemStyle: { color: COR.rampa[i], borderRadius: [4, 4, 0, 0] } })),
-        label: { show: true, position: "top", color: COR.texto, fontSize: 11, formatter: (p) => inteiro(p.value) } }],
+        label: { show: true, position: "top", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => inteiro(p.value) } }],
     }),
     tabela: { colunas: ["Tempo de casa", "Desligamentos", "% das saídas"], linhas: faixas.map((f, i) => [f, inteiro(a.porFaixa[i]), pct(a.porFaixa[i] / total)]) },
   });

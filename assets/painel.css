@@ -32,7 +32,7 @@
   border: 1px solid var(--borda);
   background: #FFFFFF;
   color: var(--texto);
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 5px 14px;
   cursor: pointer;
 }
@@ -40,17 +40,20 @@
 .grupo-filtro button[aria-pressed="true"] { background: var(--marinho); border-color: var(--marinho); color: #FFFFFF; }
 .grupo-filtro button:disabled { opacity: 0.45; cursor: not-allowed; }
 .chip { background: #FFF4E0; border-color: #F5C77A; font-weight: 600; }
+/* Lista com seta própria: a nativa fica colada na borda; esta guarda a mesma distância que o texto (12 px) */
 .grupo-filtro select {
   font: inherit;
   font-size: 0.9rem;
   border: 1px solid var(--borda);
-  background: #FFFFFF;
+  background: #FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235B6775' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center;
   color: var(--texto);
-  border-radius: 999px;
-  padding: 5px 12px;
+  border-radius: 8px;
+  padding: 5px 36px 5px 12px;
   max-width: 220px;
   cursor: pointer;
+  appearance: none;
 }
+.grupo-filtro select:hover { background-color: #E8EEF4; }
 .chip:hover { background: #FFE9C2; }
 
 .abas { display: flex; gap: 4px; margin-top: 14px; overflow-x: auto; scrollbar-width: none; }
@@ -200,7 +203,7 @@
   border: 1px solid var(--borda);
   background: #FFFFFF;
   color: var(--texto);
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 5px 14px;
   width: 240px;
   max-width: 100%;

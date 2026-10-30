@@ -91,14 +91,35 @@
 .metodo ul { margin: 0; padding-left: 20px; color: var(--texto-suave); font-size: 0.9rem; }
 .metodo li { margin-bottom: 6px; }
 
+/* ------------------------------------------------------------ análise em Python (analise.html) */
+.numeros-analise { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.numeros-analise div { background: var(--fundo); border-radius: 10px; padding: 14px 16px; }
+.numeros-analise strong { display: block; font-size: 1.7rem; line-height: 1.15; color: var(--marinho); }
+.numeros-analise span { font-size: 0.86rem; color: var(--texto-suave); }
+.titulo-analise { margin: 2px 0 10px; font-size: 1.4rem; color: var(--marinho); }
+.relatorio section h3 { margin: 22px 0 8px; font-size: 1rem; color: var(--marinho); }
+.figura { margin: 18px 0; }
+.figura img { width: 100%; height: auto; border: 1px solid var(--borda); border-radius: 10px; background: #FFFFFF; }
+.tabela-analise { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.tabela-analise th, .tabela-analise td { padding: 7px 10px; border-bottom: 1px solid var(--borda); text-align: left; white-space: nowrap; }
+.tabela-analise th { color: var(--texto-suave); font-size: 0.8rem; font-weight: 600; }
+.tabela-analise .num { text-align: right; font-variant-numeric: tabular-nums; }
+.tabela-analise tr.total td { font-weight: 700; background: #F3F6FA; }
+.relatorio .destaques { margin: 18px 0 0; }
+.relatorio .destaques li { background: var(--fundo); box-shadow: none; }
+
 /* ------------------------------------------------------------ celular */
 @media (max-width: 860px) {
+  .numeros-analise { grid-template-columns: 1fr 1fr; }
   .corpo-decisao { grid-template-columns: 1fr; gap: 0; }
   .grade-radar { grid-template-columns: 1fr; }
   .resumo-topo { grid-template-columns: 1fr; gap: 12px; }
   .ganho-total { max-width: none; }
 }
 @media (max-width: 560px) {
+  /* Gráficos largos demais para a tela: rolam de lado em tamanho legível */
+  .figura { overflow-x: auto; }
+  .figura img { min-width: 640px; }
   .relatorio { padding: 0 16px 40px; }
   .relatorio section, .decisao { padding: 18px 16px; }
   .decisao h2 { font-size: 1.15rem; }

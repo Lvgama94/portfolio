@@ -55,7 +55,7 @@ function barrasDeitadasDuplas({ nomes, series, formato, destaque = null }) {
     series: series.map((s) => ({
       name: s.nome, type: "bar", barMaxWidth: 14, barGap: "15%", cursor: "pointer",
       data: barras(s.valores, s.cor, { deitado: true, destaque }).map((d, i) => ({
-        ...d, label: { show: true, position: "right", color: COR.texto, fontSize: 10, opacity: d.itemStyle.opacity < 1 ? 0.45 : 1, formatter: () => formato(s.valores[i]) },
+        ...d, label: { show: true, position: "right", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 10, opacity: d.itemStyle.opacity < 1 ? 0.45 : 1, formatter: () => formato(s.valores[i]) },
       })),
     })),
   });
@@ -216,7 +216,7 @@ function clientes() {
         { valor: inteiro(porFaixa[p.dataIndex].n), nome: "clientes" }, { valor: pct(porFaixa[p.dataIndex].n / comCompra.length), nome: "dos clientes" }]) },
       series: [{ type: "bar", barMaxWidth: 32,
         data: porFaixa.map((x, i) => ({ value: x.n, itemStyle: { color: COR.rampa[i], borderRadius: [4, 4, 0, 0] } })),
-        label: { show: true, position: "top", color: COR.texto, fontSize: 11, formatter: (p) => inteiro(p.value) } }],
+        label: { show: true, position: "top", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => inteiro(p.value) } }],
     }),
     tabela: { colunas: ["Última compra", "Clientes", "% dos clientes"], linhas: porFaixa.map((x) => [x.nome, inteiro(x.n), pct(x.n / comCompra.length)]) },
   });

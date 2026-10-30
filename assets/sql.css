@@ -38,7 +38,7 @@
 .pergunta .num { font-size: 1.45rem; font-weight: 700; color: var(--azul-claro); font-variant-numeric: tabular-nums; }
 .pergunta h2 { margin: 0; font-size: 1.2rem; line-height: 1.35; color: var(--marinho); }
 .tecnicas { grid-column: 2; list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.tecnicas li { background: #E8EEF4; color: var(--marinho); border-radius: 999px; padding: 2px 10px; font-size: 0.8rem; font-weight: 600; }
+.tecnicas li { background: #E8EEF4; color: var(--marinho); border-radius: 6px; padding: 2px 10px; font-size: 0.8rem; font-weight: 600; }
 
 .resposta {
   margin: 16px 0 4px;

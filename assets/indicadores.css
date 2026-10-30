@@ -56,7 +56,7 @@
 .unidade { font-size: 0.75rem; font-weight: 600; color: var(--texto-suave); background: #EEF2F7; border-radius: 4px; padding: 1px 6px; }
 .valor-conferido { margin-left: auto; font-size: 0.88rem; color: var(--texto-suave); font-variant-numeric: tabular-nums; }
 .valor-conferido strong { color: var(--texto); }
-.selo { font-size: 0.75rem; font-weight: 600; color: var(--bom); background: #E9F5E9; border-radius: 999px; padding: 1px 8px; margin-left: 4px; white-space: nowrap; }
+.selo { font-size: 0.75rem; font-weight: 600; color: var(--bom); background: #E9F5E9; border-radius: 6px; padding: 1px 8px; margin-left: 4px; white-space: nowrap; }
 .definicao { margin: 4px 0 6px; }
 .meta { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 2px 18px; font-size: 0.85rem; color: var(--texto-suave); }
 .rotulo-meta { font-weight: 600; margin-right: 4px; }

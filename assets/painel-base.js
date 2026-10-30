@@ -114,18 +114,33 @@ function rotuloValor(v) {
   if (a >= 1e3) return `${sinal(v)}${numero(a / 1e3)} mil`;
   return `${sinal(v)}${numero(a)}`;
 }
+// Mede um rótulo na fonte dos gráficos, para saber se ele cabe deitado sobre a barra
+const medidor = document.createElement("canvas").getContext("2d");
+function larguraTexto(texto, tamanho = 10) {
+  medidor.font = `${tamanho}px ${FONTE}`;
+  return medidor.measureText(texto).width;
+}
 /**
- * Como rotular as colunas: deitado quando cabe; em pé quando a coluna é estreita;
- * com duas séries e barras finas demais para dois rótulos em pé, só a primeira série leva rótulo.
+ * Como rotular as colunas para toda barra ter o seu valor, de todas as séries:
+ * deitado quando o maior rótulo cabe na vaga da barra; em pé quando não cabe deitado mas a vaga comporta
+ * a espessura do texto (~15 px; com a fonte um ponto menor, ~9,5 px: os algarismos em pé ocupam ~8 px). Só quando nem em pé cabe
+ * (31 dias ou 24 meses numa tela estreita) os rótulos ficam numa coluna a cada `passo`, e só na primeira série.
+ * textos: os rótulos já formatados de todas as séries (sem eles, supõe rótulos largos).
+ * serie(i) devolve as opções de rótulo de `barras` para a série i.
  */
-function modoRotulos(chave, categorias, series = 1) {
+function modoRotulos(chave, categorias, series = 1, textos = []) {
   const largura = (document.getElementById(`g-${chave}`).clientWidth || 480) - 60;   // menos o eixo de valores
   const coluna = largura / categorias;
-  const barra = Math.min(24, coluna * 0.8 / (series + 0.1 * (series - 1)));
-  // Um rótulo em pé ocupa ~14 px: abaixo de 22 px por coluna eles se encostam.
-  // poucos: nem um rótulo por coluna cabe (24 meses em tela estreita), então rotula uma coluna a cada `passo`
-  const poucos = coluna < 22;
-  return { girar: coluna / series < 46, todas: series === 1 || barra >= 22, poucos, passo: poucos ? Math.ceil(22 / coluna) : 1, coluna };
+  const vaga = coluna / series;   // espaço de cada barra, já com a folga entre elas
+  const maior = textos.length ? Math.max(...textos.map((t) => larguraTexto(t))) : 42;
+  const modo = (girar, tamanho, apenas = null, soPrimeira = false) => ({
+    girar, tamanho, coluna, todas: !soPrimeira, poucos: apenas != null, passo: 1,
+    serie: (i) => (soPrimeira && i > 0 ? { girar: null } : { girar, tamanho, apenas }),
+  });
+  if (maior + 4 <= vaga) return modo(false, 10);
+  if (vaga >= 15) return modo(true, 10);
+  if (vaga >= 9.5) return modo(true, 9);
+  return modo(true, 9, aCada(categorias, Math.ceil(9.5 / coluna)), series > 1);
 }
 /** Colunas rotuladas quando não cabe um rótulo em cada uma: uma a cada `passo`, sempre incluindo a última. */
 function aCada(quantidade, passo) {
@@ -133,19 +148,21 @@ function aCada(quantidade, passo) {
   for (let i = quantidade - 1; i >= 0; i -= passo) indices.add(i);   // conta a partir da última: o mês mais recente sempre tem rótulo
   return indices;
 }
-const rotuloColuna = (v, girar, apagado, formato = rotuloValor) => ({
-  show: true, distance: 4, color: COR.texto, fontSize: 10, opacity: apagado ? 0.45 : 1,
+// Folga entre o valor e a ponta da barra, igual em todos os gráficos
+const DISTANCIA_ROTULO = 7;
+const rotuloColuna = (v, girar, apagado, formato = rotuloValor, tamanho = 10) => ({
+  show: true, distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: tamanho, opacity: apagado ? 0.45 : 1,
   position: v >= 0 ? "top" : "bottom", rotate: girar ? 90 : 0,
   align: girar ? (v >= 0 ? "left" : "right") : "center", verticalAlign: "middle",
   formatter: () => formato(v),
 });
-const barras = (valores, cor, { destaque = null, deitado = false, girar = null, formato, apenas = null } = {}) => valores.map((v, i) => {
+const barras = (valores, cor, { destaque = null, deitado = false, girar = null, formato, apenas = null, tamanho } = {}) => valores.map((v, i) => {
   const apagado = destaque != null && destaque !== i;
   const rotulado = girar != null && (apenas == null || apenas.has(i));
   return {
     value: v,
     itemStyle: { color: typeof cor === "function" ? cor(v, i) : cor, borderRadius: raio(v, deitado), opacity: apagado ? 0.35 : 1 },
-    ...(rotulado ? { label: rotuloColuna(v, girar, apagado, formato) } : {}),
+    ...(rotulado ? { label: rotuloColuna(v, girar, apagado, formato, tamanho) } : {}),
   };
 });
 /** Margens para os rótulos de valor não saírem do gráfico nem encostarem nos meses. */
@@ -164,7 +181,7 @@ const corSinal = (v) => (v >= 0 ? COR.serie1 : COR.negativo);
  */
 function colunasMensais(chave, { meses, series, dicas, formato = rotuloValor, eixo = eixoReais, clicavel = true }) {
   const destaque = estado.mes == null ? null : meses.indexOf(estado.mes);
-  const modo = modoRotulos(chave, meses.length, series.length);
+  const modo = modoRotulos(chave, meses.length, series.length, series.flatMap((s) => s.valores.map(formato)));
   const espaco = espacoRotulos(modo.girar, series.flatMap((s) => s.valores));
   const variosAnos = new Set(meses.map((m) => D.meses[m].slice(0, 4))).size > 1;   // "jan/24" quando o eixo passa de um ano
   return opcaoBase({
@@ -175,8 +192,7 @@ function colunasMensais(chave, { meses, series, dicas, formato = rotuloValor, ei
     tooltip: { ...opcaoBase().tooltip, formatter: (ps) => dica(nomeMes(meses[ps[0].dataIndex]), dicas(ps[0].dataIndex)) },
     series: series.map((s, i) => ({
       name: s.nome, type: "bar", barMaxWidth: 24, barGap: "10%", cursor: clicavel ? "pointer" : "default",
-      data: barras(s.valores, s.cor, { destaque, formato, girar: i === 0 || (modo.todas && !modo.poucos) ? modo.girar : null,
-                                       apenas: modo.poucos ? aCada(s.valores.length, modo.passo) : null }),
+      data: barras(s.valores, s.cor, { destaque, formato, ...modo.serie(i) }),
     })),
   });
 }
@@ -191,7 +207,7 @@ function barrasDeitadas({ nomes, valores, dicas, formato = rotuloValor, cor = CO
     series: [{
       type: "bar", barMaxWidth: 18, cursor: clicavel ? "pointer" : "default",
       data: barras(valores, cor, { deitado: true, destaque }).map((d, i) => ({
-        ...d, label: { show: true, position: "right", color: COR.texto, fontSize: 11, opacity: d.itemStyle.opacity < 1 ? 0.45 : 1, formatter: () => formato(valores[i]) },
+        ...d, label: { show: true, position: "right", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, opacity: d.itemStyle.opacity < 1 ? 0.45 : 1, formatter: () => formato(valores[i]) },
       })),
     }],
   });

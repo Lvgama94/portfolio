@@ -14,18 +14,30 @@
   <meta property="og:image:height" content="627">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" hreflang="pt-BR" href="https://lucasgama.vercel.app/">
+  <link rel="alternate" hreflang="en" href="https://lucasgama.vercel.app/?lang=en">
   <link rel="stylesheet" href="assets/style.css">
+  <script>
+    // Quem escolheu inglês não vê o português piscar antes da tradução
+    try { if ((new URLSearchParams(location.search).get("lang") || localStorage.getItem("idioma")) === "en") document.documentElement.classList.add("traduzindo"); } catch (e) {}
+  </script>
 </head>
 <body>
 
 <header class="topo">
   <nav class="nav">
     <a class="marca" href="#inicio">Lucas Gama</a>
-    <div class="links">
-      <a href="#projetos">Projetos</a>
-      <a href="#como-trabalho">Como trabalho</a>
-      <a href="#sobre">Sobre</a>
-      <a href="#contato">Contato</a>
+    <div class="nav-direita">
+      <div class="links">
+        <a href="#projetos">Projetos</a>
+        <a href="#como-trabalho">Como trabalho</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#contato">Contato</a>
+      </div>
+      <div class="idioma" role="group" aria-label="Idioma / Language" translate="no">
+        <button type="button" data-idioma="pt" aria-pressed="true" lang="pt-BR" title="Português">PT</button>
+        <button type="button" data-idioma="en" aria-pressed="false" lang="en" title="English">EN</button>
+      </div>
     </div>
   </nav>
 
@@ -74,6 +86,7 @@
             <button type="button" role="tab" id="aba-sql" aria-controls="sql" aria-selected="false" tabindex="-1"><span class="num">07</span><span class="nome">SQL na prática</span></button>
             <button type="button" role="tab" id="aba-relatorio" aria-controls="relatorio" aria-selected="false" tabindex="-1"><span class="num">08</span><span class="nome">Relatório</span></button>
             <button type="button" role="tab" id="aba-catalogo" aria-controls="catalogo" aria-selected="false" tabindex="-1"><span class="num">09</span><span class="nome">Catálogo</span></button>
+            <button type="button" role="tab" id="aba-analise" aria-controls="analise" aria-selected="false" tabindex="-1"><span class="num">10</span><span class="nome">Análise em Python</span></button>
           </div>
         </div>
       </div>
@@ -361,11 +374,46 @@
             <div class="acoes-projeto surge" style="--i: 6"><a class="botao primario" href="indicadores.html">Abrir o catálogo</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/catalogo_indicadores.md" target="_blank" rel="noopener">Versão no GitHub</a></div>
           </div>
         </article>
+        <article class="projeto" role="tabpanel" id="analise" aria-labelledby="aba-analise" tabindex="0">
+          <div class="projeto-visual">
+            <button type="button" class="imagem-principal" aria-label="Ampliar: Previsão de 2026">
+              <img src="assets/img/analise_previsao.svg" alt="Previsão de 2026" loading="lazy">
+            </button>
+            <div class="miniaturas" role="group" aria-label="Gráficos">
+              <button type="button" class="miniatura ativa" aria-pressed="true" data-src="assets/img/analise_previsao.svg" aria-label="Previsão de 2026"><img src="assets/img/analise_previsao.svg" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/analise_segmentos.svg" aria-label="Segmentos RFM"><img src="assets/img/analise_segmentos.svg" alt="" loading="lazy"></button>
+              <button type="button" class="miniatura" aria-pressed="false" data-src="assets/img/analise_em_risco.svg" aria-label="Clientes em risco"><img src="assets/img/analise_em_risco.svg" alt="" loading="lazy"></button>
+            </div>
+            <h4>O que fiz</h4>
+            <ul class="o-que-fiz">
+              <li>Segmentação RFM com pandas: recência por faixas de negócio, frequência e valor em quintis</li>
+              <li>Previsão com sazonalidade e tendência, sem o maio atípico das enchentes de 2024</li>
+              <li>Teste do método no 2º semestre de 2025, contra o real e contra o orçamento</li>
+              <li>Notebook executado no GitHub, com os números de partida conferidos contra o SQL</li>
+            </ul>
+          </div>
+          <div class="projeto-texto">
+            <p class="kicker surge" style="--i: 0">Python · pandas</p>
+            <h3 class="surge" style="--i: 1">Clientes e previsão de receita</h3>
+            <p class="lead surge" style="--i: 2">Segmentação RFM da carteira e previsão da receita de 2026, testada contra o que aconteceu em 2025.</p>
+            <h4 class="surge" style="--i: 3">O problema</h4>
+            <p class="surge" style="--i: 4">A diretoria queria saber quais clientes não pode perder e qual meta de receita é realista para 2026, depois de um orçamento que ficou acima do realizado.</p>
+            <h4 class="surge" style="--i: 5">O que os dados mostraram</h4>
+            <ul class="destaques surge" style="--i: 6">
+              <li><strong>148 campeões</strong> (35% dos clientes) fazem 82% do faturamento</li>
+              <li><strong>12 clientes em risco</strong> somaram R$ 2,6 mi em 2025; 11 dos 32 parados estão entre eles</li>
+              <li><strong>R$ 65,7 mi</strong> previstos para 2026 (+4,6%), entre R$ 64,3 e 67,0 mi</li>
+              <li><strong>0,1%</strong> de erro no teste do 2º semestre de 2025, contra 2,2% do orçamento</li>
+            </ul>
+            <p class="tags surge" style="--i: 7"><span>Python</span><span>pandas</span><span>matplotlib</span></p>
+            <div class="acoes-projeto surge" style="--i: 8"><a class="botao primario" href="analise.html">Ler a análise</a><a class="botao secundario" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/analises/clientes_e_previsao.ipynb" target="_blank" rel="noopener">Notebook no GitHub</a></div>
+          </div>
+        </article>
       </div>
 
       <div class="navegar-vitrine">
         <button type="button" class="anterior" aria-label="Projeto anterior">←</button>
-        <span class="posicao" aria-live="polite"><strong>1</strong> de 9</span>
+        <span class="posicao" aria-live="polite" translate="no"><strong>1</strong> <span class="de">de</span> 10</span>
         <button type="button" class="proximo" aria-label="Próximo projeto">→</button>
       </div>
     </div>
@@ -432,6 +480,7 @@
   <p class="legenda"></p>
 </dialog>
 
+<script src="assets/idioma.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>
