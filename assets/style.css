@@ -211,36 +211,51 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   font-weight: 700;
 }
 
-/* Faixa do SQL na prática, abaixo dos cartões: texto à esquerda, trecho de código à direita */
-.faixa-sql {
-  margin-top: 22px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: var(--cartao);
-  border: 1px solid var(--borda);
-  border-radius: var(--raio);
-  box-shadow: var(--sombra);
-  overflow: hidden;
-  scroll-margin-top: 16px;
-}
-.faixa-sql .corpo-faixa { padding: 22px 24px; display: flex; flex-direction: column; }
-.faixa-sql h3 { margin: 4px 0 6px; }
-.faixa-sql p { margin: 0 0 10px; color: var(--texto-suave); }
-.faixa-sql .acoes-cartao { margin-top: 8px; }
-.codigo-mini {
+/* Extras abaixo dos projetos: mesmo cartão, com uma prévia desenhada no lugar da captura */
+.secao .titulo-extras { font-size: 1.3rem; margin: 44px 0 16px; }
+.previa-codigo, .previa-relatorio {
   margin: 0;
-  padding: 24px;
-  overflow-x: auto;
+  aspect-ratio: 16 / 9;
+  min-height: 220px;
+  border-bottom: 1px solid var(--borda);
+  overflow: hidden;
+}
+.previa-codigo {
+  padding: 22px 24px;
   display: flex;
   align-items: center;
   background: #13263A;
   color: #E3ECF5;
   font: 0.84rem/1.6 Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace;
 }
-.codigo-mini code { background: none; padding: 0; font-size: inherit; }
-.codigo-mini .k { color: #8CC4FF; }
-.codigo-mini .f { color: #FFC56B; }
-.codigo-mini .c { color: #93A7BA; font-style: italic; }
+.previa-codigo code { background: none; padding: 0; font-size: inherit; }
+.previa-codigo .k { color: #8CC4FF; }
+.previa-codigo .f { color: #FFC56B; }
+.previa-codigo .c { color: #93A7BA; font-style: italic; }
+.previa-relatorio {
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--marinho), #2B5A85);
+  color: #FFFFFF;
+}
+.cartao .previa-relatorio p { margin: 0; color: #FFFFFF; }
+.cartao .previa-relatorio .pr-titulo { color: #BFD3E6; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.previa-relatorio .pr-total strong { font-size: 1.8rem; }
+.previa-relatorio ol { list-style: none; padding: 0; margin: 6px 0 0; }
+.cartao .previa-relatorio li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 6px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 0.88rem;
+}
+.previa-relatorio li span { color: #DCE7F2; }
+.previa-relatorio li b { white-space: nowrap; color: #FFC56B; }
 
 /* ------------------------------------------------------------ detalhes */
 .colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
@@ -323,8 +338,6 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   .fluxo { grid-template-columns: 1fr 1fr; }
   .colunas { grid-template-columns: 1fr; gap: 8px; }
   .cartoes { grid-template-columns: 1fr; }
-  .faixa-sql { grid-template-columns: 1fr; }
-  .codigo-mini { display: none; }
 }
 
 @media (max-width: 560px) {
@@ -333,4 +346,6 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   .secao { padding: 44px 20px; }
   .numeros strong { font-size: 1.6rem; }
   .fluxo { grid-template-columns: 1fr; }
+  .previa-codigo { font-size: 0.7rem; padding: 18px 16px; }
+  .previa-relatorio { aspect-ratio: auto; padding: 18px 20px; }
 }

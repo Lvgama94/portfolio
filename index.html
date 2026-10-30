@@ -156,24 +156,55 @@
       </article>
     </div>
 
-    <div class="faixa-sql" id="sql">
-      <div class="corpo-faixa">
-        <p class="rotulo">Extra · SQL Server</p>
-        <h3>SQL na prática</h3>
-        <p>Dez perguntas de negócio da mesma empresa respondidas em SQL: quem parou de comprar, quais fornecedores atrasam, onde a receita fugiu do orçamento. Cada uma traz a resposta, a consulta e o resultado.</p>
-        <p class="tags"><span>CTE</span><span>Funções de janela</span><span>LAG</span><span>NTILE</span><span>ROLLUP</span><span>FULL JOIN</span></p>
-        <div class="acoes-cartao">
-          <a class="botao primario pequeno" href="sql.html">Ver as 10 consultas</a>
-          <a class="mais" href="https://github.com/Lvgama94/distribuidora-sul/tree/main/sql/perguntas" target="_blank" rel="noopener">Arquivos no GitHub →</a>
-        </div>
-      </div>
-      <pre class="codigo-mini" aria-hidden="true"><code><span class="k">SELECT</span> faixa_de_clientes,
+    <h3 class="titulo-extras">Além dos painéis</h3>
+    <div class="cartoes">
+      <article class="cartao" id="sql">
+        <pre class="previa-codigo" aria-hidden="true"><code><span class="k">SELECT</span> faixa_de_clientes,
        <span class="f">SUM</span>(faturamento) <span class="k">AS</span> faturamento,
        <span class="f">SUM</span>(faturamento)
          / <span class="f">SUM</span>(<span class="f">SUM</span>(faturamento)) <span class="k">OVER</span> ()
          <span class="k">AS</span> pct_do_faturamento
 <span class="k">FROM</span> quintos
 <span class="k">GROUP BY</span> quinto;  <span class="c">-- 20% maiores: 73,4%</span></code></pre>
+        <div class="corpo">
+          <h3>SQL na prática</h3>
+          <p>Dez perguntas de negócio respondidas em SQL: quem parou de comprar, quais fornecedores atrasam, onde a receita fugiu do orçamento.</p>
+          <ul>
+            <li>Cada pergunta com a resposta, a consulta e o resultado</li>
+            <li>Números conferidos com as views dos painéis antes de publicar</li>
+          </ul>
+          <p class="tags"><span>CTE</span><span>Funções de janela</span><span>NTILE</span><span>FULL JOIN</span></p>
+          <div class="acoes-cartao">
+            <a class="botao primario pequeno" href="sql.html">Ver as 10 consultas</a>
+            <a class="mais" href="https://github.com/Lvgama94/distribuidora-sul/tree/main/sql/perguntas" target="_blank" rel="noopener">Arquivos no GitHub →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="cartao" id="relatorio">
+        <div class="previa-relatorio" aria-hidden="true">
+          <p class="pr-titulo">Três decisões para 2026</p>
+          <p class="pr-total"><strong>R$ 441 mil</strong> por ano</p>
+          <ol>
+            <li><span>Recuperar 32 clientes parados</span><b>R$ 333 mil</b></li>
+            <li><span>Cobrar pontualidade de 9 fornecedores</span><b>R$ 55 mil</b></li>
+            <li><span>Reduzir as saídas no 1º ano</span><b>R$ 53 mil</b></li>
+          </ol>
+        </div>
+        <div class="corpo">
+          <h3>Relatório para a diretoria</h3>
+          <p>Os quatro painéis lidos como decisão: o que fazer em 2026, quem faz e quanto vale.</p>
+          <ul>
+            <li>R$ 441 mil por ano no cenário conservador, cerca de 20% do resultado de 2025</li>
+            <li>Ganho de cada decisão calculado em SQL, com as premissas à vista</li>
+          </ul>
+          <p class="tags"><span>Análise de negócio</span><span>SQL</span><span>Comunicação</span></p>
+          <div class="acoes-cartao">
+            <a class="botao primario pequeno" href="relatorio.html">Ler o relatório</a>
+            <a class="mais" href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/relatorio_diretoria.md" target="_blank" rel="noopener">Roteiro no GitHub →</a>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatório para a diretoria · Lucas Gama</title>
+  <meta name="description" content="Três decisões para 2026 na Distribuidora Sul, tiradas dos painéis de vendas, compras, RH e financeiro, com o ganho de cada uma calculado em SQL.">
+  <meta property="og:title" content="Relatório para a diretoria · Lucas Gama">
+  <meta property="og:description" content="Três decisões para 2026, com o ganho em reais de cada uma.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/relatorio.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+  <link rel="stylesheet" href="assets/relatorio.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#relatorio">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">Relatório para a diretoria · janeiro de 2026</p>
+    <h1>Três decisões para 2026</h1>
+    <p class="ferramentas">Distribuidora Sul Ltda. (dados fictícios). Leitura dos painéis Financeiro, People Analytics, Compras e Estoque e Comercial em forma de decisão, com o ganho de cada uma calculado em SQL sobre o mesmo banco.</p>
+  </div>
+</header>
+
+<main class="relatorio">
+
+  <section class="resumo" aria-labelledby="titulo-resumo">
+    <h2 id="titulo-resumo" class="rotulo-secao">Resumo</h2>
+    <div class="resumo-topo">
+      <p class="lead">2025 fechou com faturamento 6,6% maior, mas com resultado R$ 1,9 mi abaixo do orçado. Os painéis apontam três decisões que, num cenário conservador, somam:</p>
+      <div class="ganho-total">
+        <strong>R$ 441 mil</strong>
+        <span>por ano, cerca de 20% do resultado líquido de 2025 (R$ 2,23 mi)</span>
+      </div>
+    </div>
+    <div class="tabela-rolagem">
+      <table class="decisoes">
+        <thead>
+          <tr><th>#</th><th>Decisão</th><th>Responsável</th><th class="num">Ganho por ano</th><th>Primeiro passo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><a href="#decisao-1">Recuperar os 32 clientes que pararam de comprar em 2025</a></td><td>Comercial</td><td class="num">R$ 333 mil</td><td>Ligar para os 8 supermercados em 30 dias</td></tr>
+          <tr><td>2</td><td><a href="#decisao-2">Exigir pontualidade dos 9 fornecedores que mais atrasam</a></td><td>Compras</td><td class="num">R$ 55 mil</td><td>Acordo de prazo, começando pela Gaúcha Alimentos</td></tr>
+          <tr><td>3</td><td><a href="#decisao-3">Reduzir as saídas no primeiro ano de ajudantes de entrega e vendedores</a></td><td>RH e Logística</td><td class="num">R$ 53 mil</td><td>Integração nos primeiros 90 dias</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <article class="decisao" id="decisao-1">
+    <header>
+      <span class="num-decisao">1</span>
+      <div>
+        <h2>Recuperar os clientes que pararam de comprar</h2>
+        <p class="meta">Responsável: Comercial · primeiro passo em 30 dias</p>
+      </div>
+    </header>
+    <div class="corpo-decisao">
+      <div>
+        <h3>O que os dados mostram</h3>
+        <ul>
+          <li>32 clientes compraram em 2025 e estão há mais de 90 dias sem comprar. Em 2024 eles faturaram <strong>R$ 5,0 mi</strong>; em 2025, R$ 2,85 mi até pararem.</li>
+          <li>8 deles são supermercados e respondem por R$ 3,8 mi (76%) do que esses clientes compravam.</li>
+          <li>Juntos, davam <strong>R$ 1,0 mi de lucro bruto por ano</strong>. A carteira já vinha encolhendo: 386 clientes compraram em 2024 e 371 em 2025.</li>
+        </ul>
+        <h3>O que propomos</h3>
+        <ul>
+          <li>Entregar a lista aos vendedores por ordem de faturamento e ligar para os 8 supermercados nos próximos 30 dias.</li>
+          <li>Registrar o motivo de cada parada: preço, prazo de entrega, falta de produto ou troca de vendedor.</li>
+          <li>Acompanhar todo mês os clientes ativos que passam de 60 dias sem comprar, antes que virem perda.</li>
+        </ul>
+      </div>
+      <aside>
+        <div class="ganho">
+          <span class="rotulo-ganho">Ganho estimado</span>
+          <strong>R$ 333 mil</strong>
+          <span>de lucro bruto por ano se 1 em cada 3 voltar a comprar como em 2024</span>
+        </div>
+        <div class="comparativo" aria-label="Faturamento desses 32 clientes">
+          <p class="titulo-comparativo">Faturamento desses 32 clientes</p>
+          <div class="barra"><span class="rotulo">2024</span><span class="trilho"><i style="width: 100%"></i></span><span class="valor">R$ 5,0 mi</span></div>
+          <div class="barra alerta"><span class="rotulo">2025</span><span class="trilho"><i style="width: 57%"></i></span><span class="valor">R$ 2,85 mi</span></div>
+        </div>
+        <a class="acompanhar" href="comercial.html#clientes">Acompanhar no painel Comercial › Clientes</a>
+      </aside>
+    </div>
+  </article>
+
+  <article class="decisao" id="decisao-2">
+    <header>
+      <span class="num-decisao">2</span>
+      <div>
+        <h2>Exigir pontualidade dos fornecedores que mais atrasam</h2>
+        <p class="meta">Responsável: Compras · primeiro passo em 60 dias</p>
+      </div>
+    </header>
+    <div class="corpo-decisao">
+      <div>
+        <h3>O que os dados mostram</h3>
+        <ul>
+          <li>9 fornecedores entregaram menos de 70% dos pedidos de 2025 no prazo.</li>
+          <li>Nos produtos deles, faltou estoque em <strong>2,2% da demanda</strong>, mais que o dobro dos demais fornecedores (1,0%). Foram R$ 514 mil em vendas perdidas.</li>
+          <li>A Gaúcha Alimentos tem a maior venda perdida entre todos os fornecedores (R$ 156 mil) e entregou só 58% dos pedidos no prazo.</li>
+        </ul>
+        <h3>O que propomos</h3>
+        <ul>
+          <li>Acordo de nível de serviço com os 9, com prazo de entrega e desconto por atraso, começando pela Gaúcha Alimentos.</li>
+          <li>Estoque de segurança maior nos itens classe A desses fornecedores enquanto a pontualidade não melhora, financiado pela redução do estoque dos itens que não faltam.</li>
+          <li>Um segundo fornecedor para os itens classe A mais afetados.</li>
+        </ul>
+      </div>
+      <aside>
+        <div class="ganho">
+          <span class="rotulo-ganho">Ganho estimado</span>
+          <strong>R$ 55 mil</strong>
+          <span>de lucro bruto por ano, sobre R$ 272 mil em vendas que hoje faltam, se a ruptura cair ao nível dos fornecedores pontuais</span>
+        </div>
+        <div class="comparativo" aria-label="Ruptura em 2025">
+          <p class="titulo-comparativo">Demanda sem estoque em 2025</p>
+          <div class="barra alerta"><span class="rotulo">9 impontuais</span><span class="trilho"><i style="width: 100%"></i></span><span class="valor">2,2%</span></div>
+          <div class="barra"><span class="rotulo">Demais</span><span class="trilho"><i style="width: 47%"></i></span><span class="valor">1,0%</span></div>
+        </div>
+        <a class="acompanhar" href="compras.html#estoque">Acompanhar no painel Compras e Estoque › Estoque e Ruptura</a>
+      </aside>
+    </div>
+  </article>
+
+  <article class="decisao" id="decisao-3">
+    <header>
+      <span class="num-decisao">3</span>
+      <div>
+        <h2>Reduzir as saídas no primeiro ano</h2>
+        <p class="meta">Responsável: RH e Logística · primeiro passo em 90 dias</p>
+      </div>
+    </header>
+    <div class="corpo-decisao">
+      <div>
+        <h3>O que os dados mostram</h3>
+        <ul>
+          <li>50 das 80 saídas de 2024 e 2025 (62,5%) aconteceram antes de um ano de casa. Metade delas (25) foi de ajudantes de entrega e vendedores.</li>
+          <li>As saídas de vendedores externos passaram de <strong>5 em 2024 para 13 em 2025</strong>. Cada saída passa a carteira para um vendedor novo: 153 clientes trocaram de vendedor nos dois anos.</li>
+          <li>Em 2025, quem saiu faltava 30% mais do que quem ficou (0,52 contra 0,40 falta por mês trabalhado): as faltas são um sinal de alerta.</li>
+        </ul>
+        <h3>O que propomos</h3>
+        <ul>
+          <li>Integração estruturada nos primeiros 90 dias para ajudantes e vendedores, com um responsável por novato.</li>
+          <li>Usar as faltas dos primeiros meses como alerta para uma conversa com o gestor.</li>
+          <li>Entrevista de desligamento padronizada, para saber por que os vendedores estão saindo.</li>
+        </ul>
+      </div>
+      <aside>
+        <div class="ganho">
+          <span class="rotulo-ganho">Ganho estimado</span>
+          <strong>R$ 53 mil</strong>
+          <span>por ano em custo de reposição com metade das saídas no primeiro ano. O ganho maior, menos visível, é manter o cliente com o mesmo vendedor</span>
+        </div>
+        <div class="comparativo" aria-label="Saídas de vendedores externos">
+          <p class="titulo-comparativo">Saídas de vendedores externos</p>
+          <div class="barra"><span class="rotulo">2024</span><span class="trilho"><i style="width: 38%"></i></span><span class="valor">5</span></div>
+          <div class="barra alerta"><span class="rotulo">2025</span><span class="trilho"><i style="width: 100%"></i></span><span class="valor">13</span></div>
+        </div>
+        <a class="acompanhar" href="rh.html#rotatividade">Acompanhar no painel People Analytics › Rotatividade</a>
+      </aside>
+    </div>
+  </article>
+
+  <section class="radar" aria-labelledby="titulo-radar">
+    <h2 id="titulo-radar" class="rotulo-secao">Também no radar</h2>
+    <div class="grade-radar">
+      <div>
+        <h3>Frota acima do orçado pelo 2º ano</h3>
+        <p><strong>R$ 113 mil</strong> em 2025 (combustível +18,6%, manutenção +31,3%) e R$ 79 mil em 2024. O orçamento de 2026 deveria partir do custo por entrega, com o consumo acompanhado por veículo.</p>
+      </div>
+      <div>
+        <h3>Inadimplência do pequeno varejo</h3>
+        <p><strong>25%</strong> do que mercados de bairro, padarias e lanchonetes têm em aberto está vencido, contra 7,9% nos supermercados. R$ 259 mil estão vencidos há mais de 90 dias. Vale um limite de crédito menor para novos clientes desses tipos.</p>
+      </div>
+      <div>
+        <h3>Estoque maior e girando menos</h3>
+        <p><strong>R$ 3,19 mi</strong> em dez/2025, 16% acima de dez/2024, com o giro caindo de 17,7 para 15,8 vezes. É desse capital parado que sai o estoque de segurança da decisão 2.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="metodo" aria-labelledby="titulo-metodo">
+    <h2 id="titulo-metodo" class="rotulo-secao">Como os números foram calculados</h2>
+    <ul>
+      <li>Os números das decisões e do radar saem da view <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/sql/11_relatorio_diretoria.sql" target="_blank" rel="noopener"><code>dw.vw_relatorio_diretoria</code></a>, sobre o mesmo banco dos painéis, com data de corte em 31/12/2025. O <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/relatorio_diretoria.md" target="_blank" rel="noopener">roteiro no GitHub</a> lista cada um.</li>
+      <li><strong>Lucro bruto</strong> = faturamento − impostos sobre vendas (14,1% da receita bruta em 2025) − custo das mercadorias, como na DRE.</li>
+      <li><strong>Decisão 1:</strong> o faturamento de 2024 desses clientes, um ano inteiro de compras, é a base do que está em jogo por ano.</li>
+      <li><strong>Decisão 2:</strong> fornecedor impontual é o que entregou menos de 70% dos pedidos de 2025 no prazo; a venda perdida é atribuída ao fornecedor principal do produto.</li>
+      <li><strong>Decisão 3:</strong> cada substituição custa uma folha mensal completa do cargo (salário × 1,49, com encargos e benefícios, na proporção da DRE de 2025), cobrindo rescisão, seleção e treinamento. É uma estimativa conservadora, a validar com o RH.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+</body>
+</html>
