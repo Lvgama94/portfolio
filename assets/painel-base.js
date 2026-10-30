@@ -287,7 +287,13 @@ async function iniciarPainel({ arquivo, aoCarregar, limparSelecao }) {
   }
   aoCarregar?.();
   document.getElementById("carregando").remove();
-  document.querySelectorAll(".abas button").forEach((b) => b.addEventListener("click", () => { estado.aba = b.dataset.aba; atualizar(); }));
+  // O endereço pode abrir uma aba direto (comercial.html#clientes), e a aba escolhida fica no endereço
+  if (PAGINAS[location.hash.slice(1)]) estado.aba = location.hash.slice(1);
+  document.querySelectorAll(".abas button").forEach((b) => b.addEventListener("click", () => {
+    estado.aba = b.dataset.aba;
+    history.replaceState(null, "", `#${estado.aba}`);
+    atualizar();
+  }));
   document.querySelectorAll(".ver-tabela").forEach((b) => b.addEventListener("click", () => {
     const g = b.dataset.grafico;
     if (emTabela.has(g)) emTabela.delete(g); else emTabela.add(g);

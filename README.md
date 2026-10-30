@@ -22,11 +22,13 @@ compras.html                painel Compras e Estoque interativo
 comercial.html              painel Comercial interativo
 excel.html                  resultado das automações em Excel (conciliação e ponto)
 sql.html                    SQL na prática: 10 perguntas com a consulta e o resultado
+relatorio.html              relatório para a diretoria: três decisões para 2026, com o ganho de cada uma
 assets/style.css            estilos (mesma paleta dos painéis)
 assets/site.js              ampliação das imagens das galerias
 assets/painel.css           filtros, abas, indicadores e gráficos das páginas interativas
 assets/painel-base.js       formatação, gráficos, rótulos, tabelas e abas comuns a todas
 assets/sql.js, sql.css      realce de sintaxe e tabelas de resultado do SQL na prática
+assets/relatorio.css        layout do relatório (com estilo de impressão)
 assets/financeiro.js, rh.js, compras.js, comercial.js, excel.js   cálculo e gráficos de cada página
 assets/data/*.json          dados de cada página
 assets/img/                 capturas dos painéis em WebP

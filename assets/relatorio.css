@@ -1,0 +1,126 @@
+/* Relatório para a diretoria: texto em coluna de leitura, ganho em destaque e comparativos em barras. */
+.relatorio { max-width: 960px; margin: 0 auto; padding: 0 24px 48px; }
+.relatorio section, .decisao {
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 24px 28px;
+  margin-bottom: 22px;
+  scroll-margin-top: 16px;
+}
+.rotulo-secao {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--azul-claro);
+}
+
+/* ------------------------------------------------------------ resumo */
+.resumo-topo { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin-bottom: 18px; }
+.lead { margin: 0; font-size: 1.08rem; }
+.ganho-total {
+  background: var(--marinho);
+  color: #FFFFFF;
+  border-radius: 10px;
+  padding: 14px 20px;
+  max-width: 280px;
+}
+.ganho-total strong { display: block; font-size: 2rem; line-height: 1.1; }
+.ganho-total span { color: #DCE7F2; font-size: 0.88rem; }
+
+.decisoes { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+.decisoes th, .decisoes td { padding: 9px 10px; border-bottom: 1px solid var(--borda); text-align: left; vertical-align: top; }
+.decisoes th { color: var(--texto-suave); font-size: 0.82rem; font-weight: 600; }
+.decisoes td:first-child { font-weight: 700; color: var(--azul-claro); }
+.decisoes th.num { text-align: right; white-space: nowrap; }
+.decisoes td.num { text-align: right; white-space: nowrap; font-weight: 700; color: var(--marinho); font-variant-numeric: tabular-nums; }
+.decisoes a { color: var(--texto); font-weight: 600; text-decoration-color: var(--borda); }
+.decisoes a:hover { color: var(--azul); }
+
+/* ------------------------------------------------------------ decisões */
+.decisao > header { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 8px; }
+.num-decisao {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--laranja);
+  color: #1B2631;
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.decisao h2 { margin: 0; font-size: 1.35rem; color: var(--marinho); line-height: 1.3; }
+.meta { margin: 2px 0 0; color: var(--texto-suave); font-size: 0.9rem; }
+.corpo-decisao { display: grid; grid-template-columns: 1fr 300px; gap: 28px; }
+.corpo-decisao h3 { margin: 16px 0 6px; font-size: 1rem; color: var(--marinho); }
+.corpo-decisao ul { margin: 0; padding-left: 20px; }
+.corpo-decisao li { margin-bottom: 6px; }
+.corpo-decisao aside { display: flex; flex-direction: column; gap: 14px; padding-top: 16px; }
+
+.ganho { background: #FFF8EC; border-left: 4px solid var(--laranja); border-radius: 6px; padding: 12px 14px; }
+.ganho .rotulo-ganho { display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #8A4B00; }
+.ganho strong { display: block; font-size: 1.7rem; line-height: 1.2; color: var(--marinho); }
+.ganho span:last-child { font-size: 0.88rem; color: var(--texto-suave); }
+
+/* Comparativo: duas barras na mesma escala, a que preocupa em laranja */
+.comparativo { border: 1px solid var(--borda); border-radius: 8px; padding: 10px 12px; }
+.titulo-comparativo { margin: 0 0 8px; font-size: 0.84rem; font-weight: 600; color: var(--texto-suave); }
+.barra { display: grid; grid-template-columns: 84px 1fr auto; gap: 8px; align-items: center; font-size: 0.85rem; margin-top: 6px; }
+.barra .rotulo { color: var(--texto-suave); }
+.barra .trilho { height: 10px; background: #EEF2F7; border-radius: 0 4px 4px 0; overflow: hidden; }
+.barra i { display: block; height: 100%; background: var(--azul-claro); border-radius: 0 4px 4px 0; }
+.barra.alerta i { background: var(--laranja); }
+.barra .valor { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 64px; text-align: right; }
+
+.acompanhar { font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+.acompanhar::after { content: " →"; }
+
+/* ------------------------------------------------------------ radar e método */
+.grade-radar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grade-radar > div { background: var(--fundo); border-radius: 8px; padding: 14px 16px; }
+.grade-radar h3 { margin: 0 0 6px; font-size: 0.98rem; color: var(--marinho); }
+.grade-radar p { margin: 0; font-size: 0.9rem; color: var(--texto-suave); }
+.grade-radar strong { color: var(--texto); }
+
+.metodo ul { margin: 0; padding-left: 20px; color: var(--texto-suave); font-size: 0.9rem; }
+.metodo li { margin-bottom: 6px; }
+
+/* ------------------------------------------------------------ celular */
+@media (max-width: 860px) {
+  .corpo-decisao { grid-template-columns: 1fr; gap: 0; }
+  .grade-radar { grid-template-columns: 1fr; }
+  .resumo-topo { grid-template-columns: 1fr; gap: 12px; }
+  .ganho-total { max-width: none; }
+}
+@media (max-width: 560px) {
+  .relatorio { padding: 0 16px 40px; }
+  .relatorio section, .decisao { padding: 18px 16px; }
+  .decisao h2 { font-size: 1.15rem; }
+  .num-decisao { width: 32px; height: 32px; font-size: 1rem; }
+  /* A tabela do resumo vira uma lista: cada decisão em um bloco */
+  .decisoes thead { display: none; }
+  .decisoes, .decisoes tbody, .decisoes tr, .decisoes td { display: block; }
+  .decisoes tr { border-bottom: 1px solid var(--borda); padding: 8px 0; }
+  .decisoes td { border: none; padding: 2px 0; }
+  .decisoes td:first-child { display: none; }
+  .decisoes td:nth-child(3)::before { content: "Responsável: "; color: var(--texto-suave); }
+  .decisoes td:nth-child(5)::before { content: "Primeiro passo: "; color: var(--texto-suave); }
+  .decisoes td.num { text-align: left; }
+}
+
+/* ------------------------------------------------------------ impressão */
+@media print {
+  .topo .nav, .rodape { display: none; }
+  .topo { background: none; color: var(--texto); }
+  .topo .cargo, .topo .ferramentas { color: var(--texto-suave); }
+  body { background: #FFFFFF; }
+  .relatorio section, .decisao { box-shadow: none; break-inside: avoid; }
+  .ganho-total { background: none; color: var(--marinho); border: 1px solid var(--borda); }
+  .ganho-total span { color: var(--texto-suave); }
+}
