@@ -1,0 +1,79 @@
+/* Catálogo de indicadores: complementa style.css e painel.css com a busca, os verbetes e o realce de DAX. */
+.busca { display: flex; align-items: center; gap: 6px; }
+.busca input {
+  font: inherit;
+  font-size: 0.9rem;
+  width: 280px;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: var(--cartao);
+}
+.busca input:focus { outline: 2px solid var(--azul-claro); outline-offset: 1px; }
+.so-conferidos { display: flex; align-items: center; gap: 6px; font-size: 0.88rem; color: var(--texto); cursor: pointer; }
+.contagem { margin: 10px 0 0; font-size: 0.85rem; color: var(--texto-suave); }
+
+.homonimos {
+  background: #FFF8EC;
+  border-left: 4px solid var(--laranja);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 0 0 22px;
+  font-size: 0.92rem;
+}
+.homonimos h2 { margin: 0 0 4px; font-size: 1rem; color: var(--marinho); }
+.homonimos p { margin: 0 0 6px; color: var(--texto-suave); }
+.homonimos ul { margin: 0; padding-left: 20px; }
+.homonimos li { margin-bottom: 4px; }
+
+.painel-catalogo { margin-bottom: 30px; }
+.painel-catalogo > header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-bottom: 2px solid var(--marinho); padding-bottom: 4px; }
+.painel-catalogo h2 { margin: 0; font-size: 1.4rem; color: var(--marinho); }
+.painel-catalogo > header a { font-weight: 600; font-size: 0.9rem; text-decoration: none; }
+.painel-catalogo > header a::after { content: " →"; }
+.painel-catalogo h3 {
+  margin: 20px 0 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--azul-claro);
+}
+
+.indicador {
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  scroll-margin-top: 140px;
+}
+.indicador.destaque { animation: destaque 1.6s ease-out; }
+@keyframes destaque { from { box-shadow: 0 0 0 3px var(--laranja); } to { box-shadow: 0 0 0 3px transparent; } }
+.indicador > header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.indicador h4 { margin: 0; font-size: 1.02rem; color: var(--marinho); }
+.unidade { font-size: 0.75rem; font-weight: 600; color: var(--texto-suave); background: #EEF2F7; border-radius: 4px; padding: 1px 6px; }
+.valor-conferido { margin-left: auto; font-size: 0.88rem; color: var(--texto-suave); font-variant-numeric: tabular-nums; }
+.valor-conferido strong { color: var(--texto); }
+.selo { font-size: 0.75rem; font-weight: 600; color: var(--bom); background: #E9F5E9; border-radius: 999px; padding: 1px 8px; margin-left: 4px; white-space: nowrap; }
+.definicao { margin: 4px 0 6px; }
+.meta { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 2px 18px; font-size: 0.85rem; color: var(--texto-suave); }
+.rotulo-meta { font-weight: 600; margin-right: 4px; }
+.meta a { text-decoration: none; }
+.meta a:hover { text-decoration: underline; }
+.indicador details { margin-top: 6px; }
+.indicador summary { cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--azul); width: fit-content; }
+.indicador details .codigo { margin-top: 6px; white-space: pre; }
+
+/* DAX: colunas e medidas, além das cores comuns do bloco de código */
+.codigo .col { color: #C9D7E6; }
+.codigo .med { color: #FFFFFF; text-decoration: underline dotted rgba(255, 255, 255, 0.5); text-underline-offset: 3px; }
+.codigo a.med:hover { text-decoration: underline solid; }
+
+@media (max-width: 560px) {
+  .busca { width: 100%; }
+  .busca input { width: 100%; }
+  .valor-conferido { margin-left: 0; width: 100%; }
+  .indicador { padding: 10px 12px; }
+}

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo de indicadores · Lucas Gama</title>
+  <meta name="description" content="Os 140 indicadores dos quatro painéis da Distribuidora Sul, com definição, fórmula DAX, fonte no SQL Server e valor de 2025 conferido contra o SQL.">
+  <meta property="og:title" content="Catálogo de indicadores · Lucas Gama">
+  <meta property="og:description" content="140 indicadores com definição, fórmula DAX, fonte e valor conferido contra o SQL.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lucasgama.vercel.app/indicadores.html">
+  <meta property="og:image" content="https://lucasgama.vercel.app/assets/og.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/painel.css">
+  <link rel="stylesheet" href="assets/indicadores.css">
+</head>
+<body>
+
+<header class="topo">
+  <nav class="nav">
+    <a class="marca" href="index.html">Lucas Gama</a>
+    <div class="links sempre">
+      <a href="index.html#catalogo">← Voltar ao portfólio</a>
+    </div>
+  </nav>
+  <div class="cabecalho-painel">
+    <p class="cargo">Governança de BI</p>
+    <h1>Catálogo de indicadores</h1>
+    <p class="ferramentas">Todos os indicadores dos quatro painéis da Distribuidora Sul (dados fictícios), com definição, fórmula DAX, fonte no SQL Server e o valor de 2025 dos que foram conferidos contra o SQL. O catálogo é gerado a partir dos próprios modelos do Power BI, então a definição aqui é a mesma que aparece no painel.</p>
+  </div>
+</header>
+
+<main class="painel">
+  <div class="barra-filtros">
+    <div class="filtros">
+      <label class="busca">
+        <span class="rotulo-filtro">Buscar</span>
+        <input type="search" id="busca" placeholder="nome, definição, fórmula ou tabela" autocomplete="off">
+      </label>
+      <div class="grupo-filtro" role="group" aria-label="Painel" id="filtro-painel"></div>
+      <label class="so-conferidos"><input type="checkbox" id="so-conferidos"> Só os conferidos com o SQL</label>
+    </div>
+    <p class="contagem" id="contagem" aria-live="polite"></p>
+  </div>
+
+  <aside class="homonimos" id="homonimos" hidden></aside>
+  <div id="catalogo"><p class="aviso-carregando">Carregando o catálogo…</p></div>
+
+  <p class="rodape-painel">
+    Gerado por <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/python/gerar_catalogo.py" target="_blank" rel="noopener">python/gerar_catalogo.py</a>, que lê as medidas dos modelos em TMDL, rastreia as tabelas de que cada uma depende e busca o valor nas views de conferência do SQL. Medida visível sem descrição faz o script parar. A versão em texto está no <a href="https://github.com/Lvgama94/distribuidora-sul/blob/main/docs/catalogo_indicadores.md" target="_blank" rel="noopener">GitHub</a>.
+  </p>
+</main>
+
+<footer class="rodape">
+  <p>Os dados são fictícios, gerados por código. Nenhuma empresa ou pessoa real é retratada.</p>
+  <p>© 2026 Lucas Gama</p>
+</footer>
+
+<script src="assets/indicadores.js"></script>
+</body>
+</html>

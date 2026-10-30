@@ -75,24 +75,6 @@
 }
 .rotulo-bloco .acoes button:hover, .rotulo-bloco .acoes a:hover, .mais-linhas:hover { background: #E8EEF4; }
 
-/* Código: fundo escuro com realce de palavras-chave, funções, textos, números e comentários */
-.codigo {
-  margin: 0;
-  padding: 14px 16px;
-  overflow-x: auto;
-  background: #13263A;
-  color: #E3ECF5;
-  border-radius: 8px;
-  font: 0.82rem/1.55 Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace;
-  tab-size: 4;
-}
-.codigo code { background: none; padding: 0; border-radius: 0; font-size: inherit; }
-.codigo .k { color: #8CC4FF; }
-.codigo .f { color: #FFC56B; }
-.codigo .s { color: #9FDFA0; }
-.codigo .n { color: #F4A6C8; }
-.codigo .c { color: #93A7BA; font-style: italic; }
-
 .resultado { margin-top: 0; }
 .resultado th { font-family: Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace; font-size: 0.8rem; background: #F3F6FA; }
 .tabela-dados.resultado th.texto, .tabela-dados.resultado td.texto { text-align: left; }
@@ -110,5 +92,4 @@
   .pergunta .num { font-size: 1.2rem; }
   .pergunta h2 { font-size: 1.08rem; }
   .tecnicas { grid-column: 1 / -1; }
-  .codigo { font-size: 0.76rem; padding: 12px; }
 }

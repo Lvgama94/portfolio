@@ -256,6 +256,42 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
 }
 .previa-relatorio li span { color: #DCE7F2; }
 .previa-relatorio li b { white-space: nowrap; color: #FFC56B; }
+/* Cartão largo: prévia à esquerda e texto à direita, ocupando a linha inteira da grade */
+.cartao.largo { grid-column: 1 / -1; flex-direction: row; }
+.cartao.largo > .previa-catalogo { flex: 0 0 48%; }
+.previa-catalogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #E8EEF4;
+  border-right: 1px solid var(--borda);
+}
+.pc-verbete {
+  width: 100%;
+  max-width: 420px;
+  background: var(--cartao);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  box-shadow: var(--sombra);
+  padding: 14px 16px;
+}
+.cartao .pc-verbete p { margin: 0 0 6px; }
+.cartao .pc-verbete .pc-nome { font-weight: 700; color: var(--marinho); }
+.pc-nome span { font-size: 0.72rem; font-weight: 600; color: var(--texto-suave); background: #EEF2F7; border-radius: 4px; padding: 1px 6px; margin-left: 6px; }
+.cartao .pc-verbete .pc-definicao { color: var(--texto); font-size: 0.92rem; }
+.cartao .pc-verbete .pc-formula {
+  background: #13263A;
+  color: #E3ECF5;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font: 0.8rem/1.5 Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace;
+}
+.pc-formula .f { color: #FFC56B; }
+.pc-formula .m { color: #FFFFFF; text-decoration: underline dotted rgba(255, 255, 255, 0.5); text-underline-offset: 3px; }
+.cartao .pc-verbete .pc-valor { margin: 0; font-size: 0.88rem; }
+.pc-valor strong { color: var(--texto); }
+.pc-selo { font-size: 0.72rem; font-weight: 600; color: #006300; background: #E9F5E9; border-radius: 999px; padding: 1px 8px; margin-left: 4px; white-space: nowrap; }
 
 /* ------------------------------------------------------------ detalhes */
 .colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
@@ -305,6 +341,25 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
 .rodape { text-align: center; color: var(--texto-suave); font-size: 0.85rem; padding: 28px 24px 40px; border-top: 1px solid var(--borda); }
 .rodape p { margin: 4px 0; }
 
+/* ------------------------------------------------------------ código (SQL na prática e catálogo) */
+/* Fundo escuro com realce de palavras-chave, funções, textos, números e comentários */
+.codigo {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: #13263A;
+  color: #E3ECF5;
+  border-radius: 8px;
+  font: 0.82rem/1.55 Consolas, "Cascadia Mono", "SFMono-Regular", Menlo, monospace;
+  tab-size: 4;
+}
+.codigo code { background: none; padding: 0; border-radius: 0; font-size: inherit; }
+.codigo .k { color: #8CC4FF; }
+.codigo .f { color: #FFC56B; }
+.codigo .s { color: #9FDFA0; }
+.codigo .n { color: #F4A6C8; }
+.codigo .c { color: #93A7BA; font-style: italic; }
+
 /* ------------------------------------------------------------ lightbox */
 .lightbox {
   position: fixed;
@@ -338,6 +393,8 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   .fluxo { grid-template-columns: 1fr 1fr; }
   .colunas { grid-template-columns: 1fr; gap: 8px; }
   .cartoes { grid-template-columns: 1fr; }
+  .cartao.largo { flex-direction: column; }
+  .previa-catalogo { border-right: none; border-bottom: 1px solid var(--borda); }
 }
 
 @media (max-width: 560px) {
@@ -346,6 +403,7 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   .secao { padding: 44px 20px; }
   .numeros strong { font-size: 1.6rem; }
   .fluxo { grid-template-columns: 1fr; }
+  .codigo { font-size: 0.76rem; padding: 12px; }
   .previa-codigo { font-size: 0.7rem; padding: 18px 16px; }
   .previa-relatorio { aspect-ratio: auto; padding: 18px 20px; }
 }
