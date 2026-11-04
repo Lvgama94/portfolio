@@ -57,6 +57,10 @@
           <button class="ver-tabela" type="button" data-grafico="mes">Tabela</button>
         </header>
         <div class="grafico" id="g-mes"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Colunas por mês mostram a evolução ao longo do ano e deixam comparar um mês com o outro; o eixo começa no zero, então a altura da barra é proporcional ao valor. Clicar num mês filtra o painel inteiro.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-mes">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -64,6 +68,10 @@
           <button class="ver-tabela" type="button" data-grafico="tipos">Tabela</button>
         </header>
         <div class="grafico" id="g-tipos"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras deitadas e ordenadas da maior para a menor: o ranking aparece na hora e os nomes dos tipos de cliente cabem inteiros.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-tipos">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -72,6 +80,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-1)"></i>Margem comercial</span><span><i style="background:var(--serie-2)"></i>Desconto médio</span></div>
         <div class="grafico" id="g-desconto-margem"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Duas barras por tipo de cliente, desconto e margem na mesma régua (em %): dá para ver se quem leva mais desconto deixa menos margem.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-desconto-margem">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -79,6 +91,10 @@
           <button class="ver-tabela" type="button" data-grafico="filiais">Tabela</button>
         </header>
         <div class="grafico baixo" id="g-filiais"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Com só três filiais, barras deitadas comparam o tamanho de cada uma direto, sem legenda nem pizza, que é mais difícil de comparar.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-filiais">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -86,6 +102,10 @@
           <button class="ver-tabela" type="button" data-grafico="categorias">Tabela</button>
         </header>
         <div class="grafico baixo" id="g-categorias"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras ordenadas mostram o mix de vendas: em que categorias o faturamento se concentra.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-categorias">…</span></p>
+        </div>
       </article>
     </div>
   </section>
@@ -100,6 +120,10 @@
           <button class="ver-tabela" type="button" data-grafico="ranking">Tabela</button>
         </header>
         <div class="grafico alto" id="g-ranking"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Um ranking em barras deitadas mostra quem vende mais e a distância entre os primeiros e os demais; o corte nos 15 primeiros mantém o gráfico legível.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-ranking">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico largo">
         <header>
@@ -121,6 +145,10 @@
           <button class="ver-tabela" type="button" data-grafico="concentracao">Tabela</button>
         </header>
         <div class="grafico" id="g-concentracao"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>A curva acumulada mostra quanto do faturamento depende dos maiores clientes: quanto mais ela sobe logo no começo, mais concentrada é a carteira.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-concentracao">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -128,6 +156,10 @@
           <button class="ver-tabela" type="button" data-grafico="recencia">Tabela</button>
         </header>
         <div class="grafico" id="g-recencia"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Colunas por faixa de dias desde a última compra, da mais recente para a mais antiga, com o azul escurecendo: mostra quantos clientes estão esfriando.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-recencia">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico largo">
         <header>
@@ -153,5 +185,6 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script src="assets/painel-base.js"></script>
 <script src="assets/comercial.js"></script>
+<script src="assets/visitas.js" defer></script>
 </body>
 </html>

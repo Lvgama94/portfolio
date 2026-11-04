@@ -58,6 +58,10 @@
           <button class="ver-tabela" type="button" data-grafico="receita">Tabela</button>
         </header>
         <div class="grafico" id="g-receita"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Colunas por mês mostram a evolução ao longo do ano e deixam comparar um mês com o outro; o eixo começa no zero, então a altura da barra é proporcional ao valor. Clicar num mês filtra o painel inteiro.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-receita">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -66,6 +70,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-1)"></i>Realizado</span><span><i style="background:var(--serie-2)"></i>Orçado</span></div>
         <div class="grafico" id="g-resultado"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Duas colunas por mês, realizado ao lado do orçado e na mesma escala: a distância entre elas é o desvio do mês, sem precisar de um segundo eixo.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-resultado">…</span></p>
+        </div>
       </article>
     </div>
   </section>
@@ -86,6 +94,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-1)"></i>Receita e resultado</span><span><i style="background:var(--negativo)"></i>Deduções, custos e despesas</span></div>
         <div class="grafico" id="g-cascata"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>O gráfico em cascata parte da receita bruta e vai descontando cada grupo de custo até chegar ao resultado. Ele mostra, num olhar, onde o dinheiro fica pelo caminho.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-cascata">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -94,6 +106,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-1)"></i>Abaixo do orçado</span><span><i style="background:var(--negativo)"></i>Acima do orçado</span></div>
         <div class="grafico" id="g-desvio"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras que partem do zero para os dois lados: vermelho para a esquerda é gasto acima do orçado, azul para a direita é economia. A ordem, da pior para a melhor conta, já diz por onde começar.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-desvio">…</span></p>
+        </div>
       </article>
     </div>
   </section>
@@ -109,6 +125,10 @@
           <button class="ver-tabela" type="button" data-grafico="aging">Tabela</button>
         </header>
         <div class="grafico" id="g-aging"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Colunas na ordem do atraso, do que ainda vai vencer ao que venceu há mais de 90 dias, com o azul escurecendo conforme a dívida envelhece: dá para ver quanto da carteira está em risco.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-aging">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -116,6 +136,10 @@
           <button class="ver-tabela" type="button" data-grafico="tipos">Tabela</button>
         </header>
         <div class="grafico" id="g-tipos"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras deitadas e ordenadas comparam a inadimplência entre os tipos de cliente e mostram onde está o risco de crédito. Os nomes cabem inteiros, sem cortar.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-tipos">…</span></p>
+        </div>
       </article>
     </div>
   </section>
@@ -131,6 +155,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-1)"></i>Recebido</span><span><i style="background:var(--serie-2)"></i>Pago</span></div>
         <div class="grafico" id="g-caixa"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Recebido e pago lado a lado em cada mês, na mesma escala: quando a coluna laranja passa a azul, aquele mês consumiu caixa.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-caixa">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -139,6 +167,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-1)"></i>Sobrou caixa</span><span><i style="background:var(--negativo)"></i>Faltou caixa</span></div>
         <div class="grafico" id="g-geracao"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Uma coluna por mês com a sobra de caixa: azul para cima quando sobrou, vermelho para baixo quando faltou. O sinal aparece pela cor e pela direção, sem depender só da cor.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-geracao">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico largo">
         <header>
@@ -146,6 +178,10 @@
           <button class="ver-tabela" type="button" data-grafico="grupos">Tabela</button>
         </header>
         <div class="grafico baixo" id="g-grupos"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras ordenadas da maior para a menor mostram para onde foi o dinheiro pago e o peso de cada grupo no total.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-grupos">…</span></p>
+        </div>
       </article>
     </div>
     <p class="nota-aba">A simulação começa em 01/01/2024 sem títulos anteriores, por isso jan/2024 recebe pouco e 2024 gera mais caixa que 2025.</p>
@@ -165,5 +201,6 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script src="assets/painel-base.js"></script>
 <script src="assets/financeiro.js"></script>
+<script src="assets/visitas.js" defer></script>
 </body>
 </html>

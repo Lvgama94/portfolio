@@ -57,6 +57,10 @@
           <button class="ver-tabela" type="button" data-grafico="compras-mes">Tabela</button>
         </header>
         <div class="grafico" id="g-compras-mes"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Colunas por mês mostram a evolução ao longo do ano e deixam comparar um mês com o outro; o eixo começa no zero, então a altura da barra é proporcional ao valor. Clicar num mês filtra o painel inteiro.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-compras-mes">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -64,6 +68,10 @@
           <button class="ver-tabela" type="button" data-grafico="prazo-mes">Tabela</button>
         </header>
         <div class="grafico" id="g-prazo-mes"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Colunas com o percentual de pedidos entregues no prazo em cada mês mostram se a pontualidade dos fornecedores melhora ou piora ao longo do ano.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-prazo-mes">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -71,6 +79,10 @@
           <button class="ver-tabela" type="button" data-grafico="categorias">Tabela</button>
         </header>
         <div class="grafico" id="g-categorias"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras ordenadas da maior para a menor mostram em que categorias se concentra o dinheiro das compras.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-categorias">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -94,6 +106,10 @@
           <button class="ver-tabela" type="button" data-grafico="estoque-mes">Tabela</button>
         </header>
         <div class="grafico" id="g-estoque-mes"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>O estoque é um saldo: colunas no fim de cada mês mostram se ele está crescendo ou baixando, sem somar um mês com o outro.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-estoque-mes">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -101,6 +117,10 @@
           <button class="ver-tabela" type="button" data-grafico="ruptura-categoria">Tabela</button>
         </header>
         <div class="grafico" id="g-ruptura-categoria"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras ordenadas da venda perdida por categoria mostram onde a falta de produto na prateleira custa mais caro.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-ruptura-categoria">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico largo">
         <header>
@@ -108,6 +128,10 @@
           <button class="ver-tabela" type="button" data-grafico="produtos-perda">Tabela</button>
         </header>
         <div class="grafico" id="g-produtos-perda"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Um top 10 em barras deitadas cabe os nomes dos produtos e mostra direto quais itens a compra precisa priorizar.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-produtos-perda">…</span></p>
+        </div>
       </article>
     </div>
   </section>
@@ -124,6 +148,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-1)"></i>% dos produtos</span><span><i style="background:var(--serie-2)"></i>% da receita</span></div>
         <div class="grafico" id="g-classes"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Duas colunas por classe, a fatia dos produtos ao lado da fatia da receita: a diferença de altura é a lógica da curva ABC, poucos itens fazendo muita receita.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-classes">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -131,6 +159,10 @@
           <button class="ver-tabela" type="button" data-grafico="pareto">Tabela</button>
         </header>
         <div class="grafico" id="g-pareto"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>A curva de Pareto acumula a receita do produto que mais vende para o que menos vende: onde a curva sobe rápido estão os itens que não podem faltar; onde fica plana, os que pesam pouco.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-pareto">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico largo">
         <header>
@@ -155,5 +187,6 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script src="assets/painel-base.js"></script>
 <script src="assets/compras.js"></script>
+<script src="assets/visitas.js" defer></script>
 </body>
 </html>

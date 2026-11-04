@@ -63,13 +63,14 @@ function porSetor(ms, campo) {
     .filter((x) => isFinite(x.valor)).sort((a, b) => b.valor - a.valor);
 }
 
-function graficoSetores(chave, ms, campo, formato, dicas) {
+function graficoSetores(chave, ms, campo, formato, dicas, leitura) {
   const lista = porSetor(ms, campo);
   const destaque = estado.setor == null ? null : lista.findIndex((x) => x.s === estado.setor);
   desenhar(chave, {
     opcao: barrasDeitadas({ nomes: lista.map((x) => x.nome), valores: lista.map((x) => x.valor), formato, destaque, clicavel: true,
                             dicas: (i) => dicas(lista[i]) }),
     aoClicar: (p) => alternarSetor(lista[p.dataIndex].s),
+    insight: lista.length ? leitura(lista, indRH(ms, { setor: null })[campo]) : "Sem dados no recorte escolhido.",
     tabela: { colunas: ["Setor", "Valor"], linhas: lista.map((x) => [x.nome, formato(x.valor)]) },
   });
 }
@@ -104,6 +105,12 @@ function visao() {
                      { cor: COR.serie2, valor: inteiro(porMes[i].desligamentos), nome: "desligamentos" }],
     }),
     aoClicar: clicarMes,
+    insight: (() => {
+      const adm = somar(porMes.map((x) => x.admissoes)), desl = somar(porMes.map((x) => x.desligamentos));
+      const negativos = porMes.filter((x) => x.desligamentos > x.admissoes).length;
+      return `Em ${esc(estado.ano)}, foram ${forte(inteiro(adm))} admissões e ${forte(inteiro(desl))} desligamentos; `
+        + (negativos ? `em ${forte(negativos)} ${negativos === 1 ? "mês" : "meses"} saiu mais gente do que entrou.` : "em nenhum mês saiu mais gente do que entrou.");
+    })(),
     tabela: { colunas: ["Mês", "Admissões", "Desligamentos"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), inteiro(x.admissoes), inteiro(x.desligamentos)]) },
   });
   desenhar("headcount", {
@@ -113,13 +120,19 @@ function visao() {
       dicas: (i) => [{ valor: inteiro(porMes[i].headcount), nome: "pessoas no fim do mês" }, { valor: pct(porMes[i].turnover), nome: "turnover do mês" }],
     }),
     aoClicar: clicarMes,
+    insight: (() => {
+      const hc = porMes.map((x) => x.headcount), { iMax } = extremos(hc), dif = hc[hc.length - 1] - hc[0];
+      return `O quadro foi de ${forte(inteiro(hc[0]))} pessoas em ${esc(mesLongo(doAno[0]))} para ${forte(inteiro(hc[hc.length - 1]))} em ${esc(mesLongo(doAno[hc.length - 1]))} `
+        + `(${dif >= 0 ? "+" : "−"}${esc(inteiro(Math.abs(dif)))}), com pico de ${forte(inteiro(hc[iMax]))} em ${esc(mesLongo(doAno[iMax]))}.`;
+    })(),
     tabela: { colunas: ["Mês", "Headcount", "Turnover do mês"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), inteiro(x.headcount), pct(x.turnover)]) },
   });
-  graficoSetores("setor-hc", ms, "headcount", inteiro, (x) => [{ valor: inteiro(x.valor), nome: "pessoas no fim do período" }]);
+  graficoSetores("setor-hc", ms, "headcount", inteiro, (x) => [{ valor: inteiro(x.valor), nome: "pessoas no fim do período" }],
+    (lista) => leituraRanking(lista, { sujeito: "é o maior setor, com", formato: (v) => `${inteiro(v)} pessoas` }));
   graficoSetores("setor-custo", ms, "custo", rotuloValor, (x) => {
     const r = indRH(ms, { setor: x.s });
     return [{ valor: reais(x.valor), nome: "custo de pessoal" }, { valor: reais(r.custoPorPessoa), nome: "por pessoa por mês" }];
-  });
+  }, (lista) => leituraRanking(lista, { sujeito: "concentra" }));
 }
 
 // ------------------------------------------------------------ página: Rotatividade
@@ -135,7 +148,8 @@ function rotatividade() {
   graficoSetores("turnover-setor", ms, "turnover", (v) => pct(v), (x) => {
     const r = indRH(ms, { setor: x.s });
     return [{ valor: pct(x.valor), nome: "turnover" }, { valor: inteiro(r.desligamentos), nome: "desligamentos" }, { valor: numero(r.headcountMedio, 1), nome: "headcount médio" }];
-  });
+  }, (lista, empresa) => `${forte(lista[0].nome)} tem o maior turnover (${forte(pct(lista[0].valor))}), contra ${esc(pct(lista[lista.length - 1].valor))} `
+    + `em ${forte(lista[lista.length - 1].nome)}; a empresa toda fica em ${forte(pct(empresa))}.`);
 
   const faixas = D.faixas_tempo_casa, total = a.desligamentos;
   desenhar("tempo-casa", {
@@ -149,6 +163,10 @@ function rotatividade() {
         data: Array.from(a.porFaixa, (v, i) => ({ value: v, itemStyle: { color: COR.rampa[i], borderRadius: [4, 4, 0, 0] } })),
         label: { show: true, position: "top", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => inteiro(p.value) } }],
     }),
+    insight: total
+      ? `${forte(pct(a.pctPrimeiroAno))} das saídas aconteceram no primeiro ano de casa; a faixa com mais saídas é ${forte(faixas[extremos(Array.from(a.porFaixa)).iMax])} `
+        + `(${esc(inteiro(Math.max(...a.porFaixa)))} ${Math.max(...a.porFaixa) === 1 ? "desligamento" : "desligamentos"}).`
+      : "Nenhum desligamento no período escolhido.",
     tabela: { colunas: ["Tempo de casa", "Desligamentos", "% das saídas"], linhas: faixas.map((f, i) => [f, inteiro(a.porFaixa[i]), pct(a.porFaixa[i] / total)]) },
   });
 
@@ -158,6 +176,12 @@ function rotatividade() {
                             cor: (v, i) => (motivos[i].voluntario ? COR.serie2 : COR.serie1),
                             dicas: (i) => [{ valor: inteiro(motivos[i].valor), nome: motivos[i].voluntario ? "voluntários" : "involuntários" },
                                            { valor: pct(motivos[i].valor / total), nome: "das saídas" }] }),
+    insight: (() => {
+      const voluntarias = somar(motivos.filter((m) => m.voluntario).map((m) => m.valor)) / total;
+      return `O motivo mais comum é ${forte(motivos[0].nome)} (${forte(pct(motivos[0].valor / total))} das saídas). `
+        + (motivos[0].voluntario ? `Somando todos os motivos, ${forte(pct(1 - voluntarias))} das saídas foram decisão da empresa.`
+                                 : `${forte(pct(voluntarias))} das saídas foram pedidas pela própria pessoa.`);
+    })(),
     tabela: { colunas: ["Motivo", "Tipo", "Desligamentos"], linhas: motivos.map((m) => [m.nome, m.voluntario ? "Voluntário" : "Involuntário", inteiro(m.valor)]) },
   } : { vazio: "Nenhum desligamento no período escolhido." });
 
@@ -189,11 +213,12 @@ function absenteismo() {
   graficoSetores("abs-setor", ms, "absenteismo", (v) => pct(v), (x) => {
     const r = indRH(ms, { setor: x.s });
     return [{ valor: pct(x.valor), nome: "absenteísmo" }, { valor: inteiro(r.faltas), nome: "faltas" }, { valor: inteiro(r.atestados), nome: "dias de atestado" }];
-  });
+  }, (lista, empresa) => `${forte(lista[0].nome)} tem o maior absenteísmo (${forte(pct(lista[0].valor))}); a média da empresa é ${forte(pct(empresa))}.`);
   graficoSetores("he-setor", ms, "hePorPessoa", horas, (x) => {
     const r = indRH(ms, { setor: x.s });
     return [{ valor: horas(x.valor), nome: "por pessoa por mês" }, { valor: inteiro(r.horasExtras), nome: "horas extras no período" }];
-  });
+  }, (lista, empresa) => `${forte(lista[0].nome)} faz ${forte(horas(lista[0].valor))} extras por pessoa por mês, `
+    + `${forte(`${numero(lista[0].valor / empresa, 1)}×`)} a média da empresa (${esc(horas(empresa))}).`);
 
   const doAno = mesesDoAno(estado.ano), porMes = doAno.map((m) => indRH([m]));
   desenhar("he-mes", {
@@ -203,6 +228,7 @@ function absenteismo() {
       dicas: (i) => [{ valor: inteiro(porMes[i].horasExtras), nome: "horas extras" }, { valor: horas(porMes[i].hePorPessoa), nome: "por pessoa" }],
     }),
     aoClicar: (p) => alternarMes(doAno[p.dataIndex]),
+    insight: leituraMensal(doAno, porMes.map((x) => x.horasExtras), (v) => `${inteiro(v)} h`),
     tabela: { colunas: ["Mês", "Horas extras", "Por pessoa"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), inteiro(x.horasExtras), horas(x.hePorPessoa)]) },
   });
 
@@ -216,6 +242,8 @@ function absenteismo() {
                             cor: (v, i) => grupos[i].cor,
                             dicas: (i) => [{ valor: numero(grupos[i].faltasPorMes, 2), nome: "faltas por mês trabalhado" },
                                            { valor: pct(grupos[i].absenteismo), nome: "absenteísmo" }] }),
+    insight: `Quem saiu faltava ${forte(numero(a.saiu.faltasPorMes, 2))} vezes por mês trabalhado, contra ${forte(numero(a.ficou.faltasPorMes, 2))} de quem ficou `
+      + `(${forte(pct(Math.abs(amais), 0))} ${amais >= 0 ? "a mais" : "a menos"}). Faltas subindo podem ser um aviso antes do pedido de demissão.`,
     tabela: { colunas: ["Grupo", "Faltas por mês", "Absenteísmo"], linhas: grupos.map((g) => [g.nome, numero(g.faltasPorMes, 2), pct(g.absenteismo)]) },
   } : { vazio: "Sem desligados no recorte escolhido." });
 }

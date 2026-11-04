@@ -58,6 +58,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-1)"></i>Admissões</span><span><i style="background:var(--serie-2)"></i>Desligamentos</span></div>
         <div class="grafico" id="g-movimento"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Admissões e desligamentos lado a lado por mês, na mesma escala: quando a coluna laranja passa a azul, o quadro encolheu naquele mês.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-movimento">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -65,6 +69,10 @@
           <button class="ver-tabela" type="button" data-grafico="headcount">Tabela</button>
         </header>
         <div class="grafico" id="g-headcount"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Headcount é um saldo (quantas pessoas no fim do mês), então colunas mês a mês mostram se o quadro cresce, cai ou fica estável, sem somar um mês com o outro.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-headcount">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -72,6 +80,10 @@
           <button class="ver-tabela" type="button" data-grafico="setor-hc">Tabela</button>
         </header>
         <div class="grafico" id="g-setor-hc"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras deitadas e ordenadas mostram o tamanho de cada setor no fim do período, do maior para o menor, com os nomes inteiros.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-setor-hc">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -79,6 +91,10 @@
           <button class="ver-tabela" type="button" data-grafico="setor-custo">Tabela</button>
         </header>
         <div class="grafico" id="g-setor-custo"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>O custo por setor em barras ordenadas mostra onde está o peso da folha; passando o mouse aparece o custo por pessoa, para comparar setores de tamanhos diferentes.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-setor-custo">…</span></p>
+        </div>
       </article>
     </div>
   </section>
@@ -93,6 +109,10 @@
           <button class="ver-tabela" type="button" data-grafico="turnover-setor">Tabela</button>
         </header>
         <div class="grafico" id="g-turnover-setor"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Turnover em percentual (desligamentos ÷ headcount médio) deixa comparar setores grandes e pequenos na mesma régua; a ordem aponta onde a empresa mais perde gente.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-turnover-setor">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -100,6 +120,10 @@
           <button class="ver-tabela" type="button" data-grafico="tempo-casa">Tabela</button>
         </header>
         <div class="grafico" id="g-tempo-casa"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Colunas na ordem do tempo de casa mostram em que momento as pessoas saem; o azul escurece conforme o tempo passa.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-tempo-casa">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -108,6 +132,10 @@
         </header>
         <div class="legenda"><span><i style="background:var(--serie-2)"></i>Voluntário</span><span><i style="background:var(--serie-1)"></i>Involuntário</span></div>
         <div class="grafico baixo" id="g-motivos"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Barras ordenadas por motivo, com cor diferente para quem pediu para sair (laranja) e quem foi desligado (azul): mostra o porquê das saídas e de quem foi a decisão.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-motivos">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -128,6 +156,10 @@
           <button class="ver-tabela" type="button" data-grafico="abs-setor">Tabela</button>
         </header>
         <div class="grafico" id="g-abs-setor"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Absenteísmo em percentual dos dias previstos compara setores de tamanhos diferentes na mesma régua; a ordem mostra onde as ausências pesam mais.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-abs-setor">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -135,6 +167,10 @@
           <button class="ver-tabela" type="button" data-grafico="he-setor">Tabela</button>
         </header>
         <div class="grafico" id="g-he-setor"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Horas extras por pessoa, e não o total, deixam comparar setores de tamanhos diferentes: um setor grande não aparece no topo só por ter mais gente.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-he-setor">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -142,6 +178,10 @@
           <button class="ver-tabela" type="button" data-grafico="he-mes">Tabela</button>
         </header>
         <div class="grafico" id="g-he-mes"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Colunas por mês mostram em que época do ano as horas extras se acumulam, o que ajuda a planejar escala e contratação.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-he-mes">…</span></p>
+        </div>
       </article>
       <article class="cartao-grafico">
         <header>
@@ -149,6 +189,10 @@
           <button class="ver-tabela" type="button" data-grafico="saiu-ficou">Tabela</button>
         </header>
         <div class="grafico baixo" id="g-saiu-ficou"></div>
+        <div class="explica">
+          <p class="porque"><span class="rotulo-explica">Por que este gráfico</span>Só dois grupos, quem saiu e quem ficou, comparados na mesma régua (faltas por mês trabalhado): a diferença entre as duas barras é o sinal de alerta.</p>
+          <p class="leitura"><span class="rotulo-explica">O que ele mostra</span><span id="i-saiu-ficou">…</span></p>
+        </div>
       </article>
     </div>
     <p class="nota-aba">"Quem saiu" são as pessoas desligadas até 31/12/2025, comparadas nos meses em que ainda trabalhavam.</p>
@@ -168,5 +212,6 @@
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script src="assets/painel-base.js"></script>
 <script src="assets/rh.js"></script>
+<script src="assets/visitas.js" defer></script>
 </body>
 </html>

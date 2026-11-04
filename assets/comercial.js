@@ -82,6 +82,7 @@ function visao() {
                      { valor: reais(porMes[i].ticket), nome: "ticket médio" }],
     }),
     aoClicar: (p) => alternarMes(doAno[p.dataIndex]),
+    insight: leituraMensal(doAno, porMes.map((x) => x.faturamento), compacto),
     tabela: { colunas: ["Mês", "Faturamento", "Notas", "Ticket médio", "Margem"],
               linhas: porMes.map((x, i) => [nomeMes(doAno[i]), reais(x.faturamento), inteiro(x.notas), reais(x.ticket), pct(x.margem)]) },
   });
@@ -96,6 +97,7 @@ function visao() {
                             dicas: (i) => [{ valor: compacto(tipos[i].faturamento), nome: "faturamento" }, { valor: pct(tipos[i].faturamento / a.faturamento), nome: "do total" },
                                            { valor: inteiro(tipos[i].clientes), nome: "clientes" }] }),
     aoClicar: clicarTipo,
+    insight: leituraRanking(tipos.map((x) => ({ nome: x.nome, valor: x.faturamento })), { sujeito: "é o tipo de cliente que mais fatura:" }),
     tabela: { colunas: ["Tipo de cliente", "Faturamento", "% do total", "Clientes"],
               linhas: tipos.map((x) => [x.nome, reais(x.faturamento), pct(x.faturamento / a.faturamento), inteiro(x.clientes)]) },
   });
@@ -106,6 +108,12 @@ function visao() {
                { nome: "Desconto médio", valores: tipos.map((x) => x.descontoMedio), cor: COR.serie2 }],
     }),
     aoClicar: clicarTipo,
+    insight: (() => {
+      if (tipos.length < 2) return "Escolha mais de um tipo de cliente para comparar.";
+      const porDesconto = [...tipos].sort((x, y) => y.descontoMedio - x.descontoMedio), mais = porDesconto[0], menos = porDesconto[porDesconto.length - 1];
+      return `${forte(mais.nome)} leva o maior desconto (${forte(pct(mais.descontoMedio))}) e fica com ${forte(pct(mais.margem))} de margem; `
+        + `${forte(menos.nome)}, com ${esc(pct(menos.descontoMedio))} de desconto, fica com ${forte(pct(menos.margem))}.`;
+    })(),
     tabela: { colunas: ["Tipo de cliente", "Margem comercial", "Desconto médio"], linhas: tipos.map((x) => [x.nome, pct(x.margem), pct(x.descontoMedio)]) },
   });
 
@@ -115,6 +123,7 @@ function visao() {
                             destaque: estado.filial === 0 ? null : filiais.findIndex((x) => x.id === estado.filial),
                             dicas: (i) => [{ valor: compacto(filiais[i].faturamento), nome: "faturamento" }, { valor: pct(filiais[i].margem), nome: "margem" }] }),
     aoClicar: (p) => { const f = filiais[p.dataIndex].id; estado.filial = estado.filial === f ? 0 : f; atualizar(); },
+    insight: leituraRanking(filiais.map((x) => ({ nome: x.nome, valor: x.faturamento })), { sujeito: "é a filial que mais fatura:" }),
     tabela: { colunas: ["Filial", "Faturamento", "Margem"], linhas: filiais.map((x) => [x.nome, reais(x.faturamento), pct(x.margem)]) },
   });
 
@@ -127,6 +136,7 @@ function visao() {
   desenhar("categorias", {
     opcao: barrasDeitadas({ nomes: categorias.map((x) => x.nome), valores: categorias.map((x) => x.valor),
                             dicas: (i) => [{ valor: compacto(categorias[i].valor), nome: "faturamento" }, { valor: pct(categorias[i].valor / totalMix), nome: "do total" }] }),
+    insight: leituraRanking(categorias, { sujeito: "é a categoria que mais vende:" }),
     tabela: { colunas: ["Categoria", "Faturamento", "% do total"], linhas: categorias.map((x) => [x.nome, reais(x.valor), pct(x.valor / totalMix)]) },
   });
 }
@@ -148,6 +158,11 @@ function vendedores() {
     opcao: barrasDeitadas({ nomes: top.map((v) => v.nome), valores: top.map((v) => v.faturamento),
                             dicas: (i) => [{ valor: compacto(top[i].faturamento), nome: "faturamento" }, { valor: pct(top[i].margem), nome: "margem" },
                                            { valor: pct(top[i].descontoMedio), nome: "desconto médio" }, { valor: inteiro(top[i].clientes), nome: "clientes" }] }),
+    insight: `${forte(top[0].nome)} lidera com ${esc(compacto(top[0].faturamento))}`
+      + (top.length >= 15 ? `, ${forte(`${numero(top[0].faturamento / top[14].faturamento, 1)}×`)} o 15º colocado` : "")
+      + (top.length < lista.length
+        ? `. Os ${top.length} primeiros somam ${forte(pct(somar(top.map((v) => v.faturamento)) / geral.faturamento))} do faturamento de ${lista.length} vendedores.`
+        : `. Com ${lista.length} ${lista.length === 1 ? "vendedor" : "vendedores"} no recorte escolhido, o gráfico mostra todos.`),
     tabela: { colunas: ["Vendedor", "Faturamento"], linhas: top.map((v) => [v.nome, reais(v.faturamento)]) },
   } : { vazio: "Nenhuma venda no recorte escolhido." });
 
@@ -202,6 +217,8 @@ function clientes() {
           label: { show: true, position: "right", distance: 8, color: COR.texto, fontSize: 11, formatter: () => `${pct(p[0], 0)} dos clientes = ${pct(p[1], 0)}` } } : p)),
       }],
     }),
+    insight: `Os 20% maiores clientes fazem ${forte(pct(a.top20, 0))} do faturamento, e metade dos clientes responde por `
+      + `${forte(pct(pontos[Math.max(0, Math.ceil(pontos.length / 2) - 1)][1], 0))}. Perder um cliente grande pesa muito mais que perder vários pequenos.`,
     tabela: { colunas: ["Clientes", "Faturamento acumulado"],
               linhas: [0.1, 0.2, 0.3, 0.5, 0.8, 1].map((q) => { const i = Math.max(0, Math.ceil(q * pontos.length) - 1); return [pct(pontos[i][0], 0), pct(pontos[i][1])]; }) },
   } : { vazio: "Nenhuma venda no recorte escolhido." });
@@ -218,6 +235,10 @@ function clientes() {
         data: porFaixa.map((x, i) => ({ value: x.n, itemStyle: { color: COR.rampa[i], borderRadius: [4, 4, 0, 0] } })),
         label: { show: true, position: "top", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => inteiro(p.value) } }],
     }),
+    insight: comCompra.length
+      ? `${forte(pct(porFaixa[0].n / comCompra.length, 0))} dos clientes compraram nos últimos 30 dias; ${forte(inteiro(parados.length))} `
+        + `(${esc(pct(parados.length / comCompra.length, 0))}) estão há mais de 90 dias sem comprar e aparecem na lista abaixo.`
+      : "Nenhum cliente com compra no recorte escolhido.",
     tabela: { colunas: ["Última compra", "Clientes", "% dos clientes"], linhas: porFaixa.map((x) => [x.nome, inteiro(x.n), pct(x.n / comCompra.length)]) },
   });
 

@@ -62,13 +62,14 @@ function porCategoria(ms, campo) {
     .map((x) => ({ ...x, valor: x[campo] })).filter((x) => x.valor > 0).sort((a, b) => b.valor - a.valor);
 }
 
-function graficoCategorias(chave, ms, campo, dicas, formato = rotuloValor) {
+function graficoCategorias(chave, ms, campo, dicas, leitura, formato = rotuloValor) {
   const lista = porCategoria(ms, campo);
   const destaque = estado.categoria == null ? null : lista.findIndex((x) => x.c === estado.categoria);
   desenhar(chave, lista.length ? {
     opcao: barrasDeitadas({ nomes: lista.map((x) => x.nome), valores: lista.map((x) => x.valor), formato, destaque, clicavel: true,
                             dicas: (i) => dicas(lista[i]) }),
     aoClicar: (p) => alternarCategoria(lista[p.dataIndex].c),
+    insight: leitura(lista),
     tabela: { colunas: ["Categoria", "Valor"], linhas: lista.map((x) => [x.nome, formato(x.valor)]) },
   } : { vazio: "Sem dados no recorte escolhido." });
 }
@@ -95,6 +96,7 @@ function compras() {
                      { valor: pct(porMes[i].pctPrazo), nome: "no prazo" }],
     }),
     aoClicar: clicarMes,
+    insight: leituraMensal(doAno, porMes.map((x) => x.valor), compacto),
     tabela: { colunas: ["Mês", "Valor comprado", "Pedidos"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), reais(x.valor), inteiro(x.pedidos)]) },
   });
   desenhar("prazo-mes", {
@@ -105,9 +107,15 @@ function compras() {
                      { valor: `${inteiro(porMes[i].noPrazo)} de ${inteiro(porMes[i].entregues)}`, nome: "pedidos entregues" }],
     }),
     aoClicar: clicarMes,
+    insight: (() => {
+      const taxas = porMes.map((x) => (isFinite(x.pctPrazo) ? x.pctPrazo : 0)), { iMax, iMin } = extremos(taxas);
+      return `A pontualidade variou de ${forte(pct(taxas[iMin]))} em ${esc(mesLongo(doAno[iMin]))} a ${forte(pct(taxas[iMax]))} em ${esc(mesLongo(doAno[iMax]))}; `
+        + `em ${esc(rotuloPeriodo(ms))}, ${forte(pct(a.pctPrazo))} dos pedidos chegaram no prazo.`;
+    })(),
     tabela: { colunas: ["Mês", "No prazo", "Pedidos entregues"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), pct(x.pctPrazo), inteiro(x.entregues)]) },
   });
-  graficoCategorias("categorias", ms, "valor", (x) => [{ valor: reais(x.valor), nome: "comprado" }, { valor: pct(x.pctPrazo), nome: "no prazo" }]);
+  graficoCategorias("categorias", ms, "valor", (x) => [{ valor: reais(x.valor), nome: "comprado" }, { valor: pct(x.pctPrazo), nome: "no prazo" }],
+    (lista) => leituraRanking(lista, { sujeito: "concentra" }));
 
   // Ranking de fornecedores: pontualidade com cor + ícone + número (a cor nunca vem sozinha)
   const lista = D.fornecedores.map((f, i) => ({ ...f, i, ...indCE(ms, { categoria: estado.categoria, fornecedor: i }) }))
@@ -154,10 +162,17 @@ function estoque() {
       dicas: (i) => [{ valor: compacto(saldo[doAno[i]]), nome: "em estoque no fim do mês" }, { valor: `${inteiro(porMes[i].cobertura)} dias`, nome: "de cobertura" }],
     }),
     aoClicar: (p) => alternarMes(doAno[p.dataIndex]),
+    insight: (() => {
+      const valores = doAno.map((m) => saldo[m]), { iMax } = extremos(valores), d = valores[valores.length - 1] / valores[0] - 1;
+      return `O estoque foi de ${forte(compacto(valores[0]))} no fim de ${esc(mesLongo(doAno[0]))} para ${forte(compacto(valores[valores.length - 1]))} `
+        + `no fim de ${esc(mesLongo(doAno[valores.length - 1]))} (${d >= 0 ? "alta" : "queda"} de ${esc(pct(Math.abs(d)))})`
+        + (iMax < valores.length - 1 ? `, com o maior saldo em ${forte(mesLongo(doAno[iMax]))}.` : ".");
+    })(),
     tabela: { colunas: ["Mês", "Estoque", "Cobertura"], linhas: doAno.map((m, i) => [nomeMes(m), reais(saldo[m]), `${inteiro(porMes[i].cobertura)} dias`]) },
   });
   graficoCategorias("ruptura-categoria", ms, "perdida", (x) => [{ valor: reais(x.perdida), nome: "venda perdida" },
-    { valor: pct(x.ruptura), nome: "das unidades pedidas faltaram" }, { valor: inteiro(x.naoAtendidas), nome: "unidades não atendidas" }]);
+    { valor: pct(x.ruptura), nome: "das unidades pedidas faltaram" }, { valor: inteiro(x.naoAtendidas), nome: "unidades não atendidas" }],
+    (lista) => leituraRanking(lista, { sujeito: "perdeu" }));
 
   // Os 10 produtos que mais perderam venda no período
   const noPeriodo = new Set(ms), perda = new Map();
@@ -172,6 +187,13 @@ function estoque() {
     opcao: barrasDeitadas({ nomes: top.map((x) => D.produtos[x.p].nome), valores: top.map((x) => x.perdida),
                             dicas: (i) => [{ valor: reais(top[i].perdida), nome: "venda perdida" }, { valor: inteiro(top[i].falta), nome: "unidades não atendidas" },
                                            { valor: D.categorias[D.produtos[top[i].p].categoria], nome: "" }] }),
+    insight: (() => {
+      const comPerda = [...perda.values()].filter((x) => x.perdida > 0);
+      const inicio = `${forte(D.produtos[top[0].p].nome)} lidera, com ${forte(compacto(top[0].perdida))} em vendas perdidas; `;
+      return top.length < comPerda.length
+        ? `${inicio}os ${top.length} produtos da lista somam ${forte(pct(somar(top.map((x) => x.perdida)) / somar(comPerda.map((x) => x.perdida))))} de toda a venda perdida do período.`
+        : `${inicio}${top.length === 1 ? "é o único produto" : `esses são os ${top.length} produtos`} que perderam venda no recorte escolhido.`;
+    })(),
     tabela: { colunas: ["Produto", "Categoria", "Venda perdida", "Unidades"], linhas: top.map((x) => [D.produtos[x.p].nome, D.categorias[D.produtos[x.p].categoria], reais(x.perdida), inteiro(x.falta)]) },
   } : { vazio: "Nenhuma venda perdida no recorte escolhido." });
 }
@@ -216,6 +238,8 @@ function abc() {
       ],
     }),
     aoClicar: (p) => { const c = classes[p.dataIndex].c; estado.classe = estado.classe === c ? null : c; atualizar(); },
+    insight: `A classe A tem ${forte(pct(classes[0].produtos / lista.length, 0))} dos produtos e faz ${forte(pct(classes[0].receita / total, 0))} da receita; `
+      + `a classe C tem ${forte(pct(classes[2].produtos / lista.length, 0))} dos produtos e só ${forte(pct(classes[2].receita / total, 0))} da receita.`,
     tabela: { colunas: ["Classe", "Produtos", "% dos produtos", "Receita", "% da receita"],
               linhas: classes.map((x) => [x.c, inteiro(x.produtos), pct(x.produtos / lista.length), reais(x.receita), pct(x.receita / total)]) },
   });
@@ -242,6 +266,10 @@ function abc() {
         })),
       }],
     }),
+    insight: (() => {
+      const ate80 = lista.findIndex((x) => x.acumulada >= 0.8) + 1;
+      return `${forte(ate80)} produtos (${esc(pct(ate80 / lista.length, 0))} do total) fazem 80% da receita; os outros ${forte(lista.length - ate80)} dividem os 20% restantes.`;
+    })(),
     tabela: { colunas: ["Posição", "Produto", "Receita acumulada", "Classe"], linhas: lista.map((x, i) => [`${i + 1}º`, x.nome, pct(x.acumulada), x.classe]) },
   });
 

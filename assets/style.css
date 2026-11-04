@@ -45,6 +45,32 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
   gap: 16px;
 }
 
+/* Página inicial: a barra fica presa no topo. Transparente sobre o azul do início, com fundo depois que a página rola (home.js) */
+.barra-nav { position: sticky; top: 0; z-index: 50; transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+.barra-nav.rolou {
+  background: rgba(31, 59, 87, 0.94);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  backdrop-filter: saturate(1.4) blur(10px);
+  box-shadow: 0 6px 24px rgba(10, 22, 36, 0.25);
+}
+.barra-nav + .topo { margin-top: calc(-1 * var(--altura-nav, 70px)); padding-top: var(--altura-nav, 70px); }
+html:has(.barra-nav) { scroll-padding-top: calc(var(--altura-nav, 70px) + 12px); }
+.barra-nav .links a { position: relative; transition: color 0.25s ease; }
+.barra-nav .links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--laranja);
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.barra-nav .links a.ativo { color: #FFFFFF; }
+.barra-nav .links a.ativo::after { transform: scaleX(1); }
+
 .marca { color: #FFFFFF; font-weight: 700; font-size: 1.1rem; text-decoration: none; }
 .nav-direita { display: flex; align-items: center; gap: 24px; }
 
@@ -75,12 +101,17 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
 .hero {
   max-width: var(--largura);
   margin: 0 auto;
-  padding: 56px 24px 64px;
+  padding: 44px 24px 72px;
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 52px;
+  align-items: center;
 }
 
 .cargo { color: #BFD3E6; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.85rem; margin: 0; }
-.hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.2; margin: 12px 0 14px; max-width: 820px; }
+.hero h1 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); line-height: 1.2; margin: 8px 0 16px; max-width: 820px; }
 .ferramentas { color: #DCE7F2; font-size: 1.05rem; margin: 0 0 28px; }
+.hero .ferramentas { color: #9FB6CC; font-size: 0.95rem; margin: 22px 0 0; letter-spacing: 0.02em; }
 
 .botoes { display: flex; gap: 12px; flex-wrap: wrap; }
 .botao {
@@ -294,8 +325,25 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
 .projeto-texto > p { margin: 0; }
 .projeto .destaques li { background: var(--fundo); box-shadow: none; padding: 8px 12px; margin-bottom: 8px; font-size: 0.94rem; }
 .projeto .tags { margin-top: 18px; }
-.acoes-projeto { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-.acoes-projeto .botao { padding: 9px 16px; font-size: 0.93rem; }
+/* Botões pequenos no canto superior direito do projeto, na mesma linha do rótulo ("Painel em Power BI") */
+.topo-projeto { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.acoes-projeto { display: flex; flex-wrap: nowrap; gap: 6px; margin: 0 0 0 auto; }
+.acoes-projeto .botao { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; font-size: 0.8rem; line-height: 1.4; white-space: nowrap; }
+.acoes-projeto .botao.primario { box-shadow: 0 2px 8px rgba(241, 143, 1, 0.25); }
+.acoes-projeto .botao.primario::after { content: "→"; font-weight: 700; transition: transform 0.25s ease; }
+.acoes-projeto .botao.primario:hover::after { transform: translateX(3px); }
+/* O botão do código mostra só o ícone e "GitHub"; o texto inteiro fica no nome acessível e na dica */
+.acoes-projeto .botao[href*="github.com"] { font-size: 0; }
+.acoes-projeto .botao[href*="github.com"]::after { content: "GitHub"; font-size: 0.8rem; }
+.acoes-projeto .botao[href*="github.com"]::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
 .botao.secundario { color: var(--azul); border-color: #C5D3E2; }
 .botao.secundario:hover { background: #E8EEF4; }
 
@@ -497,11 +545,23 @@ code { background: #E8EEF4; padding: 0 4px; border-radius: 4px; font-size: 0.92e
 .linha-tempo li { display: grid; grid-template-columns: 96px 1fr; padding: 8px 0; border-bottom: 1px solid var(--borda); }
 .linha-tempo span { color: var(--azul-claro); font-weight: 700; }
 
-.contato { text-align: center; }
-.contato p { color: var(--texto-suave); }
-.contato .botoes { justify-content: center; margin-top: 18px; }
-.contato .botao { color: var(--azul); border-color: var(--azul); }
-.contato .botao.primario { color: #1B2631; border-color: var(--laranja); }
+/* Contato: um cartão no azul do topo, fechando a página */
+.secao.contato {
+  max-width: calc(var(--largura) - 48px);
+  margin: 64px auto;
+  padding: 52px 32px;
+  text-align: center;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, var(--marinho) 0%, #2B5A85 100%);
+  border-radius: 20px;
+  box-shadow: 0 18px 44px rgba(31, 59, 87, 0.22);
+}
+.secao.contato h2 { color: #FFFFFF; }
+.contato p { max-width: 640px; margin: 0 auto; color: #DCE7F2; }
+.contato .botoes { justify-content: center; margin-top: 22px; }
+.botao.whatsapp { display: inline-flex; align-items: center; gap: 8px; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+.botao.whatsapp svg { width: 18px; height: 18px; fill: currentColor; }
+.botao.whatsapp:hover { background: #25D366; border-color: #25D366; color: #0B2B17; }
 
 .rodape { text-align: center; color: var(--texto-suave); font-size: 0.85rem; padding: 28px 24px 40px; border-top: 1px solid var(--borda); }
 .rodape p { margin: 4px 0; }
@@ -554,6 +614,188 @@ dialog.lightbox::backdrop { background: rgba(15, 25, 38, 0.88); }
   line-height: 1;
 }
 
+/* ------------------------------------------------------------ topo: apresentação e painel animado */
+.apresentacao { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+.avatar, .foto-contato {
+  flex: none;
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--azul);
+  box-shadow: 0 0 0 3px var(--marinho), 0 0 0 5px var(--laranja), 0 10px 24px rgba(5, 15, 28, 0.35);
+}
+.foto-contato { width: 96px; height: 96px; margin: 0 auto 18px; }
+.saudacao { margin: 0; font-size: 1.1rem; color: #FFFFFF; }
+.disponivel { display: flex; align-items: center; gap: 8px; margin: 3px 0 0; font-size: 0.86rem; color: #BFD3E6; }
+.pulso { flex: none; width: 9px; height: 9px; border-radius: 50%; background: #3DDC84; animation: pulsar 2.2s ease-out infinite; }
+@keyframes pulsar {
+  0% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.55); }
+  70%, 100% { box-shadow: 0 0 0 10px rgba(61, 220, 132, 0); }
+}
+.hero-resumo { color: #DCE7F2; font-size: 1.06rem; max-width: 620px; margin: 0 0 26px; }
+
+/* Os textos do topo entram um depois do outro, e o painel por último */
+.animar .hero-texto > *, .animar .painel-demo { animation: surgir 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animar .hero-texto > :nth-child(2) { animation-delay: 80ms; }
+.animar .hero-texto > :nth-child(3) { animation-delay: 160ms; }
+.animar .hero-texto > :nth-child(4) { animation-delay: 240ms; }
+.animar .hero-texto > :nth-child(5) { animation-delay: 320ms; }
+.animar .hero-texto > :nth-child(6) { animation-delay: 400ms; }
+.animar .painel-demo { animation-delay: 260ms; }
+
+.painel-demo { margin: 0; }
+.pd-janela {
+  overflow: hidden;
+  color: var(--texto);
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(5, 15, 28, 0.35);
+  transform: perspective(1400px) rotateY(-7deg) rotateX(2deg);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.painel-demo:hover .pd-janela { transform: none; }
+.pd-barra {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  background: #EEF2F7;
+  border-bottom: 1px solid var(--borda);
+}
+.pd-barra i { width: 9px; height: 9px; border-radius: 50%; background: #D5DDE7; }
+.pd-barra i:first-child { background: var(--laranja); }
+.pd-barra span { margin-left: 8px; }
+.pd-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 14px 14px 6px; }
+.pd-kpi { min-width: 0; padding: 10px 12px; background: var(--fundo); border-radius: 10px; }
+.pd-kpi span { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--texto-suave); }
+.pd-kpi b { display: block; margin-top: 2px; font-size: 1.22rem; color: var(--marinho); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pd-kpi em { font-style: normal; font-size: 0.76rem; font-weight: 700; color: #0A7A3D; }
+.pd-grafico { padding: 10px 14px 14px; }
+.pd-legenda { font-size: 0.74rem; font-weight: 600; color: var(--texto-suave); }
+.pd-barras {
+  height: 128px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: end;
+  gap: 6px;
+  margin-top: 8px;
+  border-bottom: 1px solid var(--borda);
+}
+.pd-barras i {
+  display: block;
+  height: calc(var(--h) * 100%);
+  background: linear-gradient(180deg, var(--azul-claro), var(--azul));
+  border-radius: 4px 4px 0 0;
+  transform-origin: bottom;
+}
+.pd-barras i:last-child { background: linear-gradient(180deg, #FFB547, var(--laranja)); }
+.animar .pd-barras i { animation: crescer 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--n, 0) * 55ms + 450ms); }
+@keyframes crescer { from { transform: scaleY(0); } }
+.pd-meses { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; margin-top: 4px; }
+.pd-meses b { font-size: 0.66rem; font-weight: 600; text-align: center; color: #94A3B4; }
+.painel-demo figcaption { margin-top: 12px; font-size: 0.78rem; text-align: center; color: #9FB6CC; }
+
+/* ------------------------------------------------------------ blocos que entram ao rolar (home.js) */
+.animar .revelar {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--atraso, 0ms);
+}
+.animar .revelar.visivel { opacity: 1; transform: none; }
+.secao .rotulo + h2 { margin-top: 6px; }
+
+/* ------------------------------------------------------------ o que eu faço e o que levo para a equipe */
+.servicos, .diferenciais { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.servico, .diferencial {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 20px;
+  background: var(--fundo);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.servico:hover, .diferencial:hover { transform: translateY(-4px); border-color: #C9D6E4; box-shadow: 0 14px 30px rgba(31, 59, 87, 0.12); }
+.icone { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; color: var(--azul); background: #E3EEF8; }
+.icone svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.diferencial .icone { color: #A35E00; background: #FFF1DC; }
+.servico h3, .diferencial h3 { margin: 14px 0 6px; }
+.servico p, .diferencial p { margin: 0 0 12px; font-size: 0.95rem; color: var(--texto-suave); }
+.diferencial p { margin: 0; }
+.servico .na-pratica {
+  padding: 8px 11px;
+  font-size: 0.88rem;
+  color: var(--texto);
+  background: var(--cartao);
+  border-left: 3px solid var(--laranja);
+  border-radius: 6px;
+}
+.na-pratica strong { color: #A35E00; }
+.servico .com { margin: auto 0 0; padding-top: 4px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.02em; color: var(--azul-claro); }
+
+/* ------------------------------------------------------------ trajetória: a linha se preenche conforme a página rola */
+.trajetoria { position: relative; list-style: none; padding: 0; margin: 30px 0 0; }
+.trajetoria::before, .trajetoria::after {
+  content: "";
+  position: absolute;
+  left: 120px;
+  top: 8px;
+  width: 2px;
+  border-radius: 2px;
+}
+.trajetoria::before { bottom: 8px; background: var(--borda); }
+.trajetoria::after { height: calc(var(--progresso, 0) * (100% - 16px)); background: linear-gradient(var(--laranja), var(--azul-claro)); }
+.etapa { position: relative; display: grid; grid-template-columns: 104px 1fr; column-gap: 34px; padding-bottom: 22px; }
+.etapa::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 114px;
+  top: 19px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cartao);
+  border: 3px solid var(--azul-claro);
+  box-sizing: border-box;
+}
+.etapa.atual::before { border-color: var(--laranja); box-shadow: 0 0 0 6px rgba(241, 143, 1, 0.18); }
+.quando { padding-top: 15px; text-align: right; font-size: 0.92rem; font-weight: 700; color: var(--azul-claro); }
+.etapa.atual .quando { color: #A35E00; }
+.etapa-cartao { padding: 18px 22px; background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; box-shadow: var(--sombra); }
+.etapa-cartao h3 { margin: 0; font-size: 1.2rem; }
+.etapa-cartao p { margin: 0 0 8px; }
+.etapa-cartao > :last-child { margin-bottom: 0; }
+.etapa-cartao .onde { margin: 2px 0 8px; font-size: 0.92rem; font-weight: 600; color: #A35E00; }
+.etapa-cartao .periodo { margin: -4px 0 10px; font-size: 0.85rem; color: var(--texto-suave); }
+.entregas { margin: 6px 0 14px; padding-left: 18px; }
+.entregas li { margin-bottom: 4px; }
+.etapa-cartao .levei { margin: 0 0 12px; padding: 8px 12px; font-size: 0.92rem; background: var(--fundo); border-left: 3px solid var(--laranja); border-radius: 6px; }
+.levei strong { color: #A35E00; }
+.formacao { margin: 4px 0 0 138px; padding: 16px 22px; background: var(--cartao); border: 1px dashed #C5D3E2; border-radius: 14px; }
+.formacao h3 { margin: 0 0 8px; font-size: 1rem; }
+.formacao ul { list-style: none; margin: 0; padding: 0; }
+.formacao li { position: relative; padding: 7px 0 7px 116px; border-top: 1px solid var(--borda); }
+.formacao li:first-child { border-top: none; }
+.formacao li > span { position: absolute; left: 0; top: 8px; font-size: 0.88rem; font-weight: 700; color: var(--azul-claro); }
+
+/* ------------------------------------------------------------ projetos: números que contam e detalhes técnicos recolhidos */
+.contadores { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: -8px 0 18px; }
+.contador { padding: 18px 20px; color: #FFFFFF; background: linear-gradient(135deg, var(--marinho), #2B5A85); border-radius: 14px; }
+.contador strong { display: block; font-size: 2.2rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.contador span { font-size: 0.92rem; color: #DCE7F2; }
+.dica { margin: 0 0 18px; font-size: 0.92rem; color: var(--texto-suave); }
+/* Detalhes técnicos: sempre à vista, numa caixa abaixo das imagens */
+.tecnico { margin-top: 16px; padding: 12px 14px 6px; background: #F8FAFC; border: 1px solid var(--borda); border-radius: 10px; }
+.projeto .tecnico h4 { margin: 0 0 8px; }
+.tecnico .o-que-fiz { padding-left: 18px; }
+.fluxo small { display: block; margin-top: 10px; font-size: 0.8rem; font-weight: 700; color: var(--azul-claro); }
+
 /* ------------------------------------------------------------ tablet e celular */
 @media (max-width: 1060px) {
   .projeto { gap: 26px; padding: 26px 24px; }
@@ -590,9 +832,57 @@ dialog.lightbox::backdrop { background: rgba(15, 25, 38, 0.88); }
   .fluxo-grande span + span::before { content: none; }
 }
 
+/* Blocos novos da página inicial */
+@media (max-width: 1060px) {
+  .servicos, .diferenciais { grid-template-columns: repeat(2, 1fr); }
+  .hero { gap: 36px; }
+}
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; padding-bottom: 56px; }
+  .painel-demo { max-width: 520px; }
+  .pd-janela { transform: none; }
+  .contadores { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .trajetoria::before, .trajetoria::after { left: 6px; }
+  .etapa { grid-template-columns: 1fr; padding-left: 30px; }
+  .etapa::before { left: 0; top: 2px; }
+  .quando { padding-top: 0; margin-bottom: 8px; text-align: left; }
+  .formacao { margin-left: 30px; }
+  .formacao li { padding-left: 0; }
+  .formacao li > span { position: static; display: block; }
+}
+
+@media (max-width: 560px) {
+  .servicos, .diferenciais { grid-template-columns: 1fr; }
+  .avatar { width: 68px; height: 68px; }
+  .foto-contato { width: 84px; height: 84px; }
+  .apresentacao { margin-bottom: 20px; }
+  .pd-kpis { gap: 6px; padding: 10px 10px 4px; }
+  .pd-kpi { padding: 8px; }
+  .pd-kpi span { font-size: 0.6rem; }
+  .pd-kpi b { font-size: 0.95rem; }
+  .pd-barras { height: 96px; gap: 4px; }
+  .pd-meses { gap: 4px; }
+  .contador strong { font-size: 1.8rem; }
+  .etapa-cartao { padding: 16px 18px; }
+  .secao.contato { margin: 44px 16px; padding: 40px 20px; }
+  /* Barra no celular: nome e idioma na primeira linha, os links das seções na segunda */
+  .barra-nav .nav { flex-wrap: wrap; row-gap: 10px; padding: 12px 20px 12px; }
+  .barra-nav .nav-direita { display: contents; }
+  .barra-nav .links { display: flex; order: 3; width: 100%; justify-content: space-between; gap: 10px; }
+  .barra-nav .links a { font-size: 0.86rem; }
+  .barra-nav .links a::after { bottom: -4px; }
+}
+
 /* Quem pede menos movimento no sistema vê a troca sem animação */
 @media (prefers-reduced-motion: reduce) {
   .projeto.entrando, .projeto.ativo .surge { animation: none; }
   .paineis-vitrine.redimensionando { transition: none; }
   .marcador-aba, .imagem-principal img, .abas-vitrine .num { transition: none; }
+  .animar .hero-texto > *, .animar .painel-demo, .animar .pd-barras i, .pulso { animation: none; }
+  .animar .revelar { opacity: 1; transform: none; transition: none; }
+  .pd-janela, .servico, .diferencial { transition: none; }
 }

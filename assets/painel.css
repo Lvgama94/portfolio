@@ -144,6 +144,16 @@
 #g-desvio { height: 320px; }
 .vazio { display: flex; align-items: center; justify-content: center; text-align: center; color: var(--texto-suave); font-size: 0.92rem; padding: 0 24px; }
 
+/* Abaixo de cada gráfico: por que esse tipo de gráfico e a leitura dele (refeita a cada filtro) */
+.cartao-grafico { display: flex; flex-direction: column; }
+.explica { display: grid; gap: 8px; margin-top: auto; padding-top: 12px; font-size: 0.86rem; line-height: 1.5; color: var(--texto); }
+.explica p { margin: 0; padding: 8px 11px; border-radius: 6px; }
+.explica .porque { background: #F4F7FA; border-left: 3px solid var(--azul-claro); color: var(--texto-suave); }
+.explica .leitura { background: #FFF6E8; border-left: 3px solid var(--laranja); }
+.explica .leitura strong { color: var(--marinho); }
+.rotulo-explica { display: block; margin-bottom: 2px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--azul-claro); }
+.leitura .rotulo-explica { color: #A35E00; }
+
 /* Dica (tooltip): o valor vem primeiro, o nome depois */
 .dica-titulo { font-weight: 700; margin-bottom: 4px; color: var(--texto); }
 .dica-linha { display: flex; align-items: center; gap: 8px; line-height: 1.6; }

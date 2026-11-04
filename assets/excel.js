@@ -67,6 +67,8 @@ function conciliacao() {
                             cor: (v, i) => (conciliado(i) ? COR.serie1 : COR.negativo),
                             dicas: (i) => [{ valor: inteiro(porStatus[i].length), nome: "lançamentos" }, { valor: pct(porStatus[i].length / L.length), nome: "do total" }] }),
     aoClicar: (p) => { estado.status = estado.status === p.dataIndex ? null : p.dataIndex; atualizar(); mostrarLancamentos(); },
+    insight: `${forte(pct(1 - pendencias.length / L.length))} dos lançamentos conciliaram sozinhos: ${forte(inteiro(porStatus[0].length))} pelo documento `
+      + `e ${forte(inteiro(porStatus[1].length))} por data e valor. Sobraram ${forte(inteiro(pendencias.length))} pendências para alguém investigar.`,
     tabela: { colunas: ["Status", "Lançamentos", "% do total"], linhas: S.map((s, i) => [s, inteiro(porStatus[i].length), pct(porStatus[i].length / L.length)]) },
   });
 
@@ -111,6 +113,11 @@ function conciliacao() {
       if (estado.status == null) estado.ver = "todos";
       atualizar(); mostrarLancamentos();
     },
+    insight: (() => {
+      const { iMax } = extremos(dias.map((_, i) => entradas[i] + saidas[i]));
+      return `O dia ${forte(dias[iMax])} teve o maior movimento: ${forte(compacto(entradas[iMax]))} de entradas e ${forte(compacto(saidas[iMax]))} de saídas. `
+        + `No mês, entraram ${esc(compacto(somar(entradas)))} e saíram ${esc(compacto(somar(saidas)))}.`;
+    })(),
     tabela: { colunas: ["Dia", "Entradas", "Saídas"], linhas: dias.map((d, i) => [dataDia(d), reais(entradas[i]), reais(saidas[i])]) },
   });
 
@@ -152,6 +159,11 @@ function ponto() {
       series: [{ nome: "Registros", valores: porMes.map((x) => x.pessoas), cor: (v, i) => (layout(i) === "novo" ? COR.serie2 : COR.serie1) }],
       dicas: (i) => [{ valor: D.arquivos[meses[i]].nome, nome: "" }, { valor: `layout ${layout(i)}`, nome: "" }, { valor: inteiro(porMes[i].pessoas), nome: "registros" }],
     }),
+    insight: (() => {
+      const registros = porMes.map((x) => x.pessoas);
+      return `${forte(meses.length)} arquivos lidos, ${forte(novos)} no layout novo; ${forte(inteiro(somar(registros)))} registros no total, `
+        + `entre ${esc(inteiro(Math.min(...registros)))} e ${esc(inteiro(Math.max(...registros)))} por mês. Nenhum mês ficou de fora.`;
+    })(),
     tabela: { colunas: ["Arquivo", "Competência", "Layout", "Registros", "Faltas", "Horas extras"],
               linhas: meses.map((m, i) => [D.arquivos[m].nome, nomeMes(m), layout(i), inteiro(porMes[i].pessoas), inteiro(porMes[i].faltas), numero(porMes[i].he, 2)]) },
   });
@@ -161,6 +173,7 @@ function ponto() {
       series: [{ nome: "Horas extras", valores: porMes.map((x) => x.he), cor: COR.serie1 }],
       dicas: (i) => [{ valor: numero(porMes[i].he, 2), nome: "horas extras" }, { valor: `layout ${layout(i)}`, nome: "" }],
     }),
+    insight: leituraMensal(meses, porMes.map((x) => x.he), (v) => `${numero(v, 1)} h`),
     tabela: { colunas: ["Mês", "Horas extras"], linhas: meses.map((m, i) => [nomeMes(m), numero(porMes[i].he, 2)]) },
   });
 
@@ -171,6 +184,8 @@ function ponto() {
                             dicas: (i) => [{ valor: pct(setores[i].absenteismo), nome: "absenteísmo" }, { valor: inteiro(setores[i].faltas), nome: "faltas" },
                                            { valor: inteiro(setores[i].atestados), nome: "dias de atestado" }] }),
     aoClicar: (p) => { const s = setores[p.dataIndex].s; estado.setor = estado.setor === s ? null : s; atualizar(); },
+    insight: `${forte(setores[0].nome)} tem o maior absenteísmo (${forte(pct(setores[0].absenteismo))}), contra ${esc(pct(setores[setores.length - 1].absenteismo))} `
+      + `em ${forte(setores[setores.length - 1].nome)}; a média geral é ${forte(pct(soma(null).absenteismo))}.`,
     tabela: { colunas: ["Setor", "Absenteísmo", "Faltas", "Atestados"], linhas: setores.map((x) => [x.nome, pct(x.absenteismo), inteiro(x.faltas), inteiro(x.atestados)]) },
   });
 }

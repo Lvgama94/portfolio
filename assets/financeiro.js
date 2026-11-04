@@ -100,6 +100,7 @@ function resumo() {
       series: [{ type: "bar", barMaxWidth: 24, cursor: "pointer", data: barras(receitas, COR.serie1, { destaque, ...modoReceita.serie(0) }) }],
     }),
     aoClicar: clicarMes,
+    insight: leituraMensal(doAno, receitas, compacto),
     tabela: { colunas: ["Mês", "Receita líquida", "Margem líquida"],
               linhas: porMes.map((x, i) => [nomeMes(doAno[i]), reais(x.liquida), pct(x.margemLiquida)]) },
   });
@@ -125,6 +126,14 @@ function resumo() {
       series,
     }),
     aoClicar: clicarMes,
+    insight: (() => {
+      if (!comOrcamento) {
+        const { iMax } = extremos(realizados);
+        return `O orçamento não é aberto por filial. O melhor mês da filial foi ${forte(mesLongo(doAno[iMax]))}, com ${forte(compacto(realizados[iMax]))} de resultado.`;
+      }
+      const abaixo = porMes.filter((x) => x.desvio < 0).length, desvio = somar(porMes.map((x) => x.desvio));
+      return `O resultado ficou abaixo do orçado em ${forte(`${abaixo} de ${porMes.length}`)} meses; no ano, o desvio somou ${forte(compacto(desvio))}.`;
+    })(),
     tabela: { colunas: comOrcamento ? ["Mês", "Realizado", "Orçado", "Desvio"] : ["Mês", "Realizado"],
               linhas: porMes.map((x, i) => [nomeMes(doAno[i]), reais(x.resultado), ...(comOrcamento ? [reais(x.resultadoOrcado), reais(x.desvio)] : [])]) },
   });
@@ -253,6 +262,12 @@ function dre() {
       }],
     }),
     aoClicar: (p) => { const x = dados[p.dataIndex]; if (!x.total || x.nome === "Receita bruta") alternarGrupo(x.nome, true); },
+    insight: (() => {
+      const bruta = dados[0].valor, custos = dados.slice(1, -1), maior = custos.reduce((a, x) => (x.valor < a.valor ? x : a), custos[0]);
+      const de100 = (v) => `R$ ${numero((v / bruta) * 100, 1)}`;
+      return `O maior custo é ${forte(maior.nome)}: ${forte(de100(-maior.valor))} de cada R$ 100 de receita bruta. `
+        + `No fim do caminho, ${acumulado >= 0 ? "sobram" : "faltam"} ${forte(de100(Math.abs(acumulado)))} de resultado.`;
+    })(),
     tabela: { colunas: ["Etapa", "Valor", "% da RL"], linhas: dados.map((x) => [x.nome, reais(x.valor), pct(x.valor / ind.liquida)]) },
   });
 
@@ -289,6 +304,12 @@ function dre() {
         })),
       }],
     }),
+    insight: (() => {
+      const pior = despesas[0], total = somar(despesas.map((c) => c.desvio));
+      const resumo = ` No total, as despesas ficaram ${forte(compacto(Math.abs(total)))} ${total < 0 ? "acima" : "abaixo"} do orçado.`;
+      if (!pior || pior.desvio >= 0) return `Todas as contas de despesa ficaram dentro do orçado.${resumo}`;
+      return `${forte(pior.nome)} foi a conta que mais passou do orçado: ${forte(compacto(-pior.desvio))} a mais (${esc(pct(-pior.desvio / Math.abs(pior.orc)))}).${resumo}`;
+    })(),
     tabela: { colunas: ["Conta", "Realizado", "Orçado", "Desvio", "Desvio %"],
               linhas: despesas.map((c) => [c.nome, reais(-c.real), reais(-c.orc), reais(c.desvio), pct(c.desvio / Math.abs(c.orc))]) },
   });
@@ -320,6 +341,9 @@ function receber() {
         label: { show: true, position: "top", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => compacto(p.value) },
       }],
     }),
+    insight: c.total
+      ? `${forte(pct(c.vencido / c.total))} da carteira em aberto já venceu, e ${forte(pct(c.acima90 / c.total))} está vencida há mais de 90 dias, a parte mais difícil de recuperar.`
+      : "Nenhum valor em aberto no recorte escolhido.",
     tabela: { colunas: ["Faixa", "Em aberto", "% da carteira"], linhas: faixas.map((f, i) => [f, reais(c.porFaixa[i]), pct(c.porFaixa[i] / c.total)]) },
   });
 
@@ -341,6 +365,10 @@ function receber() {
       }],
     }),
     aoClicar: (p) => { const t = tipos[p.dataIndex].t; estado.tipo = estado.tipo === t ? null : t; atualizar(); },
+    insight: tipos.length
+      ? `${forte(tipos[0].nome)} tem a maior inadimplência: ${forte(pct(tipos[0].inadimplencia))}, contra ${forte(pct(tipos[tipos.length - 1].inadimplencia))} `
+        + `em ${forte(tipos[tipos.length - 1].nome)}. A média da carteira é ${esc(pct(geral.inadimplencia))}.`
+      : "Nenhum valor em aberto no recorte escolhido.",
     tabela: { colunas: ["Tipo de cliente", "Inadimplência", "Vencido", "Em aberto"], linhas: tipos.map((x) => [x.nome, pct(x.inadimplencia), reais(x.vencido), reais(x.total)]) },
   });
 }
@@ -380,6 +408,11 @@ function caixa() {
       ],
     }),
     aoClicar: clicarMes,
+    insight: (() => {
+      const sobra = porMes.filter((x) => x.geracao >= 0).length, { iMin } = extremos(porMes.map((x) => x.geracao));
+      return `Em ${forte(`${sobra} de ${porMes.length}`)} meses entrou mais dinheiro do que saiu; o mês mais apertado foi ${forte(mesLongo(doAno[iMin]))} `
+        + `(${esc(compacto(porMes[iMin].geracao))}).`;
+    })(),
     tabela: { colunas: ["Mês", "Recebido", "Pago", "Geração"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), reais(x.recebido), reais(x.pago), reais(x.geracao)]) },
   });
   const geracoes = porMes.map((x) => x.geracao), modoGeracao = modoRotulos("geracao", geracoes.length, 1, geracoes.map(rotuloValor));
@@ -392,6 +425,11 @@ function caixa() {
       series: [{ type: "bar", barMaxWidth: 24, cursor: "pointer", data: barras(geracoes, corSinal, { destaque, ...modoGeracao.serie(0) }) }],
     }),
     aoClicar: clicarMes,
+    insight: (() => {
+      const negativos = geracoes.filter((v) => v < 0).length;
+      return `A geração de caixa somou ${forte(compacto(somar(geracoes)))} no ano`
+        + (negativos ? `; ${forte(negativos)} ${negativos === 1 ? "mês ficou" : "meses ficaram"} no vermelho.` : ", sem nenhum mês no vermelho.");
+    })(),
     tabela: { colunas: ["Mês", "Geração de caixa"], linhas: porMes.map((x, i) => [nomeMes(doAno[i]), reais(x.geracao)]) },
   });
 
@@ -409,6 +447,7 @@ function caixa() {
         label: { show: true, position: "right", distance: DISTANCIA_ROTULO, color: COR.texto, fontSize: 11, formatter: (p) => compacto(p.value) },
       }],
     }),
+    insight: leituraRanking(porGrupo, { prefixo: "O maior grupo de pagamentos é", total: atual.pago }),
     tabela: { colunas: ["Grupo", "Pago", "% do total"], linhas: porGrupo.map((x) => [x.nome, reais(x.valor), pct(x.valor / atual.pago)]) },
   });
 }

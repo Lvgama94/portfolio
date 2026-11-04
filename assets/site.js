@@ -90,11 +90,12 @@ barra.addEventListener("keydown", (evento) => {
   ativar(destino, { focar: true });
 });
 
-// Setas abaixo dos painéis: se o topo da vitrine saiu da tela, volta até ele para o próximo projeto começar do início
+// Setas abaixo dos painéis: se o topo da vitrine saiu da tela (ou ficou sob a barra presa no topo), volta até ele
+// para o próximo projeto começar do início
 function andar(passo) {
   ativar(atual + passo);
-  const topo = vitrine.getBoundingClientRect().top;
-  if (topo < 0) vitrine.scrollIntoView({ behavior: "smooth", block: "start" });
+  const alturaNav = document.querySelector(".barra-nav")?.offsetHeight || 0;
+  if (vitrine.getBoundingClientRect().top < alturaNav) vitrine.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 vitrine.querySelector(".navegar-vitrine .anterior").addEventListener("click", () => andar(-1));
 vitrine.querySelector(".navegar-vitrine .proximo").addEventListener("click", () => andar(1));

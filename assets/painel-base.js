@@ -218,9 +218,48 @@ function dica(titulo, linhas) {
     `<div class="dica-linha">${l.cor ? `<i class="dica-chave" style="background:${l.cor}"></i>` : ""}<strong>${esc(l.valor)}</strong><span>${esc(l.nome)}</span></div>`).join("");
 }
 
+// ------------------------------------------------------------ "O que ele mostra": a leitura de cada gráfico, refeita a cada filtro
+const MESES_LONGOS = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+const mesLongo = (m) => MESES_LONGOS[Number(D.meses[m].slice(5)) - 1];
+const forte = (t) => `<strong>${esc(t)}</strong>`;
+const somar = (vs) => vs.reduce((a, b) => a + b, 0);
+/** Posição do maior e do menor valor de uma lista. */
+function extremos(valores) {
+  let iMax = 0, iMin = 0;
+  valores.forEach((v, i) => { if (v > valores[iMax]) iMax = i; if (v < valores[iMin]) iMin = i; });
+  return { iMax, iMin };
+}
+/** Leitura de colunas por mês: o maior e o menor mês e, com o ano inteiro, o 2º semestre contra o 1º. */
+function leituraMensal(meses, valores, formato) {
+  if (!valores.length || valores.every((v) => !v)) return "Sem dados no recorte escolhido.";
+  const { iMax, iMin } = extremos(valores);
+  // Com mais de um ano no gráfico, o mês leva o ano junto ("dezembro de 2025")
+  const variosAnos = new Set(meses.map((m) => D.meses[m].slice(0, 4))).size > 1;
+  const nome = (m) => (variosAnos ? `${mesLongo(m)} de ${D.meses[m].slice(0, 4)}` : mesLongo(m));
+  let texto = `O maior mês foi ${forte(nome(meses[iMax]))} (${esc(formato(valores[iMax]))}) e o menor, ${forte(nome(meses[iMin]))} (${esc(formato(valores[iMin]))}).`;
+  if (valores.length === 12) {
+    const d = somar(valores.slice(6)) / somar(valores.slice(0, 6)) - 1;
+    if (isFinite(d) && Math.abs(d) >= 0.005) texto += ` O 2º semestre teve ${forte(pct(Math.abs(d)))} ${d > 0 ? "a mais" : "a menos"} que o 1º.`;
+  }
+  return texto;
+}
+/** Leitura de um ranking (já ordenado do maior para o menor): o primeiro, a fatia dele e a dos dois primeiros. */
+function leituraRanking(lista, { formato = compacto, sujeito = "", prefixo = "", total = somar(lista.map((x) => x.valor)) } = {}) {
+  if (!lista.length || !total) return "Sem dados no recorte escolhido.";
+  const [a, b] = lista;
+  // "Supermercado é o tipo que mais fatura: R$ 42 mi" ou, com prefixo, "O maior grupo é Fornecedores: R$ 41 mi"
+  let texto = prefixo
+    ? `${prefixo} ${forte(a.nome)}: ${esc(formato(a.valor))}, ${forte(pct(a.valor / total))} do total.`
+    : `${forte(a.nome)} ${sujeito} ${esc(formato(a.valor))}, ${forte(pct(a.valor / total))} do total.`;
+  if (b) texto += ` Com ${forte(b.nome)}, os dois primeiros somam ${forte(pct((a.valor + b.valor) / total))}.`;
+  return texto;
+}
+
 /** Desenha um gráfico, ou a tabela equivalente quando o leitor pediu a tabela. */
 function desenhar(chave, def) {
   const el = document.getElementById(`g-${chave}`);
+  const leitura = document.getElementById(`i-${chave}`);
+  if (leitura) leitura.innerHTML = def.vazio ? esc(def.vazio) : (def.insight || "");
   cliques[chave] = def.aoClicar;
   if (def.vazio || emTabela.has(chave)) {
     if (graficos[chave]) { graficos[chave].dispose(); delete graficos[chave]; }
