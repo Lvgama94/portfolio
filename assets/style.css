@@ -327,7 +327,9 @@ html:has(.barra-nav) { scroll-padding-top: calc(var(--altura-nav, 70px) + 12px);
 .projeto .tags { margin-top: 18px; }
 /* Botões pequenos no canto superior direito do projeto, na mesma linha do rótulo ("Painel em Power BI") */
 .topo-projeto { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
-.acoes-projeto { display: flex; flex-wrap: nowrap; gap: 6px; margin: 0 0 0 auto; }
+/* Em tela estreita os botões quebram de linha em vez de empurrar a coluna para fora da vitrine */
+.acoes-projeto { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin: 0 0 0 auto; }
+.projeto > * { min-width: 0; }
 .acoes-projeto .botao { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; font-size: 0.8rem; line-height: 1.4; white-space: nowrap; }
 .acoes-projeto .botao.primario { box-shadow: 0 2px 8px rgba(241, 143, 1, 0.25); }
 .acoes-projeto .botao.primario::after { content: "→"; font-weight: 700; transition: transform 0.25s ease; }

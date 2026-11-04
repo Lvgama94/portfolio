@@ -96,4 +96,21 @@
     else visivelDesde = performance.now();
   });
   addEventListener("pagehide", () => enviar("saida"));
+
+  // No celular o navegador costuma fechar a aba sem avisar, e o envio da saída nunca chega.
+  // Por isso, enquanto a página está à vista, o tempo também vai aos 15 s, 30 s e 60 s e depois a cada minuto
+  // (até 30 minutos): a planilha fica com o tempo até o último envio, mesmo sem o aviso de saída.
+  const MARCOS = [15, 30, 60];
+  let proximoMarco = 0;
+  const segundosVisiveis = () => (tempoVisivel + (visivelDesde !== null ? performance.now() - visivelDesde : 0)) / 1000;
+  const alvo = (n) => (n < MARCOS.length ? MARCOS[n] : MARCOS[MARCOS.length - 1] + 60 * (n - MARCOS.length + 1));
+  const relogio = setInterval(() => {
+    if (document.visibilityState !== "visible") return;
+    const segundos = segundosVisiveis();
+    if (segundos > 1800) { clearInterval(relogio); return; }
+    if (segundos >= alvo(proximoMarco)) {
+      while (segundos >= alvo(proximoMarco)) proximoMarco++;
+      enviar("parcial");
+    }
+  }, 5000);
 })();

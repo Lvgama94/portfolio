@@ -53,7 +53,8 @@ module.exports = async (req, res) => {
   const ua = String(req.headers["user-agent"] || "");
   let d = req.body;
   try { if (typeof d === "string") d = JSON.parse(d); } catch { d = null; }
-  const valido = d && typeof d === "object" && ["entrada", "saida"].includes(d.tipo)
+  // entrada (abriu), parcial (ainda na página, a cada marco de tempo) e saida (saiu ou trocou de aba)
+  const valido = d && typeof d === "object" && ["entrada", "parcial", "saida"].includes(d.tipo)
     && typeof d.vista === "string" && typeof d.pagina === "string" && d.pagina.startsWith("/");
   if (!valido || ROBOS.test(ua) || !process.env.PLANILHA_URL) { res.status(204).end(); return; }
 
