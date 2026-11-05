@@ -48,6 +48,24 @@ function classificarOrigem(d, ua) {
   return { origem: "Direto", detalhe: "link digitado, favorito ou app que não informa a origem" };
 }
 
+const NOMES_PAGINAS = {
+  "": "Início", index: "Início", financeiro: "Financeiro", rh: "RH", compras: "Compras", comercial: "Comercial",
+  excel: "Excel", sql: "SQL", relatorio: "Relatório", indicadores: "Catálogo", analise: "Análise em Python",
+};
+
+/** Caminho das páginas da visita, em ordem e com nomes legíveis: "Início → Financeiro → RH". */
+function caminhoDasPaginas(paginas) {
+  const nomes = paginas
+    .filter((p) => typeof p === "string" && p.startsWith("/"))
+    .slice(0, 40)
+    .map((p) => {
+      const chave = p.replace(/^\/|\.html$|\/$/g, "");
+      return NOMES_PAGINAS[chave] || corta(p, 40);
+    })
+    .filter((nome, i, todos) => nome !== todos[i - 1]); // recarregar a mesma página não repete o nome
+  return corta(nomes.join(" → "), 300);
+}
+
 module.exports = async (req, res) => {
   if (req.method !== "POST") { res.status(405).end(); return; }
   const ua = String(req.headers["user-agent"] || "");
@@ -72,7 +90,8 @@ module.exports = async (req, res) => {
     "País": cabecalho("x-vercel-ip-country"),
     "Origem": origem,
     "Detalhe da origem": corta(detalhe),
-    "Página": corta(d.pagina, 120),
+    // site antigo ainda aberto em alguma aba manda só a página atual
+    "Páginas": caminhoDasPaginas(Array.isArray(d.paginas) && d.paginas.length ? d.paginas : [d.pagina]),
     "Tempo (s)": Math.max(0, Math.min(Number(d.tempo) || 0, 86400)),
     "Rolagem (%)": Math.max(0, Math.min(Number(d.rolagem) || 0, 100)),
     "Cliques": (Array.isArray(d.cliques) ? d.cliques : []).slice(0, 60).map((c) => corta(c, 90)).join(" | "),
@@ -81,8 +100,7 @@ module.exports = async (req, res) => {
     "Sistema": sistema,
     "Idioma": corta(d.idioma, 10),
     "Tela": corta(d.tela, 20),
-    "Visita": corta(d.visita, 60),
-    "Vista": corta(d.vista, 60),
+    "Visita": corta(d.visita || d.vista, 60),
   };
 
   try {
@@ -102,3 +120,4 @@ module.exports = async (req, res) => {
 module.exports.classificarOrigem = classificarOrigem;
 module.exports.aparelho = aparelho;
 module.exports.horarioSaoPaulo = horarioSaoPaulo;
+module.exports.caminhoDasPaginas = caminhoDasPaginas;
